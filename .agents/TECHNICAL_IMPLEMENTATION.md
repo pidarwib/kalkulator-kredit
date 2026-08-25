@@ -298,7 +298,7 @@ Membuat project foundation.
 
 ---
 
-## TASK-003 — Environment Configuration
+## TASK-003 — Environment Configuration `[x] DONE`
 
 ### Objective
 
@@ -309,8 +309,8 @@ Memisahkan configuration dari source code.
 ```text
 DATABASE_URL
 AUTH_SECRET
-SESSION_SECRET / equivalent
-API configuration
+NODE_ENV
+NEXT_PUBLIC_APP_URL
 OPENROUTER_API_KEY jika digunakan
 ```
 
@@ -322,10 +322,10 @@ OPENROUTER_API_KEY jika digunakan
 
 ### Acceptance Criteria
 
-- [ ] `.env` ignored.
-- [ ] `.env.example` tersedia.
-- [ ] Application gagal dengan jelas jika required secret tidak tersedia.
-- [ ] Secret tidak muncul di log.
+- [x] `.env` ignored (diatur di `.gitignore`).
+- [x] `.env.example` tersedia dengan placeholder deskriptif dan tanpa secret aktual.
+- [x] Application gagal dengan jelas jika required secret tidak tersedia (runtime Zod validation di `src/lib/env.ts`).
+- [x] Secret tidak muncul di log (pesan error hanya menampilkan nama field & alasan validasi, nilai secret di-mask).
 
 ---
 
