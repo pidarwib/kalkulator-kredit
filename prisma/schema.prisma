@@ -1,0 +1,11 @@
+// Prisma schema file for Credit Calculator BPR
+// Database: PostgreSQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
