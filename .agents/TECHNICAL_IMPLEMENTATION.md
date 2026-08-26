@@ -632,9 +632,9 @@ Continue / 403
 
 ### Acceptance Criteria
 
-- [ ] Unauthorized endpoint = 403.
-- [ ] Frontend hiding tidak menjadi security mechanism.
-- [ ] Permission check dilakukan server-side.
+- [x] Unauthorized endpoint = 403.
+- [x] Frontend hiding tidak menjadi security mechanism.
+- [x] Permission check dilakukan server-side.
 
 ---
 
