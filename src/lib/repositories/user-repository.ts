@@ -47,22 +47,37 @@ export interface CreateUserInput {
 }
 
 export interface UpdateUserInput {
-  email?: string;
+  email?: string | null;
   password?: string;
   fullName?: string;
-  phone?: string;
+  phone?: string | null;
   roleId?: string;
-  bprId?: string;
-  branchId?: string;
+  bprId?: string | null;
+  branchId?: string | null;
   status?: string;
 }
 
 export interface UserListFilter {
+  page?: number;
+  pageSize?: number;
+  search?: string;
+  roleCode?: string;
   roleId?: string;
   status?: string;
   bprId?: string;
   branchId?: string;
   includeDeleted?: boolean;
+  baseWhere?: Prisma.UserWhereInput;
+}
+
+export interface PaginatedUsersResult {
+  data: SafeUser[];
+  pagination: {
+    page: number;
+    pageSize: number;
+    total: number;
+    totalPages: number;
+  };
 }
 
 /**
@@ -339,5 +354,78 @@ export class UserRepository {
     });
 
     return users.map(toSafeUser);
+  }
+
+  /**
+   * Finds users with pagination, search, role filtering, and scope constraints.
+   */
+  static async findManyWithPagination(
+    filter: UserListFilter = {}
+  ): Promise<PaginatedUsersResult> {
+    const page = Math.max(1, filter.page || 1);
+    const pageSize = Math.min(100, Math.max(1, filter.pageSize || 20));
+    const skip = (page - 1) * pageSize;
+
+    const where: Prisma.UserWhereInput = {
+      ...(filter.baseWhere || {}),
+    };
+
+    if (!filter.includeDeleted) {
+      where.deletedAt = null;
+    }
+    if (filter.roleId) {
+      where.roleId = filter.roleId;
+    }
+    if (filter.roleCode) {
+      where.role = {
+        is: {
+          code: filter.roleCode,
+        },
+      };
+    }
+    if (filter.status) {
+      where.status = filter.status;
+    }
+    if (filter.bprId) {
+      where.bprId = filter.bprId;
+    }
+    if (filter.branchId) {
+      where.branchId = filter.branchId;
+    }
+    if (filter.search && filter.search.trim().length > 0) {
+      const q = filter.search.trim();
+      where.OR = [
+        { username: { contains: q, mode: "insensitive" } },
+        { fullName: { contains: q, mode: "insensitive" } },
+        { email: { contains: q, mode: "insensitive" } },
+      ];
+    }
+
+    const [total, users] = await Promise.all([
+      db.user.count({ where }),
+      db.user.findMany({
+        where,
+        skip,
+        take: pageSize,
+        orderBy: { createdAt: "desc" },
+        include: {
+          role: { select: { id: true, code: true, name: true } },
+          bpr: { select: { id: true, code: true, name: true } },
+          branch: { select: { id: true, code: true, name: true } },
+        },
+      }),
+    ]);
+
+    const totalPages = Math.ceil(total / pageSize);
+
+    return {
+      data: users.map(toSafeUser),
+      pagination: {
+        page,
+        pageSize,
+        total,
+        totalPages,
+      },
+    };
   }
 }

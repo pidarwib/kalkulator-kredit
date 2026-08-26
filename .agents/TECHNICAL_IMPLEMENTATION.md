@@ -673,10 +673,11 @@ DELETE /users/:id
 
 Rules:
 
-- role assignment authorized;
-- scope assignment authorized;
-- soft delete;
-- audit sensitive action.
+- [x] role assignment authorized;
+- [x] scope assignment authorized;
+- [x] soft delete (USER_DELETE for Super Admin, self-delete blocked);
+- [x] audit sensitive action (USER_CREATE, USER_UPDATE, USER_ACTIVATE, USER_DEACTIVATE, USER_DELETE, etc.);
+- [x] pagination and filters for user listing.
 
 ---
 
