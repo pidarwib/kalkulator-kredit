@@ -735,6 +735,17 @@ BPR
 Branch
 ```
 
+### Acceptance Criteria
+
+- [x] `GET /api/v1/branches` implemented with `bprId`, `search`, `status`, pagination, and scope filtering (MASTER_VIEW).
+- [x] `POST /api/v1/branches` implemented with schema validation and unique code check per BPR (MASTER_CREATE).
+- [x] `GET /api/v1/branches/:id` implemented with scope checks (MASTER_VIEW).
+- [x] `PATCH /api/v1/branches/:id` implemented with scope boundary validation (MASTER_UPDATE).
+- [x] `DELETE /api/v1/branches/:id` implemented with soft delete (MASTER_DELETE).
+- [x] Admin can only view and manage branches in their assigned BPR.
+- [x] Structured audit logging for branch creations, updates, and deletions (`BRANCH_CREATE`, `BRANCH_UPDATE`, `BRANCH_DELETE`).
+- [x] Marketing users rejected with 403 Forbidden on all branch operations.
+
 ---
 
 ## TASK-020 — Payment Office Management
