@@ -695,9 +695,17 @@ GET /permissions
 POST /roles/:roleId/permissions
 ```
 
-### Security
+### Acceptance Criteria
 
-User tidak boleh menaikkan privilege dirinya sendiri.
+- [x] `GET /roles` implemented with permission counts and user counts (ROLE_VIEW).
+- [x] `POST /roles` implemented with validation and duplicate prevention (ROLE_CREATE).
+- [x] `PATCH /roles/:id` implemented (ROLE_UPDATE).
+- [x] `DELETE /roles/:id` implemented (ROLE_DELETE, protected system roles).
+- [x] `GET /permissions` implemented with module filter (PERMISSION_VIEW).
+- [x] `POST /roles/:roleId/permissions` implemented (ROLE_PERMISSION_ASSIGN).
+- [x] Strict privilege escalation protection enforced (Admin/Marketing rejected with 403 Forbidden).
+- [x] System roles (`SUPER_ADMIN`, `ADMIN`, `MARKETING`) protected against deletion or deactivation.
+- [x] Audit logs recorded for all role and permission mutations.
 
 ---
 
