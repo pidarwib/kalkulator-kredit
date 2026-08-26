@@ -797,6 +797,17 @@ Fee
 Calculation
 ```
 
+### Acceptance Criteria
+
+- [x] `GET /api/v1/products` implemented with `bprId`, `status`, `search`, and data scope filtering (MASTER_VIEW).
+- [x] `POST /api/v1/products` implemented with unique code per BPR and relation creation (MASTER_CREATE).
+- [x] `GET /api/v1/products/:id` implemented with child relation counts (creditParameters, feeParameters, insuranceRates, simulations, calculations) (MASTER_VIEW).
+- [x] `PATCH /api/v1/products/:id` implemented with lifecycle status and name/description updates (MASTER_UPDATE).
+- [x] `DELETE /api/v1/products/:id` implemented with soft delete (MASTER_DELETE).
+- [x] Admin can only view and manage products in their assigned BPR.
+- [x] Structured audit logging for product creations, updates, and deletions (`PRODUCT_CREATE`, `PRODUCT_UPDATE`, `PRODUCT_DELETE`).
+- [x] Marketing users rejected with 403 Forbidden on all product operations.
+
 ---
 
 ## TASK-022 — Credit Parameter Versioning
