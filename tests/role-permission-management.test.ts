@@ -218,7 +218,7 @@ describe("TASK-017: Role & Permission Management API & Privilege Security", () =
       });
 
       const res = await getRoleById(req, {
-        params: Promise.resolve({ id: superAdminRoleId }),
+        params: { id: superAdminRoleId },
       });
 
       expect(res.status).toBe(200);
@@ -235,7 +235,7 @@ describe("TASK-017: Role & Permission Management API & Privilege Security", () =
       });
 
       const res = await getRoleById(req, {
-        params: Promise.resolve({ id: fakeId }),
+        params: { id: fakeId },
       });
 
       expect(res.status).toBe(404);
@@ -268,7 +268,7 @@ describe("TASK-017: Role & Permission Management API & Privilege Security", () =
       });
 
       const res = await updateRoleById(req, {
-        params: Promise.resolve({ id: roleToUpdateId }),
+        params: { id: roleToUpdateId },
       });
 
       expect(res.status).toBe(200);
@@ -298,7 +298,7 @@ describe("TASK-017: Role & Permission Management API & Privilege Security", () =
       });
 
       const res = await updateRoleById(req, {
-        params: Promise.resolve({ id: superAdminRoleId }),
+        params: { id: superAdminRoleId },
       });
 
       expect(res.status).toBe(400);
@@ -327,7 +327,7 @@ describe("TASK-017: Role & Permission Management API & Privilege Security", () =
         });
 
         const res = await deleteRoleById(req, {
-          params: Promise.resolve({ id: roleId }),
+          params: { id: roleId },
         });
 
         expect(res.status).toBe(400);
@@ -343,7 +343,7 @@ describe("TASK-017: Role & Permission Management API & Privilege Security", () =
       });
 
       const res = await deleteRoleById(req, {
-        params: Promise.resolve({ id: roleToDeleteId }),
+        params: { id: roleToDeleteId },
       });
 
       expect(res.status).toBe(204);
@@ -429,7 +429,7 @@ describe("TASK-017: Role & Permission Management API & Privilege Security", () =
       );
 
       const res = await assignRolePermissions(req, {
-        params: Promise.resolve({ id: customRoleForPermId }),
+        params: { id: customRoleForPermId },
       });
 
       expect(res.status).toBe(200);
@@ -460,7 +460,7 @@ describe("TASK-017: Role & Permission Management API & Privilege Security", () =
       );
 
       const res = await assignRolePermissions(req, {
-        params: Promise.resolve({ id: superAdminRoleId }),
+        params: { id: superAdminRoleId },
       });
 
       expect(res.status).toBe(400);
@@ -482,7 +482,7 @@ describe("TASK-017: Role & Permission Management API & Privilege Security", () =
       );
 
       const res = await assignRolePermissions(req, {
-        params: Promise.resolve({ id: customRoleForPermId }),
+        params: { id: customRoleForPermId },
       });
 
       expect(res.status).toBe(403);

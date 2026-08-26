@@ -339,7 +339,7 @@ describe("TASK-016: User Management CRUD & Privilege Security", () => {
       });
 
       const res = await getUserById(req, {
-        params: Promise.resolve({ id: marketingId }),
+        params: { id: marketingId },
       });
 
       expect(res.status).toBe(200);
@@ -355,7 +355,7 @@ describe("TASK-016: User Management CRUD & Privilege Security", () => {
       });
 
       const res = await getUserById(req, {
-        params: Promise.resolve({ id: superAdminId }),
+        params: { id: superAdminId },
       });
 
       expect(res.status).toBe(403);
@@ -368,7 +368,7 @@ describe("TASK-016: User Management CRUD & Privilege Security", () => {
       });
 
       const res = await getUserById(req, {
-        params: Promise.resolve({ id: adminMagetanId }),
+        params: { id: adminMagetanId },
       });
 
       expect(res.status).toBe(403);
@@ -382,7 +382,7 @@ describe("TASK-016: User Management CRUD & Privilege Security", () => {
       });
 
       const res = await getUserById(req, {
-        params: Promise.resolve({ id: fakeId }),
+        params: { id: fakeId },
       });
 
       expect(res.status).toBe(404);
@@ -404,7 +404,7 @@ describe("TASK-016: User Management CRUD & Privilege Security", () => {
       });
 
       const res = await updateUserById(req, {
-        params: Promise.resolve({ id: marketingId }),
+        params: { id: marketingId },
       });
 
       expect(res.status).toBe(200);
@@ -441,7 +441,7 @@ describe("TASK-016: User Management CRUD & Privilege Security", () => {
       });
 
       const res = await updateUserById(req, {
-        params: Promise.resolve({ id: marketingId }),
+        params: { id: marketingId },
       });
 
       expect(res.status).toBe(403);
@@ -460,7 +460,7 @@ describe("TASK-016: User Management CRUD & Privilege Security", () => {
       });
 
       const res = await updateUserById(req, {
-        params: Promise.resolve({ id: adminMadiunId }),
+        params: { id: adminMadiunId },
       });
 
       expect(res.status).toBe(403);
@@ -489,7 +489,7 @@ describe("TASK-016: User Management CRUD & Privilege Security", () => {
       });
 
       const res = await deleteUserById(req, {
-        params: Promise.resolve({ id: superAdminId }),
+        params: { id: superAdminId },
       });
 
       expect(res.status).toBe(400);
@@ -504,7 +504,7 @@ describe("TASK-016: User Management CRUD & Privilege Security", () => {
       });
 
       const res = await deleteUserById(req, {
-        params: Promise.resolve({ id: userToDeleteId }),
+        params: { id: userToDeleteId },
       });
 
       expect(res.status).toBe(403);
@@ -517,7 +517,7 @@ describe("TASK-016: User Management CRUD & Privilege Security", () => {
       });
 
       const res = await deleteUserById(req, {
-        params: Promise.resolve({ id: userToDeleteId }),
+        params: { id: userToDeleteId },
       });
 
       expect(res.status).toBe(204);

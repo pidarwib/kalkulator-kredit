@@ -20,7 +20,7 @@ const assignPermissionsSchema = z.object({
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
   const auth = await requirePermission(request, "ROLE_PERMISSION_ASSIGN");
   if (!auth.allowed) {
@@ -28,7 +28,7 @@ export async function POST(
   }
 
   const caller = auth.user!;
-  const { id } = await params;
+  const { id } = params;
 
   const existingRole = await RoleRepository.findById(id);
   if (!existingRole) {

@@ -15,7 +15,7 @@ export const dynamic = "force-dynamic";
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
   // 1. Authenticate & Authorize
   const auth = await requirePermission(request, "SIMULATION_VIEW");
@@ -23,7 +23,7 @@ export async function GET(
     return auth.errorResponse!;
   }
 
-  const { id } = await params;
+  const { id } = params;
 
   // 2. Fetch resource
   const simulation = await db.simulation.findUnique({

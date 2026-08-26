@@ -31,7 +31,7 @@ const updateUserSchema = z.object({
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
   // 1. Authenticate & Authorize
   const auth = await requirePermission(request, "USER_VIEW");
@@ -40,7 +40,7 @@ export async function GET(
   }
 
   const caller = auth.user!;
-  const { id } = await params;
+  const { id } = params;
 
   // 2. Fetch target user
   const targetUser = await UserRepository.findById(id);
@@ -82,7 +82,7 @@ export async function GET(
  */
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
   // 1. Authenticate & Authorize
   const auth = await requirePermission(request, "USER_UPDATE");
@@ -91,7 +91,7 @@ export async function PATCH(
   }
 
   const caller = auth.user!;
-  const { id } = await params;
+  const { id } = params;
 
   // 2. Fetch existing user
   const existingUser = await UserRepository.findById(id);
@@ -300,7 +300,7 @@ export async function PATCH(
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
   // 1. Authenticate & Authorize
   const auth = await requirePermission(request, "USER_DELETE");
@@ -309,7 +309,7 @@ export async function DELETE(
   }
 
   const caller = auth.user!;
-  const { id } = await params;
+  const { id } = params;
 
   // 2. Prevent self-deletion
   if (caller.id === id) {

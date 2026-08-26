@@ -346,7 +346,7 @@ describe("TASK-015: Data Scope Middleware / Service", () => {
       );
 
       const res = await getSimulationById(req, {
-        params: Promise.resolve({ id: simulationMarketingBId }),
+        params: { id: simulationMarketingBId },
       });
 
       // Must be forbidden (403), NOT 200
@@ -366,7 +366,7 @@ describe("TASK-015: Data Scope Middleware / Service", () => {
       );
 
       const res = await getSimulationById(req, {
-        params: Promise.resolve({ id: simulationMarketingAId }),
+        params: { id: simulationMarketingAId },
       });
 
       expect(res.status).toBe(200);
@@ -385,7 +385,7 @@ describe("TASK-015: Data Scope Middleware / Service", () => {
       );
 
       const res = await getSimulationById(req, {
-        params: Promise.resolve({ id: simulationMarketingAId }),
+        params: { id: simulationMarketingAId },
       });
 
       expect(res.status).toBe(200);
@@ -403,7 +403,7 @@ describe("TASK-015: Data Scope Middleware / Service", () => {
       );
 
       const res = await getSimulationById(req, {
-        params: Promise.resolve({ id: simulationMagetanId }),
+        params: { id: simulationMagetanId },
       });
 
       expect(res.status).toBe(403);
@@ -424,7 +424,7 @@ describe("TASK-015: Data Scope Middleware / Service", () => {
           );
 
           const res = await getSimulationById(req, {
-            params: Promise.resolve({ id: simId }),
+        params: { id: simId },
           });
 
           expect(res.status).toBe(200);
