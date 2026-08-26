@@ -18,6 +18,7 @@ const envSchema = z.object({
     .string()
     .url("NEXT_PUBLIC_APP_URL must be a valid URL")
     .default("http://localhost:3000"),
+  DIRECT_URL: z.string().optional(),
   OPENROUTER_API_KEY: z.string().optional().default(""),
 });
 
