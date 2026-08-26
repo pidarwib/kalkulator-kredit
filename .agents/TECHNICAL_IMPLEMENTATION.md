@@ -524,32 +524,24 @@ ParameterVersion (v1.0)
 
 # 10. PHASE 4 — AUTHENTICATION
 
-## TASK-010 — User Model & Password Hashing
+## TASK-010 — User Model & Password Hashing `[x] DONE`
 
 ### Implement
 
-- User repository;
-- password hashing;
-- password verification;
-- status validation.
-
-Recommended:
-
-```text
-Argon2id
-```
-
-jika sesuai stack.
+- User repository (`UserRepository` dengan DTO `SafeUser`);
+- password hashing (`Argon2id` via `@node-rs/argon2` mengikuti standar OWASP);
+- password verification & strength policy (min 8 karakter, kombinasi huruf & angka);
+- status validation (`ACTIVE`, `INACTIVE`, `SUSPENDED`, soft-delete `deleted_at`).
 
 ### Acceptance Criteria
 
-- [ ] Plaintext password tidak disimpan.
-- [ ] Hash tidak dikirim frontend.
-- [ ] Inactive user ditolak.
+- [x] Plaintext password tidak disimpan (selalu di-hash dengan Argon2id sebelum disimpan ke database).
+- [x] Hash tidak dikirim frontend (`toSafeUser` / `SafeUser` DTO mengisolasi dan menghapus `passwordHash`).
+- [x] Inactive / suspended / soft-deleted user ditolak oleh `validateUserStatus`.
 
 ---
 
-## TASK-011 — Login API
+## TASK-011 — Login API `[x] DONE`
 
 Implement:
 
@@ -559,26 +551,26 @@ POST /api/v1/auth/login
 
 Mengikuti `API_SPECIFICATION.md`.
 
-### Tests
+### Acceptance Criteria
 
-```text
-Valid login
-Wrong password
-Unknown user
-Inactive user
-```
+- [x] Valid login menghasilkan 200 OK dengan payload user sanitized dan HTTP-only session cookie (`credit_calculator_session`).
+- [x] Wrong password menghasilkan 401 Unauthorized dengan generic error message (`INVALID_CREDENTIALS`).
+- [x] Unknown user menghasilkan 401 Unauthorized dengan generic error message (`INVALID_CREDENTIALS`).
+- [x] Inactive / suspended user menghasilkan 401 Unauthorized (`ACCOUNT_INACTIVE`).
+- [x] Missing / invalid input body menghasilkan 400 Bad Request (`VALIDATION_ERROR`).
+- [x] Audit log login tercatat di tabel `audit_logs`.
 
 ---
 
-## TASK-012 — Session / Authentication Middleware
+## TASK-012 — Session / Authentication Middleware `[x] DONE`
 
 Implement:
 
 ```text
-Authentication middleware
-Current user context
-Logout
-Session expiration
+Authentication middleware (src/middleware.ts & authenticateRequest helper)
+Current user context (GET /api/v1/auth/me)
+Logout (POST /api/v1/auth/logout)
+Session expiration & revocation (JWT 7d & active status check)
 ```
 
 Endpoints:
@@ -590,27 +582,33 @@ GET /api/v1/auth/me
 
 ### Acceptance Criteria
 
-Unauthenticated protected request:
-
-```text
-401
-```
+- [x] Unauthenticated protected request menghasilkan 401 Unauthorized (`UNAUTHORIZED`).
+- [x] `GET /api/v1/auth/me` mengembalikan user context lengkap, live permissions list, dan data scope (`OWN`, `BRANCH`, `ALL`).
+- [x] Mendukung autentikasi ganda: HTTP-only Cookie (`credit_calculator_session`) & `Authorization: Bearer <token>`.
+- [x] `POST /api/v1/auth/logout` mengembalikan 204 No Content, mencatat audit log logout, dan menghapus session cookie (`maxAge: 0`).
+- [x] Next.js Edge Middleware (`src/middleware.ts`) memproteksi endpoint `/api/v1/*` (kecuali public route `/api/v1/auth/login`).
 
 ---
 
 # 11. PHASE 5 — RBAC & DATA SCOPE
 
-## TASK-013 — Permission Model
+## TASK-013 — Permission Model `[x] DONE`
 
 Implement:
 
 ```text
-Role
-Permission
-RolePermission
+Role (SUPER_ADMIN, ADMIN, MARKETING)
+Permission (40 Canonical Permissions per ROLE_PERMISSION.md)
+RolePermission (86 Matrix Assignments)
+PermissionService (Evaluation helpers: hasPermission, hasAnyPermission, hasAllPermissions, isCanonicalPermission)
 ```
 
-Seed permission berdasarkan `ROLE_PERMISSION.md`.
+### Acceptance Criteria
+
+- [x] Tepat 40 canonical permissions terdaftar dan terstruktur per module (AUTH, USER, ROLE, CREDIT, SIMULATION, MASTER, CREDIT_PARAM, REPORT, AUDIT).
+- [x] 3 canonical roles (`SUPER_ADMIN`, `ADMIN`, `MARKETING`) terkonfigurasi dengan matriks hak akses resmi dari `ROLE_PERMISSION.md` §4.
+- [x] `PermissionService` menyediakan fungsi evaluasi permission server-side (`hasPermission`, `hasAnyPermission`, `hasAllPermissions`) dengan bypass otoritas penuh bagi `SUPER_ADMIN`.
+- [x] Tidak ada permission buatan atau tidak terdokumentasi yang ditambahkan (`isCanonicalPermission` memvalidasi integritas kode).
 
 ---
 
