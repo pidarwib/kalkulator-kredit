@@ -648,19 +648,14 @@ ADMIN → BPR / BRANCH
 MARKETING → OWN
 ```
 
-### Critical Test
+### Acceptance Criteria
 
-Marketing A:
-
-```text
-GET simulation Marketing B
-```
-
-harus:
-
-```text
-DENY
-```
+- [x] SUPER_ADMIN scope implemented (ALL records).
+- [x] ADMIN scope implemented (BPR / BRANCH isolation).
+- [x] MARKETING scope implemented (OWN records only).
+- [x] Critical Test Passed: Marketing A accessing Marketing B simulation = DENY (403 Forbidden / IDOR prevention).
+- [x] Cross-branch access denied for Branch Admins.
+- [x] Server-side Prisma query where clause generators implemented.
 
 ---
 
