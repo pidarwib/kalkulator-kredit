@@ -835,6 +835,17 @@ rounding
 
 Jangan overwrite historical parameter.
 
+### Acceptance Criteria
+
+- [x] `GET /api/v1/products/:id/credit-parameters` implemented to retrieve the currently active parameters (CREDIT_PARAMETER_VIEW).
+- [x] `GET /api/v1/products/:id/credit-parameters/versions` implemented to list all active and historical versions (CREDIT_PARAMETER_VIEW).
+- [x] `POST /api/v1/products/:id/credit-parameters/versions` implemented with transactional version lifecycle (CREDIT_PARAMETER_CREATE).
+- [x] Strict non-overwriting rule: previous active parameter is deactivated with `effectiveTo` stamped and never mutated.
+- [x] Parameter version metadata registered in `parameter_versions` table for traceability.
+- [x] Admin data scoping: Admin can only view and manage parameter versions for products in their assigned BPR.
+- [x] Structured audit logging for credit parameter version creation (`CREDIT_PARAMETER_CREATE`) capturing previous and new snapshots.
+- [x] Marketing users rejected with 403 Forbidden on all credit parameter operations.
+
 ---
 
 ## TASK-023 — Fee Parameter Management
