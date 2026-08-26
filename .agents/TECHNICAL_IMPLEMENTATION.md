@@ -493,42 +493,32 @@ Database
 
 ---
 
-## TASK-009 — Seed Core Master Data
+## TASK-009 — Seed Core Master Data `[x] DONE`
 
-Seed hanya data yang sudah disetujui.
-
-Contoh:
+Seed hanya data yang sudah disetujui dari pipeline validasi.
 
 ```text
-Roles
-Permissions
-Role-Permissions
-BPR
-Branch
-Payment Office
-Product
-Credit Parameters
-Fee Parameters
-Insurance Rates
+Roles (SUPER_ADMIN, ADMIN, MARKETING)
+Permissions (40 Canonical Permissions)
+Role-Permissions (86 Assignments)
+BPR (BPR Kota Madiun, BPR Bhakti Sumekar)
+Payment Office (29 Kantor Bayar Pos)
+Product (Kredit Pensiun Platinum)
+Credit Parameters (10.8% p.a., 90% DBR, 120 bln max, Rp200jt max)
+Fee Parameters (Flagging Rp38.000, Verifikasi Rp1.500.000, Admin 0.5%, Provisi 0.5%)
+Insurance Rates (300 Baris Matrix Usia 65-84 vs Tenor 1-15 thn)
+BusinessRuleVersion (BR-1.0)
+ParameterVersion (v1.0)
 ```
 
-### Critical Rule
+### Acceptance Criteria
 
-Jangan membuat:
-
-```text
-fake insurance rate
-estimated insurance rate
-AI-generated rate
-```
-
-Jika data resmi belum tersedia:
-
-```text
-BLOCKED
-```
-
-bukan diisi asumsi.
+- [x] Manifest verifikasi tervalidasi sebelum seeding (`manifest.json` APPROVED status & SHA256 checksum).
+- [x] 40 permissions dan 3 roles ter-seed sesuai `ROLE_PERMISSION.md`.
+- [x] 86 role-permission assignments terkonfigurasi.
+- [x] BPR, produk, parameter kredit, dan fee ter-seed tanpa halusinasi/tanpa aproksimasi nilai.
+- [x] 300 data tarif asuransi jiwa kredit ter-seed utuh dari master workbook BPR.
+- [x] Seeder bersifat idempoten (menggunakan upsert / versioned updates, aman dijalankan berulang).
 
 ---
 
