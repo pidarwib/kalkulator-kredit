@@ -711,9 +711,15 @@ POST /roles/:roleId/permissions
 
 # 12. PHASE 6 — ORGANIZATION MASTER DATA
 
-## TASK-018 — BPR Management
+### Acceptance Criteria
 
-Implement BPR CRUD sesuai API.
+- [x] `GET /api/v1/bprs` implemented with search, status filter, and data scope filtering (MASTER_VIEW).
+- [x] `POST /api/v1/bprs` implemented with schema validation and unique code check (MASTER_CREATE, Super Admin only).
+- [x] `GET /api/v1/bprs/:id` implemented with scope checks (MASTER_VIEW).
+- [x] `PATCH /api/v1/bprs/:id` implemented with scope boundary validation (MASTER_UPDATE).
+- [x] `DELETE /api/v1/bprs/:id` implemented with soft delete (MASTER_DELETE, Super Admin only).
+- [x] Structured audit logging for BPR creations, updates, and deletions (`BPR_CREATE`, `BPR_UPDATE`, `BPR_DELETE`).
+- [x] Marketing users rejected with 403 Forbidden on all BPR operations.
 
 ---
 
