@@ -760,7 +760,16 @@ Branch
 Payment Office
 ```
 
-Validasi relationship wajib dilakukan backend.
+### Acceptance Criteria
+
+- [x] `GET /api/v1/payment-offices` implemented with `bprId`, `branchId`, `type`, `status`, `search`, pagination, and scope filtering (MASTER_VIEW).
+- [x] `POST /api/v1/payment-offices` implemented with hierarchical relationship validation (`BPR → Branch → Payment Office`) (MASTER_CREATE).
+- [x] `GET /api/v1/payment-offices/:id` implemented with relations and scope validation (MASTER_VIEW).
+- [x] `PATCH /api/v1/payment-offices/:id` implemented with affiliation validation when moving branches (MASTER_UPDATE).
+- [x] `DELETE /api/v1/payment-offices/:id` implemented with soft delete (MASTER_DELETE).
+- [x] Strict backend validation preventing assignment of branches to unaffiliated BPRs.
+- [x] Structured audit logging for payment office creations, updates, and deletions (`PAYMENT_OFFICE_CREATE`, `PAYMENT_OFFICE_UPDATE`, `PAYMENT_OFFICE_DELETE`).
+- [x] Marketing users rejected with 403 Forbidden on all payment office operations.
 
 ---
 
