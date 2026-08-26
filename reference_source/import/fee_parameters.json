@@ -1,0 +1,12 @@
+[
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "adminRate": 0.005,
+    "provisionRate": 0.005,
+    "verificationFee": 1500000,
+    "flaggingFee": 38000,
+    "frontingRate": 0.06,
+    "reserveRate": 0.215,
+    "version": "v1.0"
+  }
+]

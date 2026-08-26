@@ -1,0 +1,2102 @@
+[
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 65,
+    "tenorYears": 1,
+    "premiumRate": 0.0049,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 65,
+    "tenorYears": 2,
+    "premiumRate": 0.0098,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 65,
+    "tenorYears": 3,
+    "premiumRate": 0.0147,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 65,
+    "tenorYears": 4,
+    "premiumRate": 0.0195,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 65,
+    "tenorYears": 5,
+    "premiumRate": 0.024399999999999998,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 65,
+    "tenorYears": 6,
+    "premiumRate": 0.050800000000000005,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 65,
+    "tenorYears": 7,
+    "premiumRate": 0.0615,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 65,
+    "tenorYears": 8,
+    "premiumRate": 0.0743,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 65,
+    "tenorYears": 9,
+    "premiumRate": 0.0799,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 65,
+    "tenorYears": 10,
+    "premiumRate": 0.09230000000000001,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 65,
+    "tenorYears": 11,
+    "premiumRate": 0.1662,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 65,
+    "tenorYears": 12,
+    "premiumRate": 0.1759,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 65,
+    "tenorYears": 13,
+    "premiumRate": 0.1838,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 65,
+    "tenorYears": 14,
+    "premiumRate": 0.189,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 65,
+    "tenorYears": 15,
+    "premiumRate": 0.19199999999999998,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 66,
+    "tenorYears": 1,
+    "premiumRate": 0.0049,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 66,
+    "tenorYears": 2,
+    "premiumRate": 0.0098,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 66,
+    "tenorYears": 3,
+    "premiumRate": 0.0147,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 66,
+    "tenorYears": 4,
+    "premiumRate": 0.0195,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 66,
+    "tenorYears": 5,
+    "premiumRate": 0.0459,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 66,
+    "tenorYears": 6,
+    "premiumRate": 0.0567,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 66,
+    "tenorYears": 7,
+    "premiumRate": 0.0694,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 66,
+    "tenorYears": 8,
+    "premiumRate": 0.075,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 66,
+    "tenorYears": 9,
+    "premiumRate": 0.0874,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 66,
+    "tenorYears": 10,
+    "premiumRate": 0.1662,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 66,
+    "tenorYears": 11,
+    "premiumRate": 0.1774,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 66,
+    "tenorYears": 12,
+    "premiumRate": 0.1838,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 66,
+    "tenorYears": 13,
+    "premiumRate": 0.1838,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 66,
+    "tenorYears": 14,
+    "premiumRate": 0.19019999999999998,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 66,
+    "tenorYears": 15,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 67,
+    "tenorYears": 1,
+    "premiumRate": 0.0049,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 67,
+    "tenorYears": 2,
+    "premiumRate": 0.0098,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 67,
+    "tenorYears": 3,
+    "premiumRate": 0.0147,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 67,
+    "tenorYears": 4,
+    "premiumRate": 0.041100000000000005,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 67,
+    "tenorYears": 5,
+    "premiumRate": 0.051800000000000006,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 67,
+    "tenorYears": 6,
+    "premiumRate": 0.0645,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 67,
+    "tenorYears": 7,
+    "premiumRate": 0.0702,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 67,
+    "tenorYears": 8,
+    "premiumRate": 0.0825,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 67,
+    "tenorYears": 9,
+    "premiumRate": 0.1699,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 67,
+    "tenorYears": 10,
+    "premiumRate": 0.1737,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 67,
+    "tenorYears": 11,
+    "premiumRate": 0.1774,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 67,
+    "tenorYears": 12,
+    "premiumRate": 0.1838,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 67,
+    "tenorYears": 13,
+    "premiumRate": 0.1812,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 67,
+    "tenorYears": 14,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 67,
+    "tenorYears": 15,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 68,
+    "tenorYears": 1,
+    "premiumRate": 0.0049,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 68,
+    "tenorYears": 2,
+    "premiumRate": 0.0098,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 68,
+    "tenorYears": 3,
+    "premiumRate": 0.0362,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 68,
+    "tenorYears": 4,
+    "premiumRate": 0.046900000000000004,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 68,
+    "tenorYears": 5,
+    "premiumRate": 0.0597,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 68,
+    "tenorYears": 6,
+    "premiumRate": 0.0653,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 68,
+    "tenorYears": 7,
+    "premiumRate": 0.0777,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 68,
+    "tenorYears": 8,
+    "premiumRate": 0.1662,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 68,
+    "tenorYears": 9,
+    "premiumRate": 0.1714,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 68,
+    "tenorYears": 10,
+    "premiumRate": 0.1774,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 68,
+    "tenorYears": 11,
+    "premiumRate": 0.18489999999999998,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 68,
+    "tenorYears": 12,
+    "premiumRate": 0.18869999999999998,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 68,
+    "tenorYears": 13,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 68,
+    "tenorYears": 14,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 68,
+    "tenorYears": 15,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 69,
+    "tenorYears": 1,
+    "premiumRate": 0.0049,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 69,
+    "tenorYears": 2,
+    "premiumRate": 0.0313,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 69,
+    "tenorYears": 3,
+    "premiumRate": 0.042,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 69,
+    "tenorYears": 4,
+    "premiumRate": 0.0548,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 69,
+    "tenorYears": 5,
+    "premiumRate": 0.0604,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 69,
+    "tenorYears": 6,
+    "premiumRate": 0.0728,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 69,
+    "tenorYears": 7,
+    "premiumRate": 0.1692,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 69,
+    "tenorYears": 8,
+    "premiumRate": 0.1737,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 69,
+    "tenorYears": 9,
+    "premiumRate": 0.1737,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 69,
+    "tenorYears": 10,
+    "premiumRate": 0.1812,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 69,
+    "tenorYears": 11,
+    "premiumRate": 0.18639999999999998,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 69,
+    "tenorYears": 12,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 69,
+    "tenorYears": 13,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 69,
+    "tenorYears": 14,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 69,
+    "tenorYears": 15,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 70,
+    "tenorYears": 1,
+    "premiumRate": 0.0264,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 70,
+    "tenorYears": 2,
+    "premiumRate": 0.0327,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 70,
+    "tenorYears": 3,
+    "premiumRate": 0.0499,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 70,
+    "tenorYears": 4,
+    "premiumRate": 0.0555,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 70,
+    "tenorYears": 5,
+    "premiumRate": 0.0679,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 70,
+    "tenorYears": 6,
+    "premiumRate": 0.16169999999999998,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 70,
+    "tenorYears": 7,
+    "premiumRate": 0.1714,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 70,
+    "tenorYears": 8,
+    "premiumRate": 0.1759,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 70,
+    "tenorYears": 9,
+    "premiumRate": 0.1774,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 70,
+    "tenorYears": 10,
+    "premiumRate": 0.18339999999999998,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 70,
+    "tenorYears": 11,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 70,
+    "tenorYears": 12,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 70,
+    "tenorYears": 13,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 70,
+    "tenorYears": 14,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 70,
+    "tenorYears": 15,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 71,
+    "tenorYears": 1,
+    "premiumRate": 0.0264,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 71,
+    "tenorYears": 2,
+    "premiumRate": 0.0327,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 71,
+    "tenorYears": 3,
+    "premiumRate": 0.0499,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 71,
+    "tenorYears": 4,
+    "premiumRate": 0.0555,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 71,
+    "tenorYears": 5,
+    "premiumRate": 0.16169999999999998,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 71,
+    "tenorYears": 6,
+    "premiumRate": 0.1639,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 71,
+    "tenorYears": 7,
+    "premiumRate": 0.1729,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 71,
+    "tenorYears": 8,
+    "premiumRate": 0.1767,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 71,
+    "tenorYears": 9,
+    "premiumRate": 0.17889999999999998,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 71,
+    "tenorYears": 10,
+    "premiumRate": 0.195,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 71,
+    "tenorYears": 11,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 71,
+    "tenorYears": 12,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 71,
+    "tenorYears": 13,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 71,
+    "tenorYears": 14,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 71,
+    "tenorYears": 15,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 72,
+    "tenorYears": 1,
+    "premiumRate": 0.0264,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 72,
+    "tenorYears": 2,
+    "premiumRate": 0.0327,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 72,
+    "tenorYears": 3,
+    "premiumRate": 0.0499,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 72,
+    "tenorYears": 4,
+    "premiumRate": 0.13879999999999998,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 72,
+    "tenorYears": 5,
+    "premiumRate": 0.1662,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 72,
+    "tenorYears": 6,
+    "premiumRate": 0.1684,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 72,
+    "tenorYears": 7,
+    "premiumRate": 0.1737,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 72,
+    "tenorYears": 8,
+    "premiumRate": 0.1774,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 72,
+    "tenorYears": 9,
+    "premiumRate": 0.1875,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 72,
+    "tenorYears": 10,
+    "premiumRate": 0.21,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 72,
+    "tenorYears": 11,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 72,
+    "tenorYears": 12,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 72,
+    "tenorYears": 13,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 72,
+    "tenorYears": 14,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 72,
+    "tenorYears": 15,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 73,
+    "tenorYears": 1,
+    "premiumRate": 0.0264,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 73,
+    "tenorYears": 2,
+    "premiumRate": 0.0327,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 73,
+    "tenorYears": 3,
+    "premiumRate": 0.1185,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 73,
+    "tenorYears": 4,
+    "premiumRate": 0.1482,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 73,
+    "tenorYears": 5,
+    "premiumRate": 0.1684,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 73,
+    "tenorYears": 6,
+    "premiumRate": 0.1707,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 73,
+    "tenorYears": 7,
+    "premiumRate": 0.1752,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 73,
+    "tenorYears": 8,
+    "premiumRate": 0.1875,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 73,
+    "tenorYears": 9,
+    "premiumRate": 0.195,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 73,
+    "tenorYears": 10,
+    "premiumRate": 0.225,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 73,
+    "tenorYears": 11,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 73,
+    "tenorYears": 12,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 73,
+    "tenorYears": 13,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 73,
+    "tenorYears": 14,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 73,
+    "tenorYears": 15,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 74,
+    "tenorYears": 1,
+    "premiumRate": 0.0264,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 74,
+    "tenorYears": 2,
+    "premiumRate": 0.0327,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 74,
+    "tenorYears": 3,
+    "premiumRate": 0.1215,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 74,
+    "tenorYears": 4,
+    "premiumRate": 0.1515,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 74,
+    "tenorYears": 5,
+    "premiumRate": 0.1684,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 74,
+    "tenorYears": 6,
+    "premiumRate": 0.1707,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 74,
+    "tenorYears": 7,
+    "premiumRate": 0.1875,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 74,
+    "tenorYears": 8,
+    "premiumRate": 0.195,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 74,
+    "tenorYears": 9,
+    "premiumRate": 0.21,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 74,
+    "tenorYears": 10,
+    "premiumRate": 0.24,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 74,
+    "tenorYears": 11,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 74,
+    "tenorYears": 12,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 74,
+    "tenorYears": 13,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 74,
+    "tenorYears": 14,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 74,
+    "tenorYears": 15,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 75,
+    "tenorYears": 1,
+    "premiumRate": 0.0488,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 75,
+    "tenorYears": 2,
+    "premiumRate": 0.072,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 75,
+    "tenorYears": 3,
+    "premiumRate": 0.1253,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 75,
+    "tenorYears": 4,
+    "premiumRate": 0.1608,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 75,
+    "tenorYears": 5,
+    "premiumRate": 0.1707,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 75,
+    "tenorYears": 6,
+    "premiumRate": 0.1875,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 75,
+    "tenorYears": 7,
+    "premiumRate": 0.195,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 75,
+    "tenorYears": 8,
+    "premiumRate": 0.21,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 75,
+    "tenorYears": 9,
+    "premiumRate": 0.2175,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 75,
+    "tenorYears": 10,
+    "premiumRate": 0.255,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 75,
+    "tenorYears": 11,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 75,
+    "tenorYears": 12,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 75,
+    "tenorYears": 13,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 75,
+    "tenorYears": 14,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 75,
+    "tenorYears": 15,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 76,
+    "tenorYears": 1,
+    "premiumRate": 0.0488,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 76,
+    "tenorYears": 2,
+    "premiumRate": 0.0825,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 76,
+    "tenorYears": 3,
+    "premiumRate": 0.1253,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 76,
+    "tenorYears": 4,
+    "premiumRate": 0.1608,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 76,
+    "tenorYears": 5,
+    "premiumRate": 0.1875,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 76,
+    "tenorYears": 6,
+    "premiumRate": 0.195,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 76,
+    "tenorYears": 7,
+    "premiumRate": 0.21,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 76,
+    "tenorYears": 8,
+    "premiumRate": 0.2175,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 76,
+    "tenorYears": 9,
+    "premiumRate": 0.24,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 76,
+    "tenorYears": 10,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 76,
+    "tenorYears": 11,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 76,
+    "tenorYears": 12,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 76,
+    "tenorYears": 13,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 76,
+    "tenorYears": 14,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 76,
+    "tenorYears": 15,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 77,
+    "tenorYears": 1,
+    "premiumRate": 0.0488,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 77,
+    "tenorYears": 2,
+    "premiumRate": 0.0825,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 77,
+    "tenorYears": 3,
+    "premiumRate": 0.1253,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 77,
+    "tenorYears": 4,
+    "premiumRate": 0.1875,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 77,
+    "tenorYears": 5,
+    "premiumRate": 0.195,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 77,
+    "tenorYears": 6,
+    "premiumRate": 0.21,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 77,
+    "tenorYears": 7,
+    "premiumRate": 0.2175,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 77,
+    "tenorYears": 8,
+    "premiumRate": 0.2325,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 77,
+    "tenorYears": 9,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 77,
+    "tenorYears": 10,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 77,
+    "tenorYears": 11,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 77,
+    "tenorYears": 12,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 77,
+    "tenorYears": 13,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 77,
+    "tenorYears": 14,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 77,
+    "tenorYears": 15,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 78,
+    "tenorYears": 1,
+    "premiumRate": 0.0488,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 78,
+    "tenorYears": 2,
+    "premiumRate": 0.0825,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 78,
+    "tenorYears": 3,
+    "premiumRate": 0.1875,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 78,
+    "tenorYears": 4,
+    "premiumRate": 0.195,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 78,
+    "tenorYears": 5,
+    "premiumRate": 0.21,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 78,
+    "tenorYears": 6,
+    "premiumRate": 0.2175,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 78,
+    "tenorYears": 7,
+    "premiumRate": 0.225,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 78,
+    "tenorYears": 8,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 78,
+    "tenorYears": 9,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 78,
+    "tenorYears": 10,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 78,
+    "tenorYears": 11,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 78,
+    "tenorYears": 12,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 78,
+    "tenorYears": 13,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 78,
+    "tenorYears": 14,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 78,
+    "tenorYears": 15,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 79,
+    "tenorYears": 1,
+    "premiumRate": 0.0488,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 79,
+    "tenorYears": 2,
+    "premiumRate": 0.105,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 79,
+    "tenorYears": 3,
+    "premiumRate": 0.195,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 79,
+    "tenorYears": 4,
+    "premiumRate": 0.21,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 79,
+    "tenorYears": 5,
+    "premiumRate": 0.2175,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 79,
+    "tenorYears": 6,
+    "premiumRate": 0.225,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 79,
+    "tenorYears": 7,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 79,
+    "tenorYears": 8,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 79,
+    "tenorYears": 9,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 79,
+    "tenorYears": 10,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 79,
+    "tenorYears": 11,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 79,
+    "tenorYears": 12,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 79,
+    "tenorYears": 13,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 79,
+    "tenorYears": 14,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 79,
+    "tenorYears": 15,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 80,
+    "tenorYears": 1,
+    "premiumRate": 0.0803,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 80,
+    "tenorYears": 2,
+    "premiumRate": 0.12,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 80,
+    "tenorYears": 3,
+    "premiumRate": 0.21,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 80,
+    "tenorYears": 4,
+    "premiumRate": 0.2175,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 80,
+    "tenorYears": 5,
+    "premiumRate": 0.225,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 80,
+    "tenorYears": 6,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 80,
+    "tenorYears": 7,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 80,
+    "tenorYears": 8,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 80,
+    "tenorYears": 9,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 80,
+    "tenorYears": 10,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 80,
+    "tenorYears": 11,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 80,
+    "tenorYears": 12,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 80,
+    "tenorYears": 13,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 80,
+    "tenorYears": 14,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 80,
+    "tenorYears": 15,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 81,
+    "tenorYears": 1,
+    "premiumRate": 0.0927,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 81,
+    "tenorYears": 2,
+    "premiumRate": 0.135,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 81,
+    "tenorYears": 3,
+    "premiumRate": 0.2175,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 81,
+    "tenorYears": 4,
+    "premiumRate": 0.225,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 81,
+    "tenorYears": 5,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 81,
+    "tenorYears": 6,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 81,
+    "tenorYears": 7,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 81,
+    "tenorYears": 8,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 81,
+    "tenorYears": 9,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 81,
+    "tenorYears": 10,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 81,
+    "tenorYears": 11,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 81,
+    "tenorYears": 12,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 81,
+    "tenorYears": 13,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 81,
+    "tenorYears": 14,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 81,
+    "tenorYears": 15,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 82,
+    "tenorYears": 1,
+    "premiumRate": 0.1107,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 82,
+    "tenorYears": 2,
+    "premiumRate": 0.165,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 82,
+    "tenorYears": 3,
+    "premiumRate": 0.225,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 82,
+    "tenorYears": 4,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 82,
+    "tenorYears": 5,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 82,
+    "tenorYears": 6,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 82,
+    "tenorYears": 7,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 82,
+    "tenorYears": 8,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 82,
+    "tenorYears": 9,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 82,
+    "tenorYears": 10,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 82,
+    "tenorYears": 11,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 82,
+    "tenorYears": 12,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 82,
+    "tenorYears": 13,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 82,
+    "tenorYears": 14,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 82,
+    "tenorYears": 15,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 83,
+    "tenorYears": 1,
+    "premiumRate": 0.1253,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 83,
+    "tenorYears": 2,
+    "premiumRate": 0.18,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 83,
+    "tenorYears": 3,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 83,
+    "tenorYears": 4,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 83,
+    "tenorYears": 5,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 83,
+    "tenorYears": 6,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 83,
+    "tenorYears": 7,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 83,
+    "tenorYears": 8,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 83,
+    "tenorYears": 9,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 83,
+    "tenorYears": 10,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 83,
+    "tenorYears": 11,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 83,
+    "tenorYears": 12,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 83,
+    "tenorYears": 13,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 83,
+    "tenorYears": 14,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 83,
+    "tenorYears": 15,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 84,
+    "tenorYears": 1,
+    "premiumRate": 0.1369,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 84,
+    "tenorYears": 2,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 84,
+    "tenorYears": 3,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 84,
+    "tenorYears": 4,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 84,
+    "tenorYears": 5,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 84,
+    "tenorYears": 6,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 84,
+    "tenorYears": 7,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 84,
+    "tenorYears": 8,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 84,
+    "tenorYears": 9,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 84,
+    "tenorYears": 10,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 84,
+    "tenorYears": 11,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 84,
+    "tenorYears": 12,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 84,
+    "tenorYears": 13,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 84,
+    "tenorYears": 14,
+    "premiumRate": 0,
+    "version": "v1.0"
+  },
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "age": 84,
+    "tenorYears": 15,
+    "premiumRate": 0,
+    "version": "v1.0"
+  }
+]

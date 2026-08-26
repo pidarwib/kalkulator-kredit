@@ -1,0 +1,15 @@
+{
+  "sourceFileName": "KALKULATOR KREDIT.xlsx",
+  "documentHash": "ef0589fbafc22afbb1ee21556d0de615cf1e8df3092216622ad015f5a4fc4a7d",
+  "pipelineVersion": "1.0.0",
+  "extractedAt": "2026-08-26T07:34:47.485Z",
+  "validationStatus": "APPROVED",
+  "stats": {
+    "bprCount": 2,
+    "productCount": 1,
+    "creditParameterCount": 1,
+    "feeParameterCount": 1,
+    "paymentOfficeCount": 29,
+    "insuranceRateCount": 300
+  }
+}

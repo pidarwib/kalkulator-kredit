@@ -1,0 +1,205 @@
+[
+  {
+    "code": "POS_BANYUWANGI",
+    "name": "Kantor Pos BANYUWANGI (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_JEMBER",
+    "name": "Kantor Pos JEMBER (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_BLITAR",
+    "name": "Kantor Pos BLITAR (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_KEDIRI",
+    "name": "Kantor Pos KEDIRI (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_NGANJUK",
+    "name": "Kantor Pos NGANJUK (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_TULUNGAGUNG",
+    "name": "Kantor Pos TULUNGAGUNG (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_BANGKALAN",
+    "name": "Kantor Pos BANGKALAN (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_PAMEKASAN",
+    "name": "Kantor Pos PAMEKASAN (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_SUMENEP",
+    "name": "Kantor Pos SUMENEP (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_LUMAJANG",
+    "name": "Kantor Pos LUMAJANG (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_MALANG",
+    "name": "Kantor Pos MALANG (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_PASURUAN",
+    "name": "Kantor Pos PASURUAN (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_PROBOLINGGO",
+    "name": "Kantor Pos PROBOLINGGO (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_BOJONEGORO",
+    "name": "Kantor Pos BOJONEGORO (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_JOMBANG",
+    "name": "Kantor Pos JOMBANG (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_LAMONGAN",
+    "name": "Kantor Pos LAMONGAN (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_SIDOARJO",
+    "name": "Kantor Pos SIDOARJO (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_TUBAN",
+    "name": "Kantor Pos TUBAN (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_DENPASAR",
+    "name": "Kantor Pos DENPASAR (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_GIANYAR",
+    "name": "Kantor Pos GIANYAR (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_SINGARAJA",
+    "name": "Kantor Pos SINGARAJA (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_TABANAN",
+    "name": "Kantor Pos TABANAN (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_KUPANG",
+    "name": "Kantor Pos KUPANG (REG V)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_BALIKPAPAN",
+    "name": "Kantor Pos BALIKPAPAN (REG VI)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_MAKASAR",
+    "name": "Kantor Pos MAKASAR (REG VI)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_PALU",
+    "name": "Kantor Pos PALU (REG VI)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_KENDARI",
+    "name": "Kantor Pos KENDARI (REG VI)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_MANADO",
+    "name": "Kantor Pos MANADO (REG VI)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  },
+  {
+    "code": "POS_AMBOINA",
+    "name": "Kantor Pos AMBOINA (REG VI)",
+    "bprCode": "BPR_KOTA_MADIUN",
+    "type": "POS",
+    "status": "ACTIVE"
+  }
+]

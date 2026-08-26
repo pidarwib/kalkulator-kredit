@@ -433,7 +433,7 @@ AuditLogs
 
 # 9. PHASE 3 — SEED & REFERENCE SOURCE
 
-## TASK-007 — Reference Source Directory
+## TASK-007 — Reference Source Directory `[x] DONE`
 
 ### Objective
 
@@ -451,13 +451,16 @@ reference_source/
 
 File Excel resmi ditempatkan di sini sesuai workflow project.
 
-### Rules
+### Acceptance Criteria
 
-AI tidak boleh mengarang nilai dari Excel.
+- [x] Struktur folder `reference_source/` (original, validated, import) tersedia.
+- [x] `reference_source/README.md` mendokumentasikan tata kelola data referensi, prinsip immutability, dan larangan halusinasi nilai finansial.
+- [x] File workbook resmi `KALKULATOR KREDIT.xlsx` tersimpan di `reference_source/original/`.
+- [x] AI tidak mengarang nilai dari Excel.
 
 ---
 
-## TASK-008 — Reference Data Import Pipeline
+## TASK-008 — Reference Data Import Pipeline `[x] DONE`
 
 ### Objective
 
@@ -481,12 +484,12 @@ Database
 
 ### Acceptance Criteria
 
-- [ ] File structure divalidasi.
-- [ ] Duplicate ditolak.
-- [ ] Missing value ditolak.
-- [ ] Invalid rate ditolak.
-- [ ] Import dapat direproduksi.
-- [ ] Import memiliki audit/version context.
+- [x] File structure divalidasi (sheet required: `Ref`, `Asuransi`, `Simulasi BPR`).
+- [x] Duplicate ditolak (validasi composite key: kode BPR, kode produk, kombinasi usia-tenor tarif asuransi).
+- [x] Missing value ditolak (validasi field required, relasi antar-entitas, dan pencegahan `NaN`).
+- [x] Invalid rate ditolak (pengecekan range suku bunga tahunan/bulanan, rasio DBR, tarif premi asuransi `0 <= rate <= 1`).
+- [x] Import dapat direproduksi (pipeline deterministik menghasilkan file JSON terstruktur di `reference_source/import/`).
+- [x] Import memiliki audit/version context (`manifest.json` menyimpan SHA256 document hash, timestamp ekstraksi, versi pipeline, dan ringkasan statistik baris).
 
 ---
 

@@ -1,0 +1,15 @@
+[
+  {
+    "productCode": "PLATINUM_MADIUN",
+    "maximumAgeYears": 75,
+    "maximumAgeMonths": 0,
+    "maximumTenorMonths": 120,
+    "maximumPrincipal": 200000000,
+    "maximumDbr": 0.9,
+    "flatAnnualRate": 0.108,
+    "flatMonthlyRate": 0.009,
+    "principalRoundingIncrement": 100000,
+    "installmentDeductionPeriods": 2,
+    "version": "v1.0"
+  }
+]
