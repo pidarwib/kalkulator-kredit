@@ -1,11 +1,455 @@
 // Prisma schema file for Credit Calculator BPR
-// Database: PostgreSQL
+// Database: PostgreSQL (Supabase)
+// Source of truth: .agents/DATABASE.md
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// -----------------------------------------------------------------------------
+// 1. AUTHENTICATION & RBAC
+// -----------------------------------------------------------------------------
+
+model User {
+  id           String    @id @default(uuid())
+  username     String    @unique
+  email        String?   @unique
+  passwordHash String    @map("password_hash")
+  fullName     String    @map("full_name")
+  phone        String?
+  roleId       String    @map("role_id")
+  bprId        String?   @map("bpr_id")
+  branchId     String?   @map("branch_id")
+  status       String    @default("ACTIVE") // ACTIVE, INACTIVE, SUSPENDED
+  lastLoginAt  DateTime? @map("last_login_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at")
+
+  role        Role         @relation(fields: [roleId], references: [id])
+  bpr         Bpr?         @relation(fields: [bprId], references: [id])
+  branch      Branch?      @relation(fields: [branchId], references: [id])
+  simulations Simulation[]
+  auditLogs   AuditLog[]
+
+  @@index([roleId])
+  @@index([bprId])
+  @@index([branchId])
+  @@map("users")
+}
+
+model Role {
+  id          String   @id @default(uuid())
+  code        String   @unique // SUPER_ADMIN, ADMIN, MARKETING
+  name        String
+  description String?
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  users           User[]
+  rolePermissions RolePermission[]
+
+  @@map("roles")
+}
+
+model Permission {
+  id          String   @id @default(uuid())
+  code        String   @unique // Canonical permissions from ROLE_PERMISSION.md
+  name        String
+  description String?
+  module      String
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  rolePermissions RolePermission[]
+
+  @@map("permissions")
+}
+
+model RolePermission {
+  id           String   @id @default(uuid())
+  roleId       String   @map("role_id")
+  permissionId String   @map("permission_id")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+  @@index([roleId])
+  @@index([permissionId])
+  @@map("role_permissions")
+}
+
+// -----------------------------------------------------------------------------
+// 2. ORGANIZATION STRUCTURE
+// -----------------------------------------------------------------------------
+
+model Bpr {
+  id        String    @id @default(uuid())
+  code      String    @unique
+  name      String
+  status    String    @default("ACTIVE")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  branches       Branch[]
+  paymentOffices PaymentOffice[]
+  products       Product[]
+  users          User[]
+  simulations    Simulation[]
+  calculations   Calculation[]
+
+  @@map("bprs")
+}
+
+model Branch {
+  id        String    @id @default(uuid())
+  bprId     String    @map("bpr_id")
+  code      String
+  name      String
+  address   String?
+  status    String    @default("ACTIVE")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  bpr            Bpr             @relation(fields: [bprId], references: [id])
+  paymentOffices PaymentOffice[]
+  users          User[]
+  simulations    Simulation[]
+
+  @@unique([bprId, code])
+  @@index([bprId])
+  @@map("branches")
+}
+
+model PaymentOffice {
+  id        String    @id @default(uuid())
+  bprId     String    @map("bpr_id")
+  branchId  String?   @map("branch_id")
+  code      String
+  name      String
+  type      String    @default("POS") // POS, BANK, OTHER
+  status    String    @default("ACTIVE")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  bpr           Bpr            @relation(fields: [bprId], references: [id])
+  branch        Branch?        @relation(fields: [branchId], references: [id])
+  feeParameters FeeParameter[]
+  simulations   Simulation[]
+  calculations  Calculation[]
+
+  @@unique([bprId, code])
+  @@index([bprId])
+  @@index([branchId])
+  @@map("payment_offices")
+}
+
+// -----------------------------------------------------------------------------
+// 3. PRODUCT & FINANCIAL PARAMETERS
+// -----------------------------------------------------------------------------
+
+model Product {
+  id          String    @id @default(uuid())
+  bprId       String    @map("bpr_id")
+  code        String
+  name        String
+  description String?
+  status      String    @default("ACTIVE")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  bpr               Bpr                @relation(fields: [bprId], references: [id])
+  creditParameters  CreditParameter[]
+  feeParameters     FeeParameter[]
+  insuranceRates    InsuranceRate[]
+  parameterVersions ParameterVersion[]
+  simulations       Simulation[]
+  calculations      Calculation[]
+
+  @@unique([bprId, code])
+  @@index([bprId])
+  @@map("products")
+}
+
+model CreditParameter {
+  id                          String    @id @default(uuid())
+  productId                   String    @map("product_id")
+  maximumAgeYears             Int       @map("maximum_age_years")
+  maximumAgeMonths            Int       @default(0) @map("maximum_age_months")
+  maximumTenorMonths          Int       @map("maximum_tenor_months")
+  maximumPrincipal            Decimal   @map("maximum_principal") @db.Decimal(15, 2)
+  maximumDbr                  Decimal   @map("maximum_dbr") @db.Decimal(5, 4) // e.g. 0.9000 (90%)
+  flatAnnualRate              Decimal   @map("flat_annual_rate") @db.Decimal(6, 5) // e.g. 0.10800 (10.8%)
+  flatMonthlyRate             Decimal   @map("flat_monthly_rate") @db.Decimal(7, 6) // e.g. 0.009000 (0.9%)
+  principalRoundingIncrement  Decimal   @default(100000) @map("principal_rounding_increment") @db.Decimal(15, 2)
+  installmentDeductionPeriods Int       @default(2) @map("installment_deduction_periods")
+  effectiveFrom               DateTime  @map("effective_from")
+  effectiveTo                 DateTime? @map("effective_to")
+  version                     String    @default("v1")
+  isActive                    Boolean   @default(true) @map("is_active")
+  createdBy                   String?   @map("created_by")
+  createdAt                   DateTime  @default(now()) @map("created_at")
+  updatedAt                   DateTime  @updatedAt @map("updated_at")
+
+  product Product @relation(fields: [productId], references: [id])
+
+  @@index([productId, isActive])
+  @@map("credit_parameters")
+}
+
+model FeeParameter {
+  id              String    @id @default(uuid())
+  productId       String    @map("product_id")
+  paymentOfficeId String?   @map("payment_office_id")
+  adminRate       Decimal   @default(0) @map("admin_rate") @db.Decimal(5, 4)
+  provisionRate   Decimal   @default(0) @map("provision_rate") @db.Decimal(5, 4)
+  verificationFee Decimal   @default(1500000) @map("verification_fee") @db.Decimal(15, 2)
+  flaggingFee     Decimal   @default(38000) @map("flagging_fee") @db.Decimal(15, 2)
+  frontingRate    Decimal   @default(0) @map("fronting_rate") @db.Decimal(5, 4)
+  reserveRate     Decimal   @default(0) @map("reserve_rate") @db.Decimal(5, 4)
+  effectiveFrom   DateTime  @map("effective_from")
+  effectiveTo     DateTime? @map("effective_to")
+  version         String    @default("v1")
+  isActive        Boolean   @default(true) @map("is_active")
+  createdBy       String?   @map("created_by")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  product       Product        @relation(fields: [productId], references: [id])
+  paymentOffice PaymentOffice? @relation(fields: [paymentOfficeId], references: [id])
+
+  @@index([productId, paymentOfficeId, isActive])
+  @@map("fee_parameters")
+}
+
+model InsuranceRate {
+  id            String    @id @default(uuid())
+  productId     String    @map("product_id")
+  age           Int
+  tenorYears    Int       @map("tenor_years")
+  premiumRate   Decimal   @map("premium_rate") @db.Decimal(7, 6)
+  effectiveFrom DateTime  @map("effective_from")
+  effectiveTo   DateTime? @map("effective_to")
+  version       String    @default("v1")
+  isActive      Boolean   @default(true) @map("is_active")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  product Product @relation(fields: [productId], references: [id])
+
+  @@unique([productId, age, tenorYears, effectiveFrom])
+  @@index([productId, age, tenorYears, isActive])
+  @@map("insurance_rates")
+}
+
+// -----------------------------------------------------------------------------
+// 4. VERSIONING
+// -----------------------------------------------------------------------------
+
+model BusinessRuleVersion {
+  id           String    @id @default(uuid())
+  version      String    @unique // e.g. BR-1.0
+  name         String
+  description  String?
+  documentHash String?   @map("document_hash")
+  status       String    @default("ACTIVE")
+  effectiveFrom DateTime @map("effective_from")
+  effectiveTo   DateTime? @map("effective_to")
+  createdBy    String?   @map("created_by")
+  createdAt    DateTime  @default(now()) @map("created_at")
+
+  @@map("business_rule_versions")
+}
+
+model ParameterVersion {
+  id            String    @id @default(uuid())
+  version       String
+  productId     String    @map("product_id")
+  description   String?
+  effectiveFrom DateTime  @map("effective_from")
+  effectiveTo   DateTime? @map("effective_to")
+  status        String    @default("ACTIVE")
+  createdBy     String?   @map("created_by")
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  product Product @relation(fields: [productId], references: [id])
+
+  @@unique([productId, version])
+  @@map("parameter_versions")
+}
+
+// -----------------------------------------------------------------------------
+// 5. CALCULATIONS & SIMULATIONS
+// -----------------------------------------------------------------------------
+
+model Calculation {
+  id                  String   @id @default(uuid())
+  calculationNumber   String   @unique @map("calculation_number")
+  createdBy           String?  @map("created_by")
+  bprId               String   @map("bpr_id")
+  productId           String   @map("product_id")
+  paymentOfficeId     String?  @map("payment_office_id")
+  calculationMethod   String   @map("calculation_method") // FLAT, ANNUITY
+  businessRuleVersion String   @map("business_rule_version")
+  parameterVersion    String   @map("parameter_version")
+  inputSnapshot       Json     @map("input_snapshot")
+  resultSnapshot      Json     @map("result_snapshot")
+  status              String   @default("OK") // OK, OVER
+  createdAt           DateTime @default(now()) @map("created_at")
+
+  bpr           Bpr            @relation(fields: [bprId], references: [id])
+  product       Product        @relation(fields: [productId], references: [id])
+  paymentOffice PaymentOffice? @relation(fields: [paymentOfficeId], references: [id])
+
+  @@index([bprId, productId])
+  @@index([createdAt])
+  @@map("calculations")
+}
+
+model Simulation {
+  id                  String    @id @default(uuid())
+  simulationNumber    String    @unique @map("simulation_number")
+  createdBy           String    @map("created_by")
+  bprId               String    @map("bpr_id")
+  branchId            String?   @map("branch_id")
+  paymentOfficeId     String?   @map("payment_office_id")
+  productId           String    @map("product_id")
+  customerName        String?   @map("customer_name")
+  customerNip         String?   @map("customer_nip")
+  calculationMethod   String    @map("calculation_method") // FLAT, ANNUITY
+  businessRuleVersion String    @map("business_rule_version")
+  parameterVersion    String    @map("parameter_version")
+  inputSnapshot       Json      @map("input_snapshot")
+  resultSnapshot      Json      @map("result_snapshot")
+  status              String    @default("SAVED") // DRAFT, SAVED, ARCHIVED
+  createdAt           DateTime  @default(now()) @map("created_at")
+  updatedAt           DateTime  @updatedAt @map("updated_at")
+  deletedAt           DateTime? @map("deleted_at")
+
+  user                 User                   @relation(fields: [createdBy], references: [id])
+  bpr                  Bpr                    @relation(fields: [bprId], references: [id])
+  branch               Branch?                @relation(fields: [branchId], references: [id])
+  paymentOffice        PaymentOffice?         @relation(fields: [paymentOfficeId], references: [id])
+  product              Product                @relation(fields: [productId], references: [id])
+  calculationResult    CalculationResult?
+  amortizationSchedules AmortizationSchedule[]
+  eligibilityReasons   EligibilityReason[]
+
+  @@index([createdBy, status])
+  @@index([bprId, branchId, status])
+  @@index([createdAt])
+  @@map("simulations")
+}
+
+model CalculationResult {
+  id                     String   @id @default(uuid())
+  simulationId           String   @unique @map("simulation_id")
+  ageCurrent             Int      @map("age_current")
+  ageAtMaturity          Int      @map("age_at_maturity")
+  tenorMonths            Int      @map("tenor_months")
+  tenorYearsInsurance    Int      @map("tenor_years_insurance")
+  maxTenorByAge          Int      @map("max_tenor_by_age")
+  maxTenorFinal          Int      @map("max_tenor_final")
+  maxInstallment         Decimal  @map("max_installment") @db.Decimal(15, 2)
+  maxPrincipalByCapacity Decimal  @map("max_principal_by_capacity") @db.Decimal(15, 2)
+  maxPrincipalFinal      Decimal  @map("max_principal_final") @db.Decimal(15, 2)
+  requestedPrincipal     Decimal  @map("requested_principal") @db.Decimal(15, 2)
+  installment            Decimal  @map("installment") @db.Decimal(15, 2)
+  dbr                    Decimal  @map("dbr") @db.Decimal(5, 4)
+  remainingSalary        Decimal  @map("remaining_salary") @db.Decimal(15, 2)
+  insuranceRate          Decimal  @map("insurance_rate") @db.Decimal(7, 6)
+  premium                Decimal  @map("premium") @db.Decimal(15, 2)
+  frontingFee            Decimal  @default(0) @map("fronting_fee") @db.Decimal(15, 2)
+  reserve                Decimal  @default(0) @map("reserve") @db.Decimal(15, 2)
+  adminFee               Decimal  @default(0) @map("admin_fee") @db.Decimal(15, 2)
+  provisionFee           Decimal  @default(0) @map("provision_fee") @db.Decimal(15, 2)
+  verificationFee        Decimal  @default(0) @map("verification_fee") @db.Decimal(15, 2)
+  flaggingFee            Decimal  @default(0) @map("flagging_fee") @db.Decimal(15, 2)
+  installmentDeduction   Decimal  @default(0) @map("installment_deduction") @db.Decimal(15, 2)
+  payoffAmount           Decimal  @default(0) @map("payoff_amount") @db.Decimal(15, 2)
+  totalFees              Decimal  @default(0) @map("total_fees") @db.Decimal(15, 2)
+  netDisbursement        Decimal  @map("net_disbursement") @db.Decimal(15, 2)
+  eligibilityStatus      String   @default("OK") @map("eligibility_status") // OK, OVER
+  createdAt              DateTime @default(now()) @map("created_at")
+  updatedAt              DateTime @updatedAt @map("updated_at")
+
+  simulation Simulation @relation(fields: [simulationId], references: [id], onDelete: Cascade)
+
+  @@map("calculation_results")
+}
+
+model EligibilityReason {
+  id           String   @id @default(uuid())
+  simulationId String   @map("simulation_id")
+  code         String   // DBR_EXCEEDED, AGE_EXCEEDED, TENOR_EXCEEDED, PRINCIPAL_EXCEEDED
+  message      String
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  simulation Simulation @relation(fields: [simulationId], references: [id], onDelete: Cascade)
+
+  @@index([simulationId])
+  @@map("eligibility_reasons")
+}
+
+model AmortizationSchedule {
+  id               String    @id @default(uuid())
+  simulationId     String    @map("simulation_id")
+  periodNumber     Int       @map("period_number")
+  paymentDate      DateTime? @map("payment_date")
+  openingBalance   Decimal   @map("opening_balance") @db.Decimal(15, 2)
+  principalPayment Decimal   @map("principal_payment") @db.Decimal(15, 2)
+  marginPayment    Decimal   @map("margin_payment") @db.Decimal(15, 2)
+  installment      Decimal   @map("installment") @db.Decimal(15, 2)
+  closingBalance   Decimal   @map("closing_balance") @db.Decimal(15, 2)
+  createdAt        DateTime  @default(now()) @map("created_at")
+
+  simulation Simulation @relation(fields: [simulationId], references: [id], onDelete: Cascade)
+
+  @@unique([simulationId, periodNumber])
+  @@index([simulationId])
+  @@map("amortization_schedules")
+}
+
+// -----------------------------------------------------------------------------
+// 6. AUDIT & HEALTH
+// -----------------------------------------------------------------------------
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  userId     String?  @map("user_id")
+  action     String
+  entityType String   @map("entity_type")
+  entityId   String?  @map("entity_id")
+  oldValue   Json?    @map("old_value")
+  newValue   Json?    @map("new_value")
+  ipAddress  String?  @map("ip_address")
+  userAgent  String?  @map("user_agent")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user User? @relation(fields: [userId], references: [id])
+
+  @@index([userId, createdAt])
+  @@index([entityType, entityId])
+  @@map("audit_logs")
+}
+
+model DatabaseHealth {
+  id        String   @id @default(uuid())
+  status    String   @default("HEALTHY")
+  checkedAt DateTime @default(now()) @map("checked_at")
+
+  @@map("database_health")
 }

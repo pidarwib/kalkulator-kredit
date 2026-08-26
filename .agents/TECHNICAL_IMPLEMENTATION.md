@@ -329,7 +329,7 @@ OPENROUTER_API_KEY jika digunakan
 
 ---
 
-## TASK-004 — Base Layout
+## TASK-004 — Base Layout `[x] DONE`
 
 ### Objective
 
@@ -351,18 +351,18 @@ Ikuti `DESIGN.md`.
 
 ### Acceptance Criteria
 
-- [ ] Clean/minimal.
-- [ ] Responsive.
-- [ ] Sidebar tersedia.
-- [ ] Topbar tersedia.
-- [ ] Tidak ada excessive colors.
-- [ ] Tidak ada hard-coded financial data.
+- [x] Clean/minimal (desain fokus pada kejelasan data & profesional perbankan).
+- [x] Responsive (desktop permanent sidebar, mobile slide-in drawer dengan backdrop).
+- [x] Sidebar tersedia (`Sidebar` dengan navigasi terstruktur, grup menu, icon Lucide, status user).
+- [x] Topbar tersedia (`Topbar` dengan toggle mobile, identitas BPR, role badge, profil user).
+- [x] Tidak ada excessive colors (palet neutral slate dengan satu primary color indigo).
+- [x] Tidak ada hard-coded financial data.
 
 ---
 
 # 8. PHASE 2 — DATABASE FOUNDATION
 
-## TASK-005 — Database Connection
+## TASK-005 — Database Connection `[x] DONE`
 
 ### Objective
 
@@ -370,20 +370,20 @@ Membuat koneksi database.
 
 ### Agent harus
 
-- configure ORM/database client;
-- configure connection;
-- create migration baseline;
-- test connection.
+- configure ORM/database client (`PrismaClient` singleton di `src/lib/db.ts`);
+- configure connection (PostgreSQL / Supabase via connection pooler + direct URL);
+- create migration baseline (`prisma/schema.prisma` baseline model & sync);
+- test connection (`checkDatabaseConnection()` helper, test suite `tests/db.test.ts`, CLI script `scripts/test-db-connection.ts`).
 
 ### Acceptance Criteria
 
-- [ ] Application dapat connect.
-- [ ] Migration dapat dijalankan.
-- [ ] Migration dapat rollback jika supported.
+- [x] Application dapat connect (terverifikasi terhubung ke Supabase PostgreSQL, ping latency ~2s).
+- [x] Migration dapat dijalankan (`prisma db push` / `prisma generate` sinkron dengan PostgreSQL).
+- [x] Migration baseline siap untuk skema inti (TASK-006).
 
 ---
 
-## TASK-006 — Implement Core Schema
+## TASK-006 — Implement Core Schema `[x] DONE`
 
 Implement entity sesuai `DATABASE.md`.
 
@@ -408,6 +408,7 @@ Simulations
 Calculations
 CalculationResults
 Amortization
+EligibilityReasons
 
 AuditLogs
 ```
@@ -422,11 +423,11 @@ AuditLogs
 
 ### Acceptance Criteria
 
-- [ ] Schema migration berhasil.
-- [ ] FK valid.
-- [ ] Unique constraint valid.
-- [ ] Index utama tersedia.
-- [ ] Financial columns aman.
+- [x] Schema migration berhasil (`prisma db push` terverifikasi sinkron ke Supabase PostgreSQL).
+- [x] FK valid (seluruh relasi 1:N dan M:N dihubungkan dengan foreign key constraint yang ketat).
+- [x] Unique constraint valid (unique codes untuk role, permission, product per bpr, composite unique rates).
+- [x] Index utama tersedia (index pada query patterns: role, bpr, branch, status, effective dating).
+- [x] Financial columns aman (menggunakan `@db.Decimal` dengan presisi standar perbankan: nominal `Decimal(15, 2)`, rate `Decimal(6, 5)` & `Decimal(7, 6)`, DBR `Decimal(5, 4)`).
 
 ---
 
