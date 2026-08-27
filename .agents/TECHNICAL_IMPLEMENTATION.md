@@ -866,6 +866,17 @@ Audit
 Activate
 ```
 
+### Acceptance Criteria
+
+- [x] `GET /api/v1/products/:id/fee-parameters` implemented with optional `paymentOfficeId` and product fallback (CREDIT_PARAMETER_VIEW).
+- [x] `GET /api/v1/products/:id/fee-parameters/versions` implemented to list all active and historical fee versions (CREDIT_PARAMETER_VIEW).
+- [x] `POST /api/v1/products/:id/fee-parameters/versions` implemented with transactional version lifecycle (CREDIT_PARAMETER_CREATE).
+- [x] Strict non-overwriting rule: previous active fee parameter deactivated with `effectiveTo` timestamp preserved.
+- [x] Hierarchical validation: payment office override must belong to the product's BPR.
+- [x] Fee components separated (adminRate, provisionRate, verificationFee, flaggingFee, frontingRate, reserveRate) without hard-coding in engine.
+- [x] Structured audit logging for fee parameter creation (`FEE_PARAMETER_CREATE`) capturing previous and new snapshots.
+- [x] Admin data scoping enforced and Marketing rejected with 403 Forbidden.
+
 ---
 
 ## TASK-024 — Insurance Rate Management
