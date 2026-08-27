@@ -6,7 +6,8 @@ import { CalculatorForm, CalculatorFormValues } from "@/components/calculator/ca
 import { ResultSummary, CalculationResultData } from "@/components/calculator/result-summary";
 import { ResultDetail } from "@/components/calculator/result-detail";
 import { AmortizationTable } from "@/components/calculator/amortization-table";
-import { AlertTriangle, CheckCircle } from "lucide-react";
+import { AlertTriangle, CheckCircle, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function CalculatorPage() {
   const [calculationResult, setCalculationResult] = useState<any | null>(null);
@@ -14,11 +15,16 @@ export default function CalculatorPage() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [savedSimulation, setSavedSimulation] = useState<{
+    id: string;
+    simulationNumber: string;
+  } | null>(null);
 
   const handleCalculate = async (values: CalculatorFormValues) => {
     setIsLoading(true);
     setErrorMessage(null);
     setSuccessMessage(null);
+    setSavedSimulation(null);
 
     try {
       const response = await fetch("/api/v1/calculations", {
@@ -50,7 +56,7 @@ export default function CalculatorPage() {
   };
 
   const handleSaveSimulation = async () => {
-    if (!calculationResult) return;
+    if (!calculationResult || savedSimulation) return;
     setIsSaving(true);
     setErrorMessage(null);
     setSuccessMessage(null);
@@ -84,6 +90,10 @@ export default function CalculatorPage() {
         return;
       }
 
+      setSavedSimulation({
+        id: json.data.id,
+        simulationNumber: json.data.simulationNumber,
+      });
       setSuccessMessage(
         `Simulasi berhasil disimpan dengan Nomor: ${json.data.simulationNumber}`
       );
@@ -108,17 +118,28 @@ export default function CalculatorPage() {
 
       <div className="space-y-6 pb-12">
         {/* Success Alert */}
-        {successMessage && (
+        {successMessage && savedSimulation && (
           <div
             data-testid="calculator-success-banner"
-            className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800 animate-in fade-in duration-200"
+            className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800 animate-in fade-in duration-200"
             role="alert"
           >
-            <CheckCircle className="h-5 w-5 shrink-0 text-emerald-600 mt-0.5" />
-            <div>
-              <h4 className="font-semibold">Simulasi Tersimpan</h4>
-              <p className="mt-0.5 text-xs text-emerald-700 leading-relaxed">{successMessage}</p>
+            <div className="flex items-start gap-3">
+              <CheckCircle className="h-5 w-5 shrink-0 text-emerald-600 mt-0.5" />
+              <div>
+                <h4 className="font-semibold">Simulasi Tersimpan</h4>
+                <p className="mt-0.5 text-xs text-emerald-700 leading-relaxed">{successMessage}</p>
+              </div>
             </div>
+
+            <Link
+              href={`/simulations/${savedSimulation.id}`}
+              data-testid="banner-view-simulation-link"
+              className="inline-flex items-center gap-1.5 self-start sm:self-auto rounded-lg bg-emerald-700 px-3.5 py-1.5 text-xs font-bold text-white shadow-sm hover:bg-emerald-800 transition-colors"
+            >
+              <span>Buka Detail Simulasi</span>
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
           </div>
         )}
 
@@ -150,6 +171,8 @@ export default function CalculatorPage() {
               data={calculationResult}
               onSaveSimulation={handleSaveSimulation}
               isSaving={isSaving}
+              isSaved={!!savedSimulation}
+              savedSimulationId={savedSimulation?.id}
             />
 
             <ResultDetail data={calculationResult} />

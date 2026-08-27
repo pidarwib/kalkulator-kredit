@@ -72,6 +72,8 @@ interface ResultSummaryProps {
   data: CalculationResultData;
   onSaveSimulation?: () => Promise<void>;
   isSaving?: boolean;
+  isSaved?: boolean;
+  savedSimulationId?: string;
   className?: string;
 }
 
@@ -79,6 +81,8 @@ export function ResultSummary({
   data,
   onSaveSimulation,
   isSaving = false,
+  isSaved = false,
+  savedSimulationId,
   className,
 }: ResultSummaryProps) {
   const isEligible = data.isEligible || data.status === "OK";
@@ -143,25 +147,48 @@ export function ResultSummary({
         </div>
 
         {onSaveSimulation && (
-          <button
-            type="button"
-            onClick={onSaveSimulation}
-            disabled={isSaving}
-            data-testid="save-simulation-btn"
-            className="inline-flex items-center gap-2 self-start sm:self-auto rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900 disabled:opacity-50 transition-colors"
-          >
-            {isSaving ? (
-              <>
-                <Loader2 className="h-4 w-4 animate-spin" />
-                <span>Menyimpan...</span>
-              </>
-            ) : (
-              <>
-                <BookmarkPlus className="h-4 w-4" />
-                <span>Simpan Sebagai Simulasi</span>
-              </>
+          <div className="flex items-center gap-2.5 self-start sm:self-auto">
+            <button
+              type="button"
+              onClick={onSaveSimulation}
+              disabled={isSaving || isSaved}
+              data-testid="save-simulation-btn"
+              className={cn(
+                "inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-bold shadow-sm transition-colors focus:outline-none focus:ring-2 disabled:opacity-75",
+                isSaved
+                  ? "bg-emerald-700 text-white cursor-default focus:ring-emerald-600"
+                  : "bg-slate-900 text-white hover:bg-slate-800 focus:ring-slate-900"
+              )}
+            >
+              {isSaving ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <span>Menyimpan...</span>
+                </>
+              ) : isSaved ? (
+                <>
+                  <CheckCircle2 className="h-4 w-4 text-emerald-200" />
+                  <span>Tersimpan ✓</span>
+                </>
+              ) : (
+                <>
+                  <BookmarkPlus className="h-4 w-4" />
+                  <span>Simpan Sebagai Simulasi</span>
+                </>
+              )}
+            </button>
+
+            {isSaved && savedSimulationId && (
+              <a
+                href={`/simulations/${savedSimulationId}`}
+                data-testid="view-saved-simulation-link"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-xs font-bold text-slate-700 shadow-sm hover:bg-slate-50 transition-colors"
+              >
+                <span>Lihat Detail</span>
+                <ArrowDownRight className="h-3.5 w-3.5 -rotate-90" />
+              </a>
             )}
-          </button>
+          </div>
         )}
       </div>
 

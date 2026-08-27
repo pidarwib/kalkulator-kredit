@@ -1707,6 +1707,15 @@ Success
 Simulation Detail
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented seamless Save Simulation action from calculation results to backend `POST /api/v1/simulations`.
+- [x] Prevented duplicate submissions during in-flight network requests with active loading spinner and disabled button states.
+- [x] On successful creation (201 Created), provided immediate visual feedback (success banner) displaying generated `simulationNumber` and direct link to open the saved simulation detail (`/simulations/[id]`).
+- [x] Locked the save button to `Tersimpan ✓` status to prevent accidental duplicate saves of identical results.
+- [x] Handled permission / validation errors gracefully according to the API error contract.
+- [x] Created unit & integration test suite in `tests/save-simulation-flow.test.tsx` (2/2 tests passing).
+
 ---
 
 # 20. PHASE 14 — SIMULATION UI
