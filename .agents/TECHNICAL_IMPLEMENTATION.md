@@ -1019,13 +1019,17 @@ Menggunakan formula PMT/anuitas sesuai `BUSINESS_RULES.md`.
 
 Rate yang digunakan adalah **rate tahunan yang sama dengan metode FLAT** (10,8% / 12 = 0,9% per bulan), tanpa konversi effective rate terpisah.
 
-### Tests
+### Acceptance Criteria
 
-- normal input;
-- boundary values;
-- rounding;
-- consistency;
-- invalid input.
+- [x] `AnnuityCalculationStrategy` implemented adhering strictly to `BUSINESS_RULES.md` Sections 13, 14, 17, 18, 19.
+- [x] Unified 10.8% annual margin rate / 0.9% flat monthly margin rate without separate effective conversion.
+- [x] Monthly installment formula: PMT with $P$, $r=0.009$, $n=\text{tenorMonths}$.
+- [x] Initial breakdown: interest portion ($P \times 0.009$) and principal portion ($\text{PMT} - \text{interestPortion}$).
+- [x] Capacity calculation: Present Value $PV = \text{Payment} \times \frac{1 - (1+r)^{-n}}{r}$ where $\text{Payment} = \text{Gaji Bersih} \times \text{DBR Maksimum}$.
+- [x] Downward floor rounding to nearest Rp 100.000 increment (`FLOOR(capacity, 100.000)`).
+- [x] Final maximum principal: `MIN(Plafon Kemampuan Dibulatkan, Batas Plafon Produk)`.
+- [x] DBR & validation flags (`isDbrValid: dbr <= maxDbr`, `isPrincipalValid: principal <= maxPrincipalFinal`).
+- [x] Unit test suite covering normal inputs, mathematical PMT-PV consistency, FLAT vs ANNUITY comparative behavior, boundary values (1m, 120m, 200M), rounding increments, and zero/invalid edge cases (9/9 tests passing).
 
 ---
 
