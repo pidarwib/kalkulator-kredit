@@ -17,12 +17,15 @@ import {
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/lib/auth/auth-provider";
 
 export interface NavItem {
   title: string;
   href: string;
   icon: React.ComponentType<{ className?: string }>;
   badge?: string;
+  requiredPermission?: string;
+  requiredPermissions?: string[];
 }
 
 export interface NavGroup {
@@ -42,11 +45,13 @@ export const defaultNavigationGroups: NavGroup[] = [
         title: "Kalkulator Kredit",
         href: "/calculator",
         icon: Calculator,
+        requiredPermission: "CREDIT_CALCULATE",
       },
       {
         title: "Daftar Simulasi",
         href: "/simulations",
         icon: FileSpreadsheet,
+        requiredPermission: "SIMULATION_VIEW",
       },
     ],
   },
@@ -57,26 +62,31 @@ export const defaultNavigationGroups: NavGroup[] = [
         title: "Produk Kredit",
         href: "/master/products",
         icon: Layers,
+        requiredPermission: "PRODUCT_VIEW",
       },
       {
         title: "Parameter Kredit",
         href: "/master/parameters",
         icon: Settings2,
+        requiredPermission: "PARAMETER_VIEW",
       },
       {
         title: "Tarif Asuransi",
         href: "/master/insurance",
         icon: ShieldCheck,
+        requiredPermission: "INSURANCE_VIEW",
       },
       {
         title: "Parameter Biaya",
         href: "/master/fees",
         icon: Percent,
+        requiredPermission: "FEE_VIEW",
       },
       {
         title: "Organisasi & Kantor",
         href: "/master/organization",
         icon: Building2,
+        requiredPermissions: ["BPR_VIEW", "BRANCH_VIEW", "PAYMENT_OFFICE_VIEW"],
       },
     ],
   },
@@ -87,15 +97,57 @@ export const defaultNavigationGroups: NavGroup[] = [
         title: "Manajemen User",
         href: "/users",
         icon: Users,
+        requiredPermission: "USER_VIEW",
       },
       {
         title: "Audit Trail",
         href: "/audit-logs",
         icon: History,
+        requiredPermission: "AUDIT_VIEW",
       },
     ],
   },
 ];
+
+/**
+ * Filters navigation groups based on the active user permissions and role.
+ * Super Admin gets access to all navigation items.
+ * Groups with no authorized items are automatically omitted.
+ */
+export function getNavigationForUser(
+  permissions: string[] = [],
+  role?: string,
+  baseGroups: NavGroup[] = defaultNavigationGroups
+): NavGroup[] {
+  if (role === "SUPER_ADMIN") {
+    return baseGroups;
+  }
+
+  return baseGroups
+    .map((group) => {
+      const allowedItems = group.items.filter((item) => {
+        if (!item.requiredPermission && !item.requiredPermissions) {
+          return true;
+        }
+
+        if (item.requiredPermission) {
+          return permissions.includes(item.requiredPermission);
+        }
+
+        if (item.requiredPermissions) {
+          return item.requiredPermissions.some((p) => permissions.includes(p));
+        }
+
+        return true;
+      });
+
+      return {
+        ...group,
+        items: allowedItems,
+      };
+    })
+    .filter((group) => group.items.length > 0);
+}
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -107,10 +159,16 @@ interface SidebarProps {
 export function Sidebar({
   isOpen = false,
   onClose,
-  navigation = defaultNavigationGroups,
+  navigation,
   className,
 }: SidebarProps) {
   const pathname = usePathname() || "/";
+  const { user } = useAuth();
+
+  // Compute permission-aware navigation items
+  const activeNavigation =
+    navigation ||
+    getNavigationForUser(user?.permissions || [], user?.role);
 
   return (
     <>
@@ -166,7 +224,7 @@ export function Sidebar({
 
         {/* Navigation List */}
         <div className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
-          {navigation.map((group, groupIndex) => (
+          {activeNavigation.map((group, groupIndex) => (
             <div key={groupIndex} className="space-y-1">
               {group.label && (
                 <div className="px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
@@ -186,6 +244,7 @@ export function Sidebar({
                       key={item.href}
                       href={item.href}
                       onClick={onClose}
+                      data-testid={`nav-item-${item.href.replace(/^\//, "").replace(/\//g, "-") || "home"}`}
                       className={cn(
                         "group flex items-center justify-between rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                         isActive
@@ -224,18 +283,25 @@ export function Sidebar({
           ))}
         </div>
 
-        {/* Footer info */}
+        {/* Footer User Info */}
         <div className="border-t border-slate-200 p-3 bg-slate-50/50">
           <div className="flex items-center gap-3 px-2 py-1.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-xs font-bold text-slate-700">
-              MK
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-700 border border-indigo-200">
+              {user?.fullName
+                ? user.fullName
+                    .split(" ")
+                    .map((n) => n[0])
+                    .slice(0, 2)
+                    .join("")
+                    .toUpperCase()
+                : "US"}
             </div>
             <div className="flex flex-col min-w-0">
               <span className="truncate text-xs font-semibold text-slate-900">
-                Marketing User
+                {user?.fullName || "User System"}
               </span>
               <span className="truncate text-[11px] text-slate-500">
-                BPR Head Office
+                {user?.role || "Staff"}
               </span>
             </div>
           </div>

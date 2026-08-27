@@ -3,6 +3,7 @@
 import React from "react";
 import { Menu, Building2, User, Shield, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/lib/auth/auth-provider";
 
 interface TopbarProps {
   onOpenSidebar?: () => void;
@@ -14,11 +15,17 @@ interface TopbarProps {
 
 export function Topbar({
   onOpenSidebar,
-  organizationName = "BPR Kota Sejahtera - Kantor Pusat",
-  userName = "Marketing Staff",
-  userRole = "MARKETING",
+  organizationName,
+  userName,
+  userRole,
   className,
 }: TopbarProps) {
+  const { user, logout } = useAuth();
+
+  const displayOrg = organizationName || user?.bprName || "BPR Core System - Kantor Pusat";
+  const displayName = userName || user?.fullName || "User System";
+  const displayRole = userRole || user?.role || "STAFF";
+
   return (
     <header
       data-testid="app-topbar"
@@ -42,12 +49,12 @@ export function Topbar({
           <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-700 font-medium">
             <Building2 className="h-3.5 w-3.5 text-slate-500" />
             <span className="truncate max-w-[200px] md:max-w-[320px]">
-              {organizationName}
+              {displayOrg}
             </span>
           </span>
           <span className="inline-flex sm:hidden items-center gap-1 text-slate-700 font-medium">
             <Building2 className="h-3.5 w-3.5 text-slate-500" />
-            <span className="truncate max-w-[150px]">BPR Kota</span>
+            <span className="truncate max-w-[150px]">BPR Core</span>
           </span>
         </div>
       </div>
@@ -55,9 +62,12 @@ export function Topbar({
       {/* Right side: User context, Role badge, and Profile */}
       <div className="flex items-center gap-2 sm:gap-3">
         {/* Role Badge */}
-        <span className="inline-flex items-center gap-1 rounded-md bg-indigo-50 px-2 py-1 text-[11px] font-semibold text-indigo-700 border border-indigo-100">
+        <span
+          data-testid="user-role-badge"
+          className="inline-flex items-center gap-1 rounded-md bg-indigo-50 px-2 py-1 text-[11px] font-semibold text-indigo-700 border border-indigo-100"
+        >
           <Shield className="h-3 w-3" />
-          <span>{userRole}</span>
+          <span>{displayRole}</span>
         </span>
 
         {/* User Pill */}
@@ -66,8 +76,11 @@ export function Topbar({
             <User className="h-4 w-4" />
           </div>
           <div className="hidden text-left md:block">
-            <div className="text-xs font-semibold text-slate-900 leading-tight">
-              {userName}
+            <div
+              data-testid="user-full-name"
+              className="text-xs font-semibold text-slate-900 leading-tight"
+            >
+              {displayName}
             </div>
             <div className="text-[11px] text-slate-500 leading-tight">
               Online
@@ -77,10 +90,8 @@ export function Topbar({
           <button
             type="button"
             title="Keluar dari sistem"
-            onClick={async () => {
-              await fetch("/api/v1/auth/logout", { method: "POST" }).catch(() => {});
-              window.location.href = "/login";
-            }}
+            onClick={logout}
+            data-testid="logout-button"
             className="ml-1 inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
             aria-label="Logout"
           >

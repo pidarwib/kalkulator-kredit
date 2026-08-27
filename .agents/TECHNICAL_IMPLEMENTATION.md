@@ -1481,6 +1481,15 @@ Admin
 
 Frontend hanya UX layer.
 
+### Acceptance Criteria
+
+- [x] Implemented dynamic, permission-aware navigation filtering (`getNavigationForUser` & `Sidebar`) adhering to `DESIGN.md` and `ROLE_PERMISSION.md`.
+- [x] Annotated navigation items with `requiredPermission` / `requiredPermissions` mapping (Calculator, Simulations, Products, Parameters, Insurance, Fees, Organization, User Management, Audit Trail).
+- [x] Filtered out unauthorized menu items and omitted empty section headers dynamically based on live user permissions.
+- [x] Created `AuthProvider` and `useAuth()` React Context to distribute authenticated user profile, live permissions, and role across UI components.
+- [x] Preserved the architecture rule that hiding frontend navigation is purely a UX optimization while backend APIs remain the authoritative security boundary.
+- [x] Created component and unit test suite in `tests/permission-aware-navigation.test.tsx` (5/5 tests passing).
+
 ---
 
 # 18. PHASE 12 — CALCULATOR UI
