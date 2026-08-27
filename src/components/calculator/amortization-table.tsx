@@ -14,11 +14,13 @@ import { cn } from "@/lib/utils";
 
 export interface AmortizationRow {
   period: number;
-  paymentDate?: string;
+  paymentDate?: string | null;
   dueDate?: string;
   openingBalance: number;
-  principal: number;
-  interest: number;
+  principal?: number;
+  principalPortion?: number;
+  interest?: number;
+  interestPortion?: number;
   installment: number;
   closingBalance: number;
 }
@@ -54,8 +56,8 @@ export function AmortizationTable({
   const totals = useMemo(() => {
     return schedule.reduce(
       (acc, row) => ({
-        principal: acc.principal + (row.principal || 0),
-        interest: acc.interest + (row.interest || 0),
+        principal: acc.principal + (row.principal ?? row.principalPortion ?? 0),
+        interest: acc.interest + (row.interest ?? row.interestPortion ?? 0),
         installment: acc.installment + (row.installment || 0),
       }),
       { principal: 0, interest: 0, installment: 0 }
@@ -82,8 +84,8 @@ export function AmortizationTable({
     const rows = schedule.map((r) => [
       r.period,
       r.openingBalance,
-      r.principal,
-      r.interest,
+      r.principal ?? r.principalPortion ?? 0,
+      r.interest ?? r.interestPortion ?? 0,
       r.installment,
       r.closingBalance,
     ]);
@@ -218,10 +220,10 @@ export function AmortizationTable({
                   {formatRupiah(row.openingBalance)}
                 </td>
                 <td className="py-2.5 px-4 text-right text-slate-900 font-mono tabular-nums">
-                  {formatRupiah(row.principal)}
+                  {formatRupiah(row.principal ?? row.principalPortion ?? 0)}
                 </td>
                 <td className="py-2.5 px-4 text-right text-slate-600 font-mono tabular-nums">
-                  {formatRupiah(row.interest)}
+                  {formatRupiah(row.interest ?? row.interestPortion ?? 0)}
                 </td>
                 <td className="py-2.5 px-4 text-right font-extrabold text-indigo-900 font-mono tabular-nums bg-indigo-50/30">
                   {formatRupiah(row.installment)}

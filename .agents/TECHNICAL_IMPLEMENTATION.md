@@ -1760,6 +1760,20 @@ Business Rule Version
 Amortization
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented comprehensive Simulation Detail Page (`src/app/simulations/[id]/page.tsx`) matching `DESIGN.md`.
+- [x] Displayed simulation header with Simulation Number, copy action, Status Badge (`ELIGIBLE` / `OVER CAPACITY`), and print / PDF action.
+- [x] Rendered metadata card with Creator information, BPR & Branch affiliation, creation timestamp, and snapshot verification badge.
+- [x] Rendered authoritative parameter versions (`parameterVersion`, `businessRuleVersion`) and immutability notice.
+- [x] Rendered structured Input Snapshot card (Customer Name, NIP, Birth Date, Net Salary, Other Income, Payment Office, Product, Calculation Method, Tenor).
+- [x] Displayed 4 primary KPI cards (Plafon Maksimal, Angsuran Bulanan, DBR %, Estimasi Terima Bersih) with contextual helper info.
+- [x] Rendered over-capacity reasons alert banner when simulation is not eligible.
+- [x] Integrated 6-tabbed detailed calculation breakdown via `ResultDetail`.
+- [x] Rendered full Amortization Schedule table with right-aligned numeric formatting, sticky headers, pagination, summary totals, and CSV export.
+- [x] Handled loading spinner and 404/403/500 error states gracefully.
+- [x] Created unit & component test suite in `tests/simulation-detail-ui.test.tsx` (3/3 tests passing).
+
 ---
 
 # 21. PHASE 15 — ADMIN UI
