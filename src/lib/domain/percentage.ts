@@ -66,7 +66,7 @@ export class Percentage {
    * Returns percent value (e.g. 10.8 for 0.108).
    */
   toPercent(): number {
-    return Number(this._decimal.times(100).toFixed(4));
+    return Number(this._decimal.times(100).toString());
   }
 
   /**

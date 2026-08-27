@@ -1118,6 +1118,16 @@ atau formula final yang tertulis pada `BUSINESS_RULES.md`.
 
 Jangan mengubah formula.
 
+### Acceptance Criteria
+
+- [x] `DbrService` implemented strictly following `BUSINESS_RULES.md` Sections 9 & 10.
+- [x] Ratio formula: $\text{DBR} = \text{Angsuran Bulanan} / \text{Gaji Bersih}$.
+- [x] Maximum installment formula: $\text{Maksimal Angsuran} = \text{Gaji Bersih} \times \text{DBR Maksimum}$ (default 90%).
+- [x] Remaining salary formula: $\text{Sisa Gaji} = \text{Gaji Bersih} - \text{Angsuran Bulanan}$.
+- [x] High-precision internal Decimal boundary check: $\text{DBR} \le 90\% \rightarrow \text{OK}$, $\text{DBR} > 90\% \rightarrow \text{OVER}$ without premature display rounding.
+- [x] Edge cases handled: zero/negative salary and negative remaining salary.
+- [x] Unit test suite covering standard ratios, 90% exact boundary, internal decimal precision, negative remaining salary, and zero salary handlers (6/6 tests passing).
+
 ---
 
 ## TASK-032 — Eligibility Engine

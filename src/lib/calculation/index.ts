@@ -4,3 +4,4 @@ export * from "./flat-calculation-strategy";
 export * from "./annuity-calculation-strategy";
 export * from "./insurance-calculation-service";
 export * from "./fee-calculation-service";
+export * from "./dbr-service";
