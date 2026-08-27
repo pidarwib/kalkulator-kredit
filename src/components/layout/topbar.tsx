@@ -73,6 +73,19 @@ export function Topbar({
               Online
             </div>
           </div>
+          
+          <button
+            type="button"
+            title="Keluar dari sistem"
+            onClick={async () => {
+              await fetch("/api/v1/auth/logout", { method: "POST" }).catch(() => {});
+              window.location.href = "/login";
+            }}
+            className="ml-1 inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
+            aria-label="Logout"
+          >
+            <LogOut className="h-4 w-4" />
+          </button>
         </div>
       </div>
     </header>

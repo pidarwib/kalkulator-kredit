@@ -1423,6 +1423,15 @@ Loading
 Error
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented clean, minimal, and professional Login UI (`src/app/login/page.tsx`) adhering to `DESIGN.md`.
+- [x] Provided username and password inputs, form validation, loading spinner state, and error/success alerts.
+- [x] Integrated seamlessly with backend authentication API `POST /api/v1/auth/login`.
+- [x] Handled redirect after successful login to default `/` or `callbackUrl` search parameter.
+- [x] Integrated functional logout in `Topbar` with `POST /api/v1/auth/logout`.
+- [x] Created unit & component test suite in `tests/login-page.test.tsx` (4/4 tests passing).
+
 ---
 
 ## TASK-042 — Protected Routes
