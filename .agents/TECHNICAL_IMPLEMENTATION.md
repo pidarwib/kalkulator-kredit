@@ -1843,6 +1843,17 @@ Updated By
 
 Update flow harus memiliki confirmation.
 
+### Acceptance Criteria
+
+- [x] Implemented comprehensive Parameter Management page (`src/app/master/parameters/page.tsx`) matching `DESIGN.md` §19 and §21.
+- [x] Implemented Product Selector linking to specific loan products across BPRs.
+- [x] Rendered Active Parameter card displaying current version, status (`AKTIF`), effective date, creation timestamp, and structured financial parameters (DBR Max, Flat Rate Tahunan/Bulanan, Tenor Max, Plafon Max, Batas Usia, Pembulatan Plafon, Potongan Angsuran di Muka).
+- [x] Displayed historical versions audit trail table showing version list, effective date ranges, parameter summaries, and creation dates.
+- [x] Integrated Multi-Step Create New Version modal with step 1 parameter form input and step 2 side-by-side comparison diff & confirmation dialog (`DESIGN.md` §21).
+- [x] Handled immutable historical snapshot archiving upon new version activation via `POST /api/v1/products/:id/credit-parameters/versions`.
+- [x] Handled permission-aware action buttons and access restrictions (`CREDIT_PARAMETER_VIEW`, `CREDIT_PARAMETER_CREATE`, `PARAMETER_VIEW`).
+- [x] Created unit & component test suite in `tests/parameter-management-ui.test.tsx` (2/2 tests passing).
+
 ---
 
 ## TASK-057 — Insurance Management UI
