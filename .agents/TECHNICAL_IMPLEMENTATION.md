@@ -1673,6 +1673,16 @@ Installment
 Closing Balance
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented modular and responsive `AmortizationTable` component (`src/components/calculator/amortization-table.tsx`) adhering to `DESIGN.md` §16.
+- [x] Included all required table columns: `Bln (Period)`, `Pokok Awal`, `Angsuran Pokok`, `Margin / Bunga`, `Total Angsuran`, and `Pokok Akhir`.
+- [x] Enforced strict numeric right-alignment (`text-right font-mono tabular-nums`) for monetary values and centered alignment for period index.
+- [x] Implemented sticky table headers on vertical scroll and responsive horizontal scroll support.
+- [x] Added summary footer computing total principal paid, total margin/interest, and total installment repayments.
+- [x] Implemented client-side pagination (default 12 months/page) with quick page-size selector (12, 24, 60, All) and CSV export action.
+- [x] Created unit & component test suite in `tests/amortization-ui.test.tsx` (6/6 tests passing).
+
 ---
 
 ## TASK-051 — Save Simulation

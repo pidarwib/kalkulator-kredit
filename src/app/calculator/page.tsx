@@ -5,10 +5,11 @@ import { AppLayout, PageHeader } from "@/components/layout";
 import { CalculatorForm, CalculatorFormValues } from "@/components/calculator/calculator-form";
 import { ResultSummary, CalculationResultData } from "@/components/calculator/result-summary";
 import { ResultDetail } from "@/components/calculator/result-detail";
+import { AmortizationTable } from "@/components/calculator/amortization-table";
 import { AlertTriangle, CheckCircle } from "lucide-react";
 
 export default function CalculatorPage() {
-  const [calculationResult, setCalculationResult] = useState<CalculationResultData | null>(null);
+  const [calculationResult, setCalculationResult] = useState<any | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -142,7 +143,7 @@ export default function CalculatorPage() {
           isLoading={isLoading}
         />
 
-        {/* Dedicated Result Summary & Detail Breakdown */}
+        {/* Dedicated Result Summary, Detail Breakdown & Amortization Table */}
         {calculationResult && (
           <div className="space-y-6 animate-in fade-in duration-300">
             <ResultSummary
@@ -152,6 +153,13 @@ export default function CalculatorPage() {
             />
 
             <ResultDetail data={calculationResult} />
+
+            {calculationResult.schedule && calculationResult.schedule.length > 0 && (
+              <AmortizationTable
+                schedule={calculationResult.schedule}
+                calculationMethod={calculationResult.calculationMethod}
+              />
+            )}
           </div>
         )}
       </div>
