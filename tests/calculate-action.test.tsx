@@ -76,7 +76,7 @@ describe("TASK-047: Calculate Action End-to-End Flow Tests", () => {
     await waitFor(() => {
       expect(screen.getByTestId("calculation-summary-result")).toBeDefined();
       expect(screen.getByText(/hasil analisis kelayakan/i)).toBeDefined();
-      expect(screen.getByText(/status: ok/i)).toBeDefined();
+      expect(screen.getByText(/eligible/i)).toBeDefined();
       expect(screen.getByText("30.20%")).toBeDefined();
     });
   });

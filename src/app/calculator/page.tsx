@@ -3,26 +3,20 @@
 import React, { useState } from "react";
 import { AppLayout, PageHeader } from "@/components/layout";
 import { CalculatorForm, CalculatorFormValues } from "@/components/calculator/calculator-form";
-import {
-  Calculator,
-  CheckCircle2,
-  AlertTriangle,
-  FileCheck2,
-  ArrowRight,
-  TrendingUp,
-  ShieldAlert,
-  Percent,
-  Receipt,
-} from "lucide-react";
+import { ResultSummary, CalculationResultData } from "@/components/calculator/result-summary";
+import { AlertTriangle, CheckCircle } from "lucide-react";
 
 export default function CalculatorPage() {
-  const [calculationResult, setCalculationResult] = useState<any | null>(null);
+  const [calculationResult, setCalculationResult] = useState<CalculationResultData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
 
   const handleCalculate = async (values: CalculatorFormValues) => {
     setIsLoading(true);
     setErrorMessage(null);
+    setSuccessMessage(null);
 
     try {
       const response = await fetch("/api/v1/calculations", {
@@ -53,12 +47,50 @@ export default function CalculatorPage() {
     }
   };
 
-  const formatRupiah = (amount: number) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      maximumFractionDigits: 0,
-    }).format(amount);
+  const handleSaveSimulation = async () => {
+    if (!calculationResult) return;
+    setIsSaving(true);
+    setErrorMessage(null);
+    setSuccessMessage(null);
+
+    try {
+      const payload = {
+        customerName: calculationResult.input.customerName || "Nasabah Tanpa Nama",
+        customerNip: calculationResult.input.customerNip,
+        birthDate: calculationResult.input.birthDate,
+        netSalary: calculationResult.input.netSalary,
+        otherIncome: calculationResult.input.otherIncome || 0,
+        otherDeductions: calculationResult.input.otherDeductions || 0,
+        productId: calculationResult.input.productId,
+        paymentOfficeId: calculationResult.input.paymentOfficeId,
+        requestedPrincipal: calculationResult.input.requestedPrincipal,
+        tenorMonths: calculationResult.input.tenorMonths,
+        calculationMethod: calculationResult.calculationMethod,
+        settlementPayoff: calculationResult.input.settlementPayoff || 0,
+        otherFee: calculationResult.input.otherFee || 0,
+      };
+
+      const res = await fetch("/api/v1/simulations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const json = await res.json();
+      if (!res.ok) {
+        setErrorMessage(json?.error?.message || "Gagal menyimpan simulasi kredit.");
+        return;
+      }
+
+      setSuccessMessage(
+        `Simulasi berhasil disimpan dengan Nomor: ${json.data.simulationNumber}`
+      );
+    } catch (err) {
+      console.error("[Calculator Page] Save simulation error:", err);
+      setErrorMessage("Terjadi kesalahan saat menyimpan simulasi.");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -73,16 +105,31 @@ export default function CalculatorPage() {
       />
 
       <div className="space-y-6 pb-12">
+        {/* Success Alert */}
+        {successMessage && (
+          <div
+            data-testid="calculator-success-banner"
+            className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800 animate-in fade-in duration-200"
+            role="alert"
+          >
+            <CheckCircle className="h-5 w-5 shrink-0 text-emerald-600 mt-0.5" />
+            <div>
+              <h4 className="font-semibold">Simulasi Tersimpan</h4>
+              <p className="mt-0.5 text-xs text-emerald-700 leading-relaxed">{successMessage}</p>
+            </div>
+          </div>
+        )}
+
         {/* Error Alert */}
         {errorMessage && (
           <div
             data-testid="calculator-error-banner"
-            className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800"
+            className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800 animate-in fade-in duration-200"
             role="alert"
           >
             <AlertTriangle className="h-5 w-5 shrink-0 text-red-600 mt-0.5" />
             <div>
-              <h4 className="font-semibold">Perhitungan Tidak Dapat Dilanjutkan</h4>
+              <h4 className="font-semibold">Perhitungan / Penyimpanan Tidak Dapat Dilanjutkan</h4>
               <p className="mt-0.5 text-xs text-red-700 leading-relaxed">{errorMessage}</p>
             </div>
           </div>
@@ -94,115 +141,13 @@ export default function CalculatorPage() {
           isLoading={isLoading}
         />
 
-        {/* Calculation Result Summary Box (Instant Feedback) */}
+        {/* Dedicated Result Summary Component */}
         {calculationResult && (
-          <div
-            data-testid="calculation-summary-result"
-            className="rounded-2xl border border-indigo-100 bg-white p-6 shadow-sm sm:p-8 animate-in fade-in duration-300"
-          >
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100">
-              <div className="flex items-center gap-3">
-                <div
-                  className={`flex h-10 w-10 items-center justify-center rounded-xl font-bold text-white shadow-sm ${
-                    calculationResult.isEligible ? "bg-emerald-600" : "bg-amber-600"
-                  }`}
-                >
-                  {calculationResult.isEligible ? (
-                    <CheckCircle2 className="h-6 w-6" />
-                  ) : (
-                    <ShieldAlert className="h-6 w-6" />
-                  )}
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-lg font-bold text-slate-900">
-                      Hasil Analisis Kelayakan
-                    </h3>
-                    <span
-                      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold ${
-                        calculationResult.isEligible
-                          ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                          : "bg-amber-50 text-amber-700 border border-amber-200"
-                      }`}
-                    >
-                      Status: {calculationResult.status}
-                    </span>
-                  </div>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    Metode: {calculationResult.calculationMethod} • Versi Aturan:{" "}
-                    {calculationResult.versions?.businessRule}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Metric KPI Cards */}
-            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {/* Angsuran Bulanan */}
-              <div className="rounded-xl border border-indigo-100 bg-indigo-50/40 p-4">
-                <span className="text-xs font-semibold text-indigo-700 uppercase tracking-wider">
-                  Angsuran Bulanan
-                </span>
-                <div className="mt-2 text-xl font-extrabold text-indigo-950">
-                  {formatRupiah(calculationResult.result.installment)}
-                </div>
-                <span className="text-[11px] text-indigo-600">
-                  Tenor {calculationResult.input.tenorMonths} bulan
-                </span>
-              </div>
-
-              {/* Debt Burden Ratio */}
-              <div className="rounded-xl border border-slate-200 bg-slate-50/50 p-4">
-                <span className="text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                  Debt Burden Ratio (DBR)
-                </span>
-                <div className="mt-2 text-xl font-extrabold text-slate-900">
-                  {(calculationResult.result.dbr * 100).toFixed(2)}%
-                </div>
-                <span className="text-[11px] text-slate-500">
-                  Sisa Gaji: {formatRupiah(calculationResult.result.remainingSalary)}
-                </span>
-              </div>
-
-              {/* Plafon Maksimal */}
-              <div className="rounded-xl border border-slate-200 bg-slate-50/50 p-4">
-                <span className="text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                  Plafon Maksimal
-                </span>
-                <div className="mt-2 text-xl font-extrabold text-slate-900">
-                  {formatRupiah(calculationResult.result.maximumPrincipal)}
-                </div>
-                <span className="text-[11px] text-slate-500">Kapasitas Maksimal Debitur</span>
-              </div>
-
-              {/* Terima Bersih */}
-              <div className="rounded-xl border border-emerald-100 bg-emerald-50/40 p-4">
-                <span className="text-xs font-semibold text-emerald-700 uppercase tracking-wider">
-                  Estimasi Terima Bersih
-                </span>
-                <div className="mt-2 text-xl font-extrabold text-emerald-950">
-                  {formatRupiah(calculationResult.result.netDisbursement)}
-                </div>
-                <span className="text-[11px] text-emerald-600">
-                  Setelah potongan biaya & premi
-                </span>
-              </div>
-            </div>
-
-            {/* Eligibility Warnings / Reasons */}
-            {calculationResult.reasons && calculationResult.reasons.length > 0 && (
-              <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50/50 p-4">
-                <h4 className="text-xs font-bold text-amber-900 uppercase tracking-wider">
-                  Catatan Batasan Kelayakan:
-                </h4>
-                <ul className="mt-2 list-disc list-inside space-y-1 text-xs text-amber-800">
-                  {calculationResult.reasons.map((reason: string, idx: number) => (
-                    <li key={idx}>{reason}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
+          <ResultSummary
+            data={calculationResult}
+            onSaveSimulation={handleSaveSimulation}
+            isSaving={isSaving}
+          />
         )}
       </div>
     </AppLayout>

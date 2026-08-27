@@ -143,7 +143,7 @@ export function CalculatorForm({
 
   // Comprehensive Field-level Validation Logic
   const runValidation = (field?: string): Record<string, string> => {
-    const errors: Record<string, string> = { ...validationErrors };
+    const errors: Record<string, string> = field ? { ...validationErrors } : {};
 
     // 1. Birth Date & Age
     if (!field || field === "birthDate") {

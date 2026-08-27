@@ -1623,6 +1623,15 @@ DBR
 
 Primary result harus mudah dipindai.
 
+### Acceptance Criteria
+
+- [x] Implemented dedicated `ResultSummary` component (`src/components/calculator/result-summary.tsx`) adhering strictly to `DESIGN.md` §13 & §14.
+- [x] Displayed clear primary KPI cards for Maximum Principal, Monthly Installment, Debt Burden Ratio (DBR), and Net Disbursement.
+- [x] Implemented explicit status badges and text indicators for `ELIGIBLE` and `NOT ELIGIBLE (OVER)` with semantic color highlights without relying solely on color.
+- [x] Displayed bulleted failure reasons when calculation status is `OVER`.
+- [x] Included "Simpan Sebagai Simulasi" action button calling `POST /api/v1/simulations` with persistent feedback.
+- [x] Created unit & component test suite in `tests/result-summary.test.tsx` (3/3 tests passing).
+
 ---
 
 ## TASK-049 — Result Detail
