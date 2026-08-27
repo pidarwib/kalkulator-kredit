@@ -1072,6 +1072,15 @@ Jika rate tidak ditemukan:
 Calculation Error / Business Validation Error
 ```
 
+### Acceptance Criteria
+
+- [x] `InsuranceCalculationService` implemented adhering strictly to `BUSINESS_RULES.md` Sections 23-30.
+- [x] Tenor lookup in years using ceiling rule: `tenorYears = CEILING(tenorMonths / 12)`.
+- [x] Dual lookup: evaluates both `currentAge` and `nextAge` (`currentAge + 1`) and selects `MAX(rate1, rate2)` per Section 25.
+- [x] Full breakdown calculation: Base Premium (`principal * selectedRate`), Fronting Fee (`principal * frontingRate`), Reserve Charge (`principal * reserveRate`), Combined Rate, and Total Insurance Charge.
+- [x] Critical Rule strictly enforced: missing rate throws `MissingInsuranceRateError` (never estimates or guesses rates).
+- [x] Unit and integration tests covering standard calculations, ceiling rules, dual lookup, and missing rate errors (5/5 tests passing).
+
 ---
 
 ## TASK-030 — Fee Calculation Service
