@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { requirePermission, forbiddenResponse } from "@/lib/rbac";
+import { requirePermission, requireAnyPermission, forbiddenResponse } from "@/lib/rbac";
 import { ProductRepository, BprRepository } from "@/lib/repositories";
 import { AuditService } from "@/lib/audit";
 
@@ -23,10 +23,10 @@ const createProductSchema = z.object({
  * GET /api/v1/products
  *
  * Lists products with filters and relation counts.
- * Permission: MASTER_VIEW (Super Admin, Admin)
+ * Permission: MASTER_VIEW or CREDIT_CALCULATE (Super Admin, Admin, Marketing)
  */
 export async function GET(request: NextRequest) {
-  const auth = await requirePermission(request, "MASTER_VIEW");
+  const auth = await requireAnyPermission(request, ["MASTER_VIEW", "CREDIT_CALCULATE"]);
   if (!auth.allowed) {
     return auth.errorResponse!;
   }
@@ -38,8 +38,8 @@ export async function GET(request: NextRequest) {
   const status = searchParams.get("status") || undefined;
   const search = searchParams.get("search") || undefined;
 
-  // Data scope enforcement for Admin
-  if (caller.role === "ADMIN") {
+  // Data scope enforcement for Admin & Marketing
+  if (caller.role !== "SUPER_ADMIN") {
     if (caller.bprId) {
       bprId = caller.bprId;
     }

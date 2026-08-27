@@ -1517,6 +1517,15 @@ FLAT
 ANNUITY
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented comprehensive Calculator Form UI (`src/components/calculator/calculator-form.tsx`) and Calculator Page (`src/app/calculator/page.tsx`) adhering to `DESIGN.md`.
+- [x] Provided structured fields: Customer Name, NIP, Birth Date, Net Salary, Other Income, Other Deductions, Product dropdown, Payment Office dropdown, Requested Principal, Tenor Months (with shortcut buttons), Calculation Method (Flat / Annuity toggle), Settlement Payoff, and Other Fees.
+- [x] Dynamic dropdown fetching for active products and payment offices scoped to user BPR.
+- [x] Client-side form validations for positive amounts, mandatory birth dates, products, and tenors.
+- [x] Connected to authoritative backend calculation API `POST /api/v1/calculations` with instant KPI feedback and eligibility status display.
+- [x] Created unit & component test suite in `tests/calculator-form.test.tsx` (5/5 tests passing).
+
 ---
 
 ## TASK-045 — Currency & Percentage Components
