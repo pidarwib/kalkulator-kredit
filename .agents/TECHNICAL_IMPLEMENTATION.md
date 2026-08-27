@@ -1446,6 +1446,15 @@ Authenticated
 → Application
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented route protection middleware (`src/middleware.ts`) handling all frontend and API routes.
+- [x] Redirected unauthenticated users attempting to access protected frontend pages to `/login` with full `callbackUrl` search parameter.
+- [x] Redirected already authenticated users attempting to access `/login` back to the application (`/` or target callback URL).
+- [x] Blocked unauthenticated requests to protected API routes (`/api/v1/*`) with standard 401 Unauthorized JSON format.
+- [x] Maintained the strict security boundary on backend endpoints where authorization and data scopes remain authoritative.
+- [x] Created comprehensive integration test suite in `tests/protected-routes.test.ts` (10/10 tests passing).
+
 ---
 
 ## TASK-043 — Permission-aware Navigation
