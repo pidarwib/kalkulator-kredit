@@ -1252,6 +1252,14 @@ Eligibility
 Response
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented route handler `POST /api/v1/calculations` with authentication & RBAC permission `CREDIT_CALCULATE`.
+- [x] Enforced tenant scoping (non-Super Admin restricted to products in their own BPR).
+- [x] Validated input with `CalculationInputValidator` and executed orchestration flow via `CreditCalculationOrchestrator`.
+- [x] Persisted calculation audit record to database `Calculation` table.
+- [x] Integration tests created in `tests/calculations-api.test.ts` (7/7 tests passing).
+
 ---
 
 ## TASK-036 — Calculation Response Contract
@@ -1269,6 +1277,12 @@ Review
  ↓
 Implementation
 ```
+
+### Acceptance Criteria
+
+- [x] Verified response structure conforming strictly to `API_SPECIFICATION.md` Section 23 (root properties, `input`, `result`, `insurance`, `fees`, `versions`, `breakdown`, `schedule`).
+- [x] Handled error responses conforming strictly to Section 25 (422 `CALCULATION_VALIDATION_ERROR`, 403 Forbidden, 401 Unauthorized).
+- [x] Created dedicated contract test suite `tests/calculation-response-contract.test.ts` (3/3 tests passing).
 
 ---
 
@@ -1300,6 +1314,13 @@ Jika critical operation gagal:
 ROLLBACK
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented route handler `POST /api/v1/simulations` with permission `SIMULATION_CREATE` and tenant scoping.
+- [x] Implemented `SimulationRepository.createWithDetails` executing atomic database transaction `db.$transaction` covering `Simulation`, `CalculationResult`, `AmortizationSchedule` (all periods), `EligibilityReason`, and `AuditLog`.
+- [x] Guaranteed rollback if any critical write fails.
+- [x] Created comprehensive integration & transaction tests in `tests/create-simulation-api.test.ts` (7/7 tests passing).
+
 ---
 
 ## TASK-038 — Simulation List
@@ -1323,6 +1344,13 @@ Date
 
 Scope wajib diterapkan.
 
+### Acceptance Criteria
+
+- [x] Implemented route handler `GET /api/v1/simulations` with permission `SIMULATION_VIEW`.
+- [x] Implemented server-side data scoping (`MARKETING`: own simulations only, `ADMIN`: BPR scope, `SUPER_ADMIN`: all).
+- [x] Implemented search (`simulationNumber`, `customerName`, `customerNip`), filter (`status`, `productId`, `createdFrom`, `createdTo`), and pagination (`page`, `pageSize`, `total`, `totalPages`).
+- [x] Created comprehensive test suite in `tests/list-simulations-api.test.ts` (9/9 tests passing).
+
 ---
 
 ## TASK-039 — Simulation Detail
@@ -1345,6 +1373,13 @@ Versions
 Amortization
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented route handler `GET /api/v1/simulations/:id` with permission `SIMULATION_VIEW`.
+- [x] Enforced ownership & BPR scoping checks before returning simulation details (returning 403 for unauthorized access).
+- [x] Returned complete detailed payload: `input`, `result`, `breakdown`, `insurance`, `fees`, `versions`, and `schedule`.
+- [x] Created comprehensive detail test suite in `tests/simulation-detail-api.test.ts` (9/9 tests passing).
+
 ---
 
 ## TASK-040 — Simulation Archive/Delete
@@ -1356,6 +1391,13 @@ Default:
 ```text
 Soft Delete
 ```
+
+### Acceptance Criteria
+
+- [x] Implemented `DELETE /api/v1/simulations/:id` for soft deleting (`deletedAt = now()`, `status = ARCHIVED`) with audit log and permission `SIMULATION_DELETE`.
+- [x] Implemented `POST /api/v1/simulations/:id/archive` for explicit archiving lifecycle with audit log.
+- [x] Enforced ownership and multi-tenant scoping for deletion/archival.
+- [x] Created comprehensive test suite in `tests/simulation-delete-archive-api.test.ts` (7/7 tests passing).
 
 ---
 
