@@ -1733,6 +1733,16 @@ Date
 Product
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented comprehensive Simulation List Page (`src/app/simulations/page.tsx`) matching `DESIGN.md` §17.
+- [x] Integrated server-side search input supporting simulation numbers, customer names, and NIP.
+- [x] Implemented multi-criteria filtering by Eligibility Status (`OK` / `OVER`), Product, and Date Ranges.
+- [x] Implemented data table displaying Simulation Number, Creation Date, Customer Name/NIP, Product Name/Method, Principal, Installment, DBR, and Status Badge.
+- [x] Supported scope-aware data retrieval (Marketing sees own simulations, Admin sees BPR simulations, Super Admin sees all).
+- [x] Added pagination navigation (Page X of Y, First/Prev/Next/Last controls) and empty state with new simulation prompt.
+- [x] Created unit & component test suite in `tests/simulation-list-ui.test.tsx` (3/3 tests passing).
+
 ---
 
 ## TASK-053 — Simulation Detail Page
