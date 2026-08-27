@@ -969,6 +969,17 @@ FLAT
 ANNUITY
 ```
 
+### Acceptance Criteria
+
+- [x] Backend calculation input validation schema implemented with Zod and deep business rule checks.
+- [x] Product validation (verifying active product exists and active `CreditParameter` and `FeeParameter` are present).
+- [x] Hierarchical relationship validation (payment office must belong to the product's BPR).
+- [x] Debtor age validation (minimum 18 years, strictly before 85 years boundary, past birth date check).
+- [x] Financial input validation (netSalary > 0, otherIncome >= 0, requestedPrincipal > 0, tenorMonths 1-360, method `FLAT` or `ANNUITY`).
+- [x] `calculateAgeBreakdown` helper implemented for exact calendar year, month, and day calculations.
+- [x] Input transformation to strongly-typed domain objects (`Money`, `Tenor`, `InterestRate`, `CalculationMethod`).
+- [x] Unit test suite covering valid flows and boundary/error conditions (9/9 tests passing).
+
 ---
 
 ## TASK-027 — Flat Calculation Strategy
