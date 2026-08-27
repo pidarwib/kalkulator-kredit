@@ -1792,6 +1792,17 @@ BPR
 Branch
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented comprehensive User Management page (`src/app/users/page.tsx`) matching `DESIGN.md` §18 and RBAC rules.
+- [x] Implemented multi-criteria search and filters (search by name/username/email, role filter, status filter, BPR & Branch filters for Super Admin).
+- [x] Implemented structured user table displaying Name, Username, Role Badge, BPR & Branch, Status Badge, Last Login timestamp, and Action buttons.
+- [x] Integrated Create User modal with client-side field validation, role scoping, BPR/Branch linking, and password visibility toggle.
+- [x] Integrated Edit User modal for updating full name, email, phone, role, status, branch, and optional password reset (while keeping username immutable).
+- [x] Integrated Delete confirmation modal enforcing soft deletion and preventing self-deletion.
+- [x] Handled permission-aware action buttons and access restrictions (`USER_VIEW`, `USER_CREATE`, `USER_UPDATE`, `USER_DELETE`).
+- [x] Created unit & component test suite in `tests/user-management-ui.test.tsx` (4/4 tests passing).
+
 ---
 
 ## TASK-055 — Product Management UI
