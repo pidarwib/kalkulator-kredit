@@ -1869,6 +1869,17 @@ Version
 Activation
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented comprehensive Insurance Management page (`src/app/master/insurance/page.tsx`) matching `DESIGN.md` §20.
+- [x] Implemented Product Selector linking to specific loan products across BPRs.
+- [x] Integrated Live Quick Rate Lookup tool supporting exact lookup and dual age lookup rules (`/api/v1/products/:id/insurance-rates/lookup`).
+- [x] Implemented structured Insurance Rate matrix table (`Umur | Tenor | Rate % | Versi | Status | Periode Efektif`) with right-aligned numeric rate formatting (`font-mono tabular-nums`).
+- [x] Implemented multi-criteria filters (Filter by Age, Tenor Years, Version, and Active/Archive Status).
+- [x] Integrated versioned batch CSV/JSON Import modal with client-side parser, versioning label, effective date, and audit log integration.
+- [x] Handled permission-aware action buttons and access restrictions (`MASTER_VIEW`, `MASTER_UPDATE`, `INSURANCE_VIEW`).
+- [x] Created unit & component test suite in `tests/insurance-management-ui.test.tsx` (3/3 tests passing).
+
 ---
 
 ## TASK-058 — Fee Management UI
