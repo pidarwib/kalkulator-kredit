@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { AppLayout, PageHeader } from "@/components/layout";
 import { CalculatorForm, CalculatorFormValues } from "@/components/calculator/calculator-form";
 import { ResultSummary, CalculationResultData } from "@/components/calculator/result-summary";
+import { ResultDetail } from "@/components/calculator/result-detail";
 import { AlertTriangle, CheckCircle } from "lucide-react";
 
 export default function CalculatorPage() {
@@ -141,13 +142,17 @@ export default function CalculatorPage() {
           isLoading={isLoading}
         />
 
-        {/* Dedicated Result Summary Component */}
+        {/* Dedicated Result Summary & Detail Breakdown */}
         {calculationResult && (
-          <ResultSummary
-            data={calculationResult}
-            onSaveSimulation={handleSaveSimulation}
-            isSaving={isSaving}
-          />
+          <div className="space-y-6 animate-in fade-in duration-300">
+            <ResultSummary
+              data={calculationResult}
+              onSaveSimulation={handleSaveSimulation}
+              isSaving={isSaving}
+            />
+
+            <ResultDetail data={calculationResult} />
+          </div>
         )}
       </div>
     </AppLayout>

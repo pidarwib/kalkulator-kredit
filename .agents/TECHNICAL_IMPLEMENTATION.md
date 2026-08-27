@@ -1647,6 +1647,17 @@ Fees
 Net Disbursement
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented comprehensive `ResultDetail` component (`src/components/calculator/result-detail.tsx`) with accessible tabbed sections according to `DESIGN.md` §15.
+- [x] Implemented **Ringkasan** section showing applicant biodata, financial inputs, and facility parameters.
+- [x] Implemented **Kelayakan** section showing DBR evaluation vs 90% threshold, age at maturity vs max limit, and maximum borrowing capacity.
+- [x] Implemented **Angsuran** section showing interest/margin structure, principal monthly, margin monthly, and total repayment.
+- [x] Implemented **Insurance** section showing life insurance premium, fronting fee, reserve fund, and total insurance charges.
+- [x] Implemented **Rincian Biaya** section showing itemized admin, provision, verification, flagging, hold installment, settlement payoff, other fee, and total deductions.
+- [x] Implemented **Terima Bersih** section showing net loan disbursement computation, displaying `-` if calculation status is `OVER` without altering raw calculation data.
+- [x] Created unit & component test suite in `tests/result-detail.test.tsx` (7/7 tests passing).
+
 ---
 
 ## TASK-050 — Amortization UI
