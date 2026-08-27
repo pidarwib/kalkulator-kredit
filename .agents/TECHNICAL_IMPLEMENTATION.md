@@ -994,14 +994,16 @@ Formula wajib mengikuti `BUSINESS_RULES.md`.
 
 Jangan menulis formula baru berdasarkan asumsi agent.
 
-### Tests
+### Acceptance Criteria
 
-- normal principal;
-- normal tenor;
-- boundary tenor;
-- boundary principal;
-- rounding;
-- zero/invalid values.
+- [x] `FlatCalculationStrategy` implemented adhering strictly to `BUSINESS_RULES.md` Sections 9, 10, 12, 16, 18, 19.
+- [x] Unified 10.8% annual margin rate / 0.9% flat monthly margin rate.
+- [x] Installment calculation: `Angsuran Pokok = Plafon / Tenor`, `Angsuran Margin = Plafon * Margin Bulanan`, `Angsuran Bulanan = Pokok + Margin`.
+- [x] Capacity calculation: `Plafon Maksimum Kemampuan = (Maksimal Angsuran * Tenor) / (1 + (Margin Flat Bulanan * Tenor))`.
+- [x] Downward floor rounding to nearest Rp 100.000 increment (`FLOOR(capacity, 100.000)`).
+- [x] Final maximum principal: `MIN(Plafon Kemampuan Dibulatkan, Batas Plafon Produk)`.
+- [x] DBR & validation flags (`isDbrValid: dbr <= maxDbr`, `isPrincipalValid: principal <= maxPrincipalFinal`).
+- [x] Unit test suite covering normal principal/tenor, boundary tenor (1m, 120m), boundary principal, rounding, high DBR, and zero/invalid edge cases (8/8 tests passing).
 
 ---
 
