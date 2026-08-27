@@ -1093,6 +1093,15 @@ Fee harus berasal dari active parameter:
 - `adminFee` = dari rule/parameter produk
 - `provisionFee` = dari rule/parameter produk
 
+### Acceptance Criteria
+
+- [x] `FeeCalculationService` implemented adhering strictly to `BUSINESS_RULES.md` Sections 31-37.
+- [x] Fee components separated (admin fee, provision fee, verification fee, flagging fee, installment deductions, other fee, settlement payoff).
+- [x] `Total Biaya` formula implemented: `adminFee + provisionFee + insuranceCharge + verificationFee + installmentDeduction + otherFee` (strictly excludes flagging fee and settlement payoff to prevent double deduction).
+- [x] `Terima Bersih` (Net Disbursement) formula implemented: `principal - totalDeductions` where `totalDeductions = totalFees + flaggingFee + settlementPayoff + otherDeductions`.
+- [x] Payment office fee parameter override support with automatic fallback to default BPR product fee parameter.
+- [x] Unit and integration tests covering standard calculations, payoff deductions, payment office fallback, and error handling (4/4 tests passing).
+
 ---
 
 ## TASK-031 — DBR Calculation
