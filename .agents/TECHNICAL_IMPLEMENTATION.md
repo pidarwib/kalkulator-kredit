@@ -1598,6 +1598,14 @@ Result
 
 Disable button selama request.
 
+### Acceptance Criteria
+
+- [x] Implemented complete calculation execution flow: `validate form -> POST /api/v1/calculations -> loading state -> render calculation results`.
+- [x] Disabled submit button and displayed active loading spinner and status text during in-flight network request.
+- [x] Handled error responses in full accordance with the API error contract (`400`, `404`, `422`, `500`), displaying clear contextual alert banner while resetting stale results.
+- [x] Integrated seamlessly with backend calculations engine and database parameters.
+- [x] Created end-to-end component test suite in `tests/calculate-action.test.tsx` (3/3 tests passing).
+
 ---
 
 # 19. PHASE 13 — RESULT UI
