@@ -902,6 +902,16 @@ reference_source
 
 bukan AI estimation.
 
+### Acceptance Criteria
+
+- [x] `GET /api/v1/products/:id/insurance-rates` implemented with pagination and `age`/`tenorYears` filter (MASTER_VIEW).
+- [x] `GET /api/v1/products/:id/insurance-rates/lookup` implemented with strict exact and dual lookup (Current Age vs Next Age MAX rule) (MASTER_VIEW).
+- [x] Strict rule enforced: missing insurance rates return 404 NOT_FOUND error (no AI guessing or estimation).
+- [x] `POST /api/v1/products/:id/insurance-rates/import` implemented with versioned batch import and non-overwriting historical preservation (MASTER_UPDATE).
+- [x] Validation against duplicate (age, tenor) pairs and out-of-bound values in import payload.
+- [x] Structured audit logging for insurance rate import (`INSURANCE_RATE_IMPORT`).
+- [x] Admin data scoping: Admin restricted to own BPR and Marketing rejected with 403 Forbidden.
+
 ---
 
 # 14. PHASE 8 — CALCULATION DOMAIN
