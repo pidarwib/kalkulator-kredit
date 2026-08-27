@@ -933,6 +933,18 @@ Eligibility
 
 Tujuannya mencegah percampuran unit/value.
 
+### Acceptance Criteria
+
+- [x] `Money` Value Object implemented with high precision decimal math, rounding, increments, and IDR formatting.
+- [x] `Percentage` Value Object implemented with decimal, percent, basis points, arithmetic, and application to Money.
+- [x] `Tenor` Value Object implemented with months, years, and insurance lookup ceiling rule (`CEILING(months / 12)`).
+- [x] `InterestRate` Value Object implemented with unified 10.8% annual rate, 0.9% monthly rate, flat interest, and PMT formula.
+- [x] `Installment` Domain Object implemented with FLAT and ANNUITY breakdowns and upfront deduction logic.
+- [x] `InsurancePremium` Domain Object implemented with base premium, fronting fee, reserve charge, and combined rate.
+- [x] `Fee` Domain Object implemented with admin fee, provision fee, verification fee, flagging fee, total fees, and net disbursement formula.
+- [x] `Eligibility` Domain Object implemented with multi-rule failure aggregation (DBR, Age at maturity < 85y, Tenor, Principal, Net disbursement).
+- [x] Unit test suite covering all 8 domain models/value objects (16/16 tests passing).
+
 ---
 
 ## TASK-026 — Calculation Input Validator
