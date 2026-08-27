@@ -5,18 +5,15 @@ import {
   Calculator,
   User,
   Calendar,
-  DollarSign,
   Layers,
   Building2,
   Clock,
-  Percent,
-  AlertCircle,
-  Loader2,
   RotateCcw,
   Sparkles,
-  Info,
+  Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { CurrencyInput, NumberInput } from "@/components/ui";
 
 export interface CalculatorFormValues {
   customerName?: string;
@@ -66,22 +63,22 @@ export function CalculatorForm({
   const [customerName, setCustomerName] = useState(initialValues?.customerName || "");
   const [customerNip, setCustomerNip] = useState(initialValues?.customerNip || "");
   const [birthDate, setBirthDate] = useState(initialValues?.birthDate || "1975-01-01");
-  const [netSalary, setNetSalary] = useState<number>(initialValues?.netSalary || 8500000);
-  const [otherIncome, setOtherIncome] = useState<number>(initialValues?.otherIncome || 0);
-  const [otherDeductions, setOtherDeductions] = useState<number>(initialValues?.otherDeductions || 0);
+  const [netSalary, setNetSalary] = useState<number>(initialValues?.netSalary ?? 8500000);
+  const [otherIncome, setOtherIncome] = useState<number>(initialValues?.otherIncome ?? 0);
+  const [otherDeductions, setOtherDeductions] = useState<number>(initialValues?.otherDeductions ?? 0);
   const [productId, setProductId] = useState(initialValues?.productId || "");
   const [paymentOfficeId, setPaymentOfficeId] = useState(initialValues?.paymentOfficeId || "");
   const [requestedPrincipal, setRequestedPrincipal] = useState<number>(
-    initialValues?.requestedPrincipal || 100000000
+    initialValues?.requestedPrincipal ?? 100000000
   );
-  const [tenorMonths, setTenorMonths] = useState<number>(initialValues?.tenorMonths || 60);
+  const [tenorMonths, setTenorMonths] = useState<number>(initialValues?.tenorMonths ?? 60);
   const [calculationMethod, setCalculationMethod] = useState<"FLAT" | "ANNUITY">(
     initialValues?.calculationMethod || "FLAT"
   );
   const [settlementPayoff, setSettlementPayoff] = useState<number>(
-    initialValues?.settlementPayoff || 0
+    initialValues?.settlementPayoff ?? 0
   );
-  const [otherFee, setOtherFee] = useState<number>(initialValues?.otherFee || 0);
+  const [otherFee, setOtherFee] = useState<number>(initialValues?.otherFee ?? 0);
 
   // Options State
   const [products, setProducts] = useState<ProductOption[]>([]);
@@ -188,11 +185,6 @@ export function CalculatorForm({
     setSettlementPayoff(0);
     setOtherFee(0);
     setValidationErrors({});
-  };
-
-  // Helper formatting for Indonesian Rupiah
-  const formatCurrency = (val: number) => {
-    return new Intl.NumberFormat("id-ID").format(val);
   };
 
   return (
@@ -320,95 +312,40 @@ export function CalculatorForm({
 
             {/* Gaji Bersih */}
             <div>
-              <label
-                htmlFor="netSalary"
-                className="block text-xs font-semibold text-slate-700 mb-1"
-              >
-                Gaji Bersih / Pensiun (Rp) <span className="text-red-500">*</span>
-              </label>
-              <div className="relative rounded-lg shadow-sm">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <span className="text-xs font-semibold text-slate-500">Rp</span>
-                </div>
-                <input
-                  id="netSalary"
-                  name="netSalary"
-                  type="number"
-                  min="0"
-                  step="1000"
-                  required
-                  value={netSalary || ""}
-                  onChange={(e) => setNetSalary(Number(e.target.value) || 0)}
-                  placeholder="0"
-                  className={cn(
-                    "block w-full rounded-lg border pl-9 pr-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-1",
-                    validationErrors.netSalary
-                      ? "border-red-300 focus:border-red-600 focus:ring-red-600"
-                      : "border-slate-300 focus:border-indigo-600 focus:ring-indigo-600"
-                  )}
-                />
-              </div>
-              <div className="mt-1 text-[11px] text-slate-500">
-                Display: Rp {formatCurrency(netSalary)}
-              </div>
+              <CurrencyInput
+                id="netSalary"
+                name="netSalary"
+                label="Gaji Bersih / Pensiun (Rp)"
+                required
+                value={netSalary}
+                onChange={(val) => setNetSalary(val)}
+                error={validationErrors.netSalary}
+                placeholder="8.500.000"
+              />
             </div>
 
             {/* Penghasilan Lain */}
             <div>
-              <label
-                htmlFor="otherIncome"
-                className="block text-xs font-semibold text-slate-700 mb-1"
-              >
-                Penghasilan Lain (Rp)
-              </label>
-              <div className="relative rounded-lg shadow-sm">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <span className="text-xs font-semibold text-slate-500">Rp</span>
-                </div>
-                <input
-                  id="otherIncome"
-                  name="otherIncome"
-                  type="number"
-                  min="0"
-                  step="1000"
-                  value={otherIncome || ""}
-                  onChange={(e) => setOtherIncome(Number(e.target.value) || 0)}
-                  placeholder="0"
-                  className="block w-full rounded-lg border border-slate-300 pl-9 pr-3 py-2 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-600"
-                />
-              </div>
-              <div className="mt-1 text-[11px] text-slate-500">
-                Display: Rp {formatCurrency(otherIncome)}
-              </div>
+              <CurrencyInput
+                id="otherIncome"
+                name="otherIncome"
+                label="Penghasilan Lain (Rp)"
+                value={otherIncome}
+                onChange={(val) => setOtherIncome(val)}
+                placeholder="0"
+              />
             </div>
 
             {/* Potongan Lain */}
             <div>
-              <label
-                htmlFor="otherDeductions"
-                className="block text-xs font-semibold text-slate-700 mb-1"
-              >
-                Potongan Pinjaman Luar (Rp)
-              </label>
-              <div className="relative rounded-lg shadow-sm">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <span className="text-xs font-semibold text-slate-500">Rp</span>
-                </div>
-                <input
-                  id="otherDeductions"
-                  name="otherDeductions"
-                  type="number"
-                  min="0"
-                  step="1000"
-                  value={otherDeductions || ""}
-                  onChange={(e) => setOtherDeductions(Number(e.target.value) || 0)}
-                  placeholder="0"
-                  className="block w-full rounded-lg border border-slate-300 pl-9 pr-3 py-2 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-600"
-                />
-              </div>
-              <div className="mt-1 text-[11px] text-slate-500">
-                Display: Rp {formatCurrency(otherDeductions)}
-              </div>
+              <CurrencyInput
+                id="otherDeductions"
+                name="otherDeductions"
+                label="Potongan Pinjaman Luar (Rp)"
+                value={otherDeductions}
+                onChange={(val) => setOtherDeductions(val)}
+                placeholder="0"
+              />
             </div>
           </div>
         </div>
@@ -539,42 +476,16 @@ export function CalculatorForm({
 
             {/* Plafon Kredit Dimohon */}
             <div>
-              <label
-                htmlFor="requestedPrincipal"
-                className="block text-xs font-semibold text-slate-700 mb-1"
-              >
-                Plafon Dimohon (Rp) <span className="text-red-500">*</span>
-              </label>
-              <div className="relative rounded-lg shadow-sm">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <span className="text-xs font-semibold text-slate-500">Rp</span>
-                </div>
-                <input
-                  id="requestedPrincipal"
-                  name="requestedPrincipal"
-                  type="number"
-                  min="1000000"
-                  step="500000"
-                  required
-                  value={requestedPrincipal || ""}
-                  onChange={(e) => setRequestedPrincipal(Number(e.target.value) || 0)}
-                  placeholder="100000000"
-                  className={cn(
-                    "block w-full rounded-lg border pl-9 pr-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-1",
-                    validationErrors.requestedPrincipal
-                      ? "border-red-300 focus:border-red-600 focus:ring-red-600"
-                      : "border-slate-300 focus:border-indigo-600 focus:ring-indigo-600"
-                  )}
-                />
-              </div>
-              <div className="mt-1 text-[11px] text-slate-500 font-medium">
-                Plafon: Rp {formatCurrency(requestedPrincipal)}
-              </div>
-              {validationErrors.requestedPrincipal && (
-                <p className="mt-1 text-xs text-red-600">
-                  {validationErrors.requestedPrincipal}
-                </p>
-              )}
+              <CurrencyInput
+                id="requestedPrincipal"
+                name="requestedPrincipal"
+                label="Plafon Dimohon (Rp)"
+                required
+                value={requestedPrincipal}
+                onChange={(val) => setRequestedPrincipal(val)}
+                error={validationErrors.requestedPrincipal}
+                placeholder="100.000.000"
+              />
             </div>
 
             {/* Tenor dalam Bulan */}
@@ -585,25 +496,18 @@ export function CalculatorForm({
               >
                 Tenor Pinjaman (Bulan) <span className="text-red-500">*</span>
               </label>
-              <div className="relative rounded-lg shadow-sm">
-                <input
-                  id="tenorMonths"
-                  name="tenorMonths"
-                  type="number"
-                  min="1"
-                  max="360"
-                  required
-                  value={tenorMonths || ""}
-                  onChange={(e) => setTenorMonths(Number(e.target.value) || 0)}
-                  placeholder="60"
-                  className={cn(
-                    "block w-full rounded-lg border px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-1",
-                    validationErrors.tenorMonths
-                      ? "border-red-300 focus:border-red-600 focus:ring-red-600"
-                      : "border-slate-300 focus:border-indigo-600 focus:ring-indigo-600"
-                  )}
-                />
-              </div>
+              <NumberInput
+                id="tenorMonths"
+                name="tenorMonths"
+                required
+                min={1}
+                max={360}
+                value={tenorMonths}
+                onChange={(val) => setTenorMonths(val)}
+                suffix="Bulan"
+                error={validationErrors.tenorMonths}
+                placeholder="60"
+              />
               {/* Quick Tenor Buttons */}
               <div className="mt-1.5 flex flex-wrap gap-1">
                 {tenorShortcuts.map((t) => (
@@ -626,31 +530,14 @@ export function CalculatorForm({
 
             {/* Pelunasan / Takeover */}
             <div>
-              <label
-                htmlFor="settlementPayoff"
-                className="block text-xs font-semibold text-slate-700 mb-1"
-              >
-                Pelunasan Takeover (Rp)
-              </label>
-              <div className="relative rounded-lg shadow-sm">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <span className="text-xs font-semibold text-slate-500">Rp</span>
-                </div>
-                <input
-                  id="settlementPayoff"
-                  name="settlementPayoff"
-                  type="number"
-                  min="0"
-                  step="10000"
-                  value={settlementPayoff || ""}
-                  onChange={(e) => setSettlementPayoff(Number(e.target.value) || 0)}
-                  placeholder="0"
-                  className="block w-full rounded-lg border border-slate-300 pl-9 pr-3 py-2 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-600"
-                />
-              </div>
-              <div className="mt-1 text-[11px] text-slate-500">
-                Pelunasan: Rp {formatCurrency(settlementPayoff)}
-              </div>
+              <CurrencyInput
+                id="settlementPayoff"
+                name="settlementPayoff"
+                label="Pelunasan Takeover (Rp)"
+                value={settlementPayoff}
+                onChange={(val) => setSettlementPayoff(val)}
+                placeholder="0"
+              />
             </div>
           </div>
         </div>

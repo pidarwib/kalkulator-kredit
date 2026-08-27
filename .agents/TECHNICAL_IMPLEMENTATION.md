@@ -1545,6 +1545,15 @@ Display → formatted
 Internal → numeric/decimal
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented reusable financial input components (`CurrencyInput`, `PercentageInput`, `NumberInput`) in `src/components/ui/`.
+- [x] Separated presentation layer formatting (e.g. `Rp 100.000.000`, `12,5%`) from internal numeric/decimal states (`100000000`, `0.125`) adhering strictly to `DESIGN.md` §10.
+- [x] Provided helper formatting and parsing utilities (`formatCurrencyValue`, `parseCurrencyValue`, `formatPercentageValue`, `parsePercentageValue`).
+- [x] Supported accessibility features, prefixes (`Rp`), suffixes (`%`, `Bulan`), inline error states, and helper texts.
+- [x] Integrated `CurrencyInput` and `NumberInput` cleanly into `CalculatorForm`.
+- [x] Created unit & component test suite in `tests/currency-percentage-components.test.tsx` (7/7 tests passing).
+
 ---
 
 ## TASK-046 — Calculator Validation UX
