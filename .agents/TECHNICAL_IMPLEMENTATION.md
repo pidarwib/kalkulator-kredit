@@ -1174,6 +1174,16 @@ Implement calculation maximum principal berdasarkan business rule.
 
 Jangan membuat formula sendiri.
 
+### Acceptance Criteria
+
+- [x] `MaximumPrincipalService` implemented strictly following `BUSINESS_RULES.md` Sections 8, 16, 17, 18, 19.
+- [x] Method-specific capacity formulas (FLAT installment capacity vs ANNUITY Present Value $PV$ capacity).
+- [x] Age-limited maximum tenor evaluation (debitor tenure capped at remaining months until 84 years 11 months).
+- [x] Floor rounding to nearest Rp 100.000 increment (`FLOOR(capacity, 100000)`).
+- [x] Final maximum principal capped at product limit (`MIN(roundedCapacity, maxProductPrincipal)`).
+- [x] Requested principal validation check against final maximum principal.
+- [x] Unit test suite covering FLAT capacity, ANNUITY capacity, age constraint effects, and boundary checks (5/5 tests passing).
+
 ---
 
 ## TASK-034 — Amortization Engine
