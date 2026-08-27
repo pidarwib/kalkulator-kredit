@@ -182,3 +182,87 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+/**
+ * GET /api/v1/simulations
+ *
+ * Lists simulations with search, filtering, pagination, and server-side data scoping.
+ *
+ * Permission: SIMULATION_VIEW (Super Admin, Admin, Marketing)
+ * Data Scope:
+ * - MARKETING: Only own simulations (createdBy = caller.id)
+ * - ADMIN: Simulations within caller's BPR (bprId = caller.bprId)
+ * - SUPER_ADMIN: All simulations across all BPRs
+ */
+export async function GET(request: NextRequest) {
+  const auth = await requirePermission(request, "SIMULATION_VIEW");
+  if (!auth.allowed) {
+    return auth.errorResponse!;
+  }
+
+  const caller = auth.user!;
+  const { searchParams } = new URL(request.url);
+
+  const page = parseInt(searchParams.get("page") || "1", 10) || 1;
+  const pageSize = parseInt(searchParams.get("pageSize") || "20", 10) || 20;
+  const search = searchParams.get("search") || undefined;
+  const status = searchParams.get("status") || undefined;
+  const productId = searchParams.get("productId") || undefined;
+  const createdFrom = searchParams.get("createdFrom") || undefined;
+  const createdTo = searchParams.get("createdTo") || undefined;
+
+  let bprId: string | undefined = undefined;
+  let branchId: string | undefined = undefined;
+  let createdBy: string | undefined = undefined;
+
+  if (caller.role === "MARKETING") {
+    // Marketing is strictly scoped to own simulations
+    createdBy = caller.id;
+    bprId = caller.bprId || undefined;
+  } else if (caller.role === "ADMIN") {
+    // Admin is scoped to their BPR
+    bprId = caller.bprId || undefined;
+    branchId = caller.branchId || searchParams.get("branchId") || undefined;
+    createdBy = searchParams.get("createdBy") || undefined;
+  } else if (caller.role === "SUPER_ADMIN") {
+    // Super admin can filter across all scopes
+    bprId = searchParams.get("bprId") || undefined;
+    branchId = searchParams.get("branchId") || undefined;
+    createdBy = searchParams.get("createdBy") || undefined;
+  }
+
+  try {
+    const result = await SimulationRepository.list({
+      page,
+      pageSize,
+      search,
+      status,
+      productId,
+      bprId,
+      branchId,
+      createdBy,
+      createdFrom,
+      createdTo,
+    });
+
+    return NextResponse.json(
+      {
+        data: result.items,
+        meta: result.meta,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("[List Simulations API] Error:", error);
+    return NextResponse.json(
+      {
+        error: {
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Terjadi kesalahan internal server saat mengambil daftar simulasi.",
+        },
+      },
+      { status: 500 }
+    );
+  }
+}
+

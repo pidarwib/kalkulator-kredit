@@ -189,4 +189,117 @@ export class SimulationRepository {
       },
     });
   }
+
+  /**
+   * Lists simulations with search, filter, scoping, and pagination.
+   */
+  static async list(params: ListSimulationsParams = {}) {
+    const page = Math.max(1, params.page || 1);
+    const pageSize = Math.min(100, Math.max(1, params.pageSize || 20));
+    const skip = (page - 1) * pageSize;
+
+    const where = this.buildWhereClause(params);
+
+    const [items, total] = await Promise.all([
+      db.simulation.findMany({
+        where,
+        skip,
+        take: pageSize,
+        orderBy: { createdAt: "desc" },
+        include: {
+          user: { select: { id: true, username: true, fullName: true } },
+          bpr: { select: { id: true, code: true, name: true } },
+          branch: { select: { id: true, code: true, name: true } },
+          paymentOffice: { select: { id: true, code: true, name: true } },
+          product: { select: { id: true, code: true, name: true } },
+          calculationResult: {
+            select: {
+              requestedPrincipal: true,
+              installment: true,
+              dbr: true,
+              netDisbursement: true,
+              eligibilityStatus: true,
+            },
+          },
+        },
+      }),
+      db.simulation.count({ where }),
+    ]);
+
+    const totalPages = Math.ceil(total / pageSize);
+
+    return {
+      items,
+      meta: {
+        page,
+        pageSize,
+        total,
+        totalPages,
+      },
+    };
+  }
+
+  private static buildWhereClause(params: ListSimulationsParams): Prisma.SimulationWhereInput {
+    const where: Prisma.SimulationWhereInput = {};
+
+    if (!params.includeDeleted) {
+      where.deletedAt = null;
+    }
+
+    if (params.bprId) {
+      where.bprId = params.bprId;
+    }
+
+    if (params.branchId) {
+      where.branchId = params.branchId;
+    }
+
+    if (params.createdBy) {
+      where.createdBy = params.createdBy;
+    }
+
+    if (params.productId) {
+      where.productId = params.productId;
+    }
+
+    if (params.status) {
+      where.status = params.status;
+    }
+
+    if (params.createdFrom || params.createdTo) {
+      where.createdAt = {};
+      if (params.createdFrom) {
+        where.createdAt.gte = new Date(params.createdFrom);
+      }
+      if (params.createdTo) {
+        where.createdAt.lte = new Date(params.createdTo);
+      }
+    }
+
+    if (params.search && params.search.trim() !== "") {
+      const search = params.search.trim();
+      where.OR = [
+        { simulationNumber: { contains: search, mode: "insensitive" } },
+        { customerName: { contains: search, mode: "insensitive" } },
+        { customerNip: { contains: search, mode: "insensitive" } },
+      ];
+    }
+
+    return where;
+  }
 }
+
+export interface ListSimulationsParams {
+  page?: number;
+  pageSize?: number;
+  search?: string;
+  status?: string;
+  productId?: string;
+  bprId?: string;
+  branchId?: string;
+  createdBy?: string;
+  createdFrom?: Date | string;
+  createdTo?: Date | string;
+  includeDeleted?: boolean;
+}
+
