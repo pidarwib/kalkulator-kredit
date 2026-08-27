@@ -59,9 +59,6 @@ export function NumberInput({
     let num = allowDecimals ? parseFloat(displayValue) : parseInt(displayValue, 10);
     if (isNaN(num)) num = 0;
 
-    if (min !== undefined && num < min) num = min;
-    if (max !== undefined && num > max) num = max;
-
     onChange(num);
     setDisplayValue(String(num));
     if (props.onBlur) props.onBlur(e);

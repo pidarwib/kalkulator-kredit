@@ -1569,6 +1569,15 @@ Business validation
 
 Error harus dekat dengan field terkait.
 
+### Acceptance Criteria
+
+- [x] Implemented rich, contextual inline field-level validations (required, invalid format, out-of-range, and business rules) directly under each affected input container.
+- [x] Enforced applicant age constraints (minimum 20 years, maximum before 85 years) with dynamic age calculation and real-time badge feedback (`Usia: X thn Y bln`).
+- [x] Enforced principal range constraints (minimum Rp 1.000.000, positive values, maximum Rp 1.000.000.000) and tenor bounds (1 to 360 months).
+- [x] Displayed clear error icons, red border states, and descriptive error copy close to each field (avoiding relying solely on detached global toasts).
+- [x] Preserved user interaction responsiveness with live validation feedback on blur and submit.
+- [x] Created unit & component test suite in `tests/calculator-validation-ux.test.tsx` (4/4 tests passing).
+
 ---
 
 ## TASK-047 — Calculate Action

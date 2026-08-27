@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   Calculator,
   User,
@@ -11,6 +11,9 @@ import {
   RotateCcw,
   Sparkles,
   Loader2,
+  AlertCircle,
+  CheckCircle2,
+  Info,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { CurrencyInput, NumberInput } from "@/components/ui";
@@ -85,6 +88,7 @@ export function CalculatorForm({
   const [paymentOffices, setPaymentOffices] = useState<PaymentOfficeOption[]>([]);
   const [isLoadingOptions, setIsLoadingOptions] = useState(true);
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+  const [touchedFields, setTouchedFields] = useState<Record<string, boolean>>({});
 
   // Quick tenor options in months
   const tenorShortcuts = [12, 24, 36, 48, 60, 84, 120];
@@ -121,37 +125,166 @@ export function CalculatorForm({
     loadOptions();
   }, []);
 
-  // Form Submission Validation
-  const validateForm = (): boolean => {
-    const errors: Record<string, string> = {};
+  // Compute live applicant age
+  const applicantAgeInfo = useMemo(() => {
+    if (!birthDate) return null;
+    const bDate = new Date(birthDate);
+    if (isNaN(bDate.getTime())) return null;
 
-    if (!birthDate) {
-      errors.birthDate = "Tanggal lahir wajib diisi.";
+    const now = new Date();
+    let years = now.getFullYear() - bDate.getFullYear();
+    let months = now.getMonth() - bDate.getMonth();
+    if (months < 0 || (months === 0 && now.getDate() < bDate.getDate())) {
+      years--;
+      months += 12;
+    }
+    return { years, months, isValidDate: true };
+  }, [birthDate]);
+
+  // Comprehensive Field-level Validation Logic
+  const runValidation = (field?: string): Record<string, string> => {
+    const errors: Record<string, string> = { ...validationErrors };
+
+    // 1. Birth Date & Age
+    if (!field || field === "birthDate") {
+      if (!birthDate || birthDate.trim() === "") {
+        errors.birthDate = "Tanggal lahir wajib diisi.";
+      } else {
+        const bDate = new Date(birthDate);
+        if (isNaN(bDate.getTime()) || !/^\d{4}-\d{2}-\d{2}$/.test(birthDate)) {
+          errors.birthDate = "Format tanggal lahir tidak valid (YYYY-MM-DD).";
+        } else {
+          const now = new Date();
+          let years = now.getFullYear() - bDate.getFullYear();
+          let months = now.getMonth() - bDate.getMonth();
+          if (months < 0 || (months === 0 && now.getDate() < bDate.getDate())) {
+            years--;
+            months += 12;
+          }
+
+          if (years < 20) {
+            errors.birthDate = `Usia pemohon (${years} thn) kurang dari batas minimum 20 tahun.`;
+          } else if (years >= 85) {
+            errors.birthDate = `Usia pemohon (${years} thn) melebihi batas usia maksimal sebelum 85 tahun.`;
+          } else {
+            delete errors.birthDate;
+          }
+        }
+      }
     }
 
-    if (!productId) {
-      errors.productId = "Produk kredit wajib dipilih.";
+    // 2. Product ID
+    if (!field || field === "productId") {
+      if (!productId || productId.trim() === "") {
+        errors.productId = "Produk kredit wajib dipilih.";
+      } else {
+        delete errors.productId;
+      }
     }
 
-    if (!requestedPrincipal || requestedPrincipal <= 0) {
-      errors.requestedPrincipal = "Plafon kredit harus lebih dari Rp 0.";
+    // 3. Requested Principal
+    if (!field || field === "requestedPrincipal") {
+      if (requestedPrincipal === undefined || requestedPrincipal === null || isNaN(requestedPrincipal)) {
+        errors.requestedPrincipal = "Plafon kredit wajib diisi.";
+      } else if (requestedPrincipal <= 0) {
+        errors.requestedPrincipal = "Plafon kredit harus lebih besar dari Rp 0.";
+      } else if (requestedPrincipal < 1000000) {
+        errors.requestedPrincipal = "Plafon kredit minimal pengajuan adalah Rp 1.000.000.";
+      } else if (requestedPrincipal > 1000000000) {
+        errors.requestedPrincipal = "Plafon kredit melebihi batas sistem maksimal Rp 1.000.000.000.";
+      } else {
+        delete errors.requestedPrincipal;
+      }
     }
 
-    if (!tenorMonths || tenorMonths < 1) {
-      errors.tenorMonths = "Tenor pinjaman minimal 1 bulan.";
+    // 4. Tenor Months
+    if (!field || field === "tenorMonths") {
+      if (tenorMonths === undefined || tenorMonths === null || isNaN(tenorMonths)) {
+        errors.tenorMonths = "Tenor pinjaman wajib diisi.";
+      } else if (tenorMonths < 1) {
+        errors.tenorMonths = "Tenor pinjaman minimal 1 bulan.";
+      } else if (tenorMonths > 360) {
+        errors.tenorMonths = "Tenor pinjaman maksimal 360 bulan (30 tahun).";
+      } else {
+        delete errors.tenorMonths;
+      }
     }
 
-    if (netSalary === undefined || netSalary === null || netSalary < 0) {
-      errors.netSalary = "Gaji bersih tidak boleh bernilai negatif.";
+    // 5. Net Salary
+    if (!field || field === "netSalary") {
+      if (netSalary === undefined || netSalary === null || isNaN(netSalary)) {
+        errors.netSalary = "Gaji bersih wajib diisi.";
+      } else if (netSalary <= 0) {
+        errors.netSalary = "Gaji bersih harus lebih besar dari Rp 0.";
+      } else {
+        delete errors.netSalary;
+      }
+    }
+
+    // 6. Other Income
+    if (!field || field === "otherIncome") {
+      if (otherIncome < 0) {
+        errors.otherIncome = "Penghasilan lain tidak boleh bernilai negatif.";
+      } else {
+        delete errors.otherIncome;
+      }
+    }
+
+    // 7. Other Deductions
+    if (!field || field === "otherDeductions") {
+      if (otherDeductions < 0) {
+        errors.otherDeductions = "Potongan pinjaman luar tidak boleh bernilai negatif.";
+      } else {
+        delete errors.otherDeductions;
+      }
+    }
+
+    // 8. Settlement Payoff
+    if (!field || field === "settlementPayoff") {
+      if (settlementPayoff < 0) {
+        errors.settlementPayoff = "Nilai pelunasan takeover tidak boleh bernilai negatif.";
+      } else {
+        delete errors.settlementPayoff;
+      }
+    }
+
+    // 9. NIP Format (optional)
+    if (!field || field === "customerNip") {
+      if (customerNip && !/^[A-Za-z0-9\s-]+$/.test(customerNip)) {
+        errors.customerNip = "NIP hanya boleh mengandung huruf, angka, spasi, atau tanda hubung.";
+      } else {
+        delete errors.customerNip;
+      }
     }
 
     setValidationErrors(errors);
-    return Object.keys(errors).length === 0;
+    return errors;
+  };
+
+  const markTouched = (fieldName: string) => {
+    setTouchedFields((prev) => ({ ...prev, [fieldName]: true }));
+    runValidation(fieldName);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validateForm()) return;
+
+    // Mark all fields as touched
+    const allTouched: Record<string, boolean> = {
+      birthDate: true,
+      productId: true,
+      requestedPrincipal: true,
+      tenorMonths: true,
+      netSalary: true,
+      otherIncome: true,
+      otherDeductions: true,
+      settlementPayoff: true,
+      customerNip: true,
+    };
+    setTouchedFields(allTouched);
+
+    const errors = runValidation();
+    if (Object.keys(errors).length > 0) return;
 
     await onCalculate({
       customerName: customerName.trim() || undefined,
@@ -185,11 +318,13 @@ export function CalculatorForm({
     setSettlementPayoff(0);
     setOtherFee(0);
     setValidationErrors({});
+    setTouchedFields({});
   };
 
   return (
     <form
       onSubmit={handleSubmit}
+      noValidate
       data-testid="calculator-form"
       className={cn(
         "rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8",
@@ -215,7 +350,7 @@ export function CalculatorForm({
           onClick={handleReset}
           disabled={isLoading}
           data-testid="calculator-reset-btn"
-          className="inline-flex items-center gap-1.5 self-start sm:self-auto rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-400 disabled:opacity-50"
+          className="inline-flex items-center gap-1.5 self-start sm:self-auto rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-400 disabled:opacity-50 transition-colors"
         >
           <RotateCcw className="h-3.5 w-3.5" />
           <span>Reset Form</span>
@@ -272,20 +407,42 @@ export function CalculatorForm({
                 name="customerNip"
                 type="text"
                 value={customerNip}
-                onChange={(e) => setCustomerNip(e.target.value)}
+                onChange={(e) => {
+                  setCustomerNip(e.target.value);
+                  if (touchedFields.customerNip) runValidation("customerNip");
+                }}
+                onBlur={() => markTouched("customerNip")}
                 placeholder="Contoh: 196101011985031001"
-                className="block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-600"
+                className={cn(
+                  "block w-full rounded-lg border px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1",
+                  validationErrors.customerNip
+                    ? "border-red-300 focus:border-red-600 focus:ring-red-600 bg-red-50/20"
+                    : "border-slate-300 focus:border-indigo-600 focus:ring-indigo-600"
+                )}
               />
+              {validationErrors.customerNip && (
+                <p className="mt-1 text-xs text-red-600 flex items-center gap-1 font-medium">
+                  <AlertCircle className="h-3.5 w-3.5 shrink-0" />
+                  <span>{validationErrors.customerNip}</span>
+                </p>
+              )}
             </div>
 
             {/* Tanggal Lahir */}
             <div>
-              <label
-                htmlFor="birthDate"
-                className="block text-xs font-semibold text-slate-700 mb-1"
-              >
-                Tanggal Lahir <span className="text-red-500">*</span>
-              </label>
+              <div className="flex items-center justify-between mb-1">
+                <label
+                  htmlFor="birthDate"
+                  className="block text-xs font-semibold text-slate-700"
+                >
+                  Tanggal Lahir <span className="text-red-500">*</span>
+                </label>
+                {applicantAgeInfo && applicantAgeInfo.isValidDate && (
+                  <span className="text-[11px] font-semibold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-100">
+                    Usia: {applicantAgeInfo.years} thn {applicantAgeInfo.months} bln
+                  </span>
+                )}
+              </div>
               <div className="relative rounded-lg shadow-sm">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                   <Calendar className="h-4 w-4 text-slate-400" />
@@ -296,17 +453,28 @@ export function CalculatorForm({
                   type="date"
                   required
                   value={birthDate}
-                  onChange={(e) => setBirthDate(e.target.value)}
+                  onChange={(e) => {
+                    setBirthDate(e.target.value);
+                    if (touchedFields.birthDate) runValidation("birthDate");
+                  }}
+                  onBlur={() => markTouched("birthDate")}
                   className={cn(
                     "block w-full rounded-lg border pl-9 pr-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-1",
                     validationErrors.birthDate
-                      ? "border-red-300 focus:border-red-600 focus:ring-red-600"
+                      ? "border-red-300 focus:border-red-600 focus:ring-red-600 bg-red-50/20 text-red-900"
                       : "border-slate-300 focus:border-indigo-600 focus:ring-indigo-600"
                   )}
                 />
               </div>
-              {validationErrors.birthDate && (
-                <p className="mt-1 text-xs text-red-600">{validationErrors.birthDate}</p>
+              {validationErrors.birthDate ? (
+                <p className="mt-1 text-xs text-red-600 flex items-center gap-1 font-medium">
+                  <AlertCircle className="h-3.5 w-3.5 shrink-0" />
+                  <span>{validationErrors.birthDate}</span>
+                </p>
+              ) : (
+                <p className="mt-1 text-[11px] text-slate-500">
+                  Digunakan untuk perhitungan batas usia dan premi asuransi jiwa.
+                </p>
               )}
             </div>
 
@@ -318,9 +486,14 @@ export function CalculatorForm({
                 label="Gaji Bersih / Pensiun (Rp)"
                 required
                 value={netSalary}
-                onChange={(val) => setNetSalary(val)}
+                onChange={(val) => {
+                  setNetSalary(val);
+                  if (touchedFields.netSalary) runValidation("netSalary");
+                }}
+                onBlur={() => markTouched("netSalary")}
                 error={validationErrors.netSalary}
                 placeholder="8.500.000"
+                helperText="Total penghasilan bersih bulanan yang sah."
               />
             </div>
 
@@ -331,8 +504,14 @@ export function CalculatorForm({
                 name="otherIncome"
                 label="Penghasilan Lain (Rp)"
                 value={otherIncome}
-                onChange={(val) => setOtherIncome(val)}
+                onChange={(val) => {
+                  setOtherIncome(val);
+                  if (touchedFields.otherIncome) runValidation("otherIncome");
+                }}
+                onBlur={() => markTouched("otherIncome")}
+                error={validationErrors.otherIncome}
                 placeholder="0"
+                helperText="Pendapatan tambahan rutin (opsional)."
               />
             </div>
 
@@ -343,8 +522,14 @@ export function CalculatorForm({
                 name="otherDeductions"
                 label="Potongan Pinjaman Luar (Rp)"
                 value={otherDeductions}
-                onChange={(val) => setOtherDeductions(val)}
+                onChange={(val) => {
+                  setOtherDeductions(val);
+                  if (touchedFields.otherDeductions) runValidation("otherDeductions");
+                }}
+                onBlur={() => markTouched("otherDeductions")}
+                error={validationErrors.otherDeductions}
                 placeholder="0"
+                helperText="Kewajiban angsuran di bank/koperasi lain."
               />
             </div>
           </div>
@@ -376,12 +561,16 @@ export function CalculatorForm({
                   name="productId"
                   required
                   value={productId}
-                  onChange={(e) => setProductId(e.target.value)}
+                  onChange={(e) => {
+                    setProductId(e.target.value);
+                    if (touchedFields.productId) runValidation("productId");
+                  }}
+                  onBlur={() => markTouched("productId")}
                   disabled={isLoadingOptions}
                   className={cn(
                     "block w-full rounded-lg border px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-1 bg-white",
                     validationErrors.productId
-                      ? "border-red-300 focus:border-red-600 focus:ring-red-600"
+                      ? "border-red-300 focus:border-red-600 focus:ring-red-600 bg-red-50/20"
                       : "border-slate-300 focus:border-indigo-600 focus:ring-indigo-600"
                   )}
                 >
@@ -395,8 +584,15 @@ export function CalculatorForm({
                   ))}
                 </select>
               </div>
-              {validationErrors.productId && (
-                <p className="mt-1 text-xs text-red-600">{validationErrors.productId}</p>
+              {validationErrors.productId ? (
+                <p className="mt-1 text-xs text-red-600 flex items-center gap-1 font-medium">
+                  <AlertCircle className="h-3.5 w-3.5 shrink-0" />
+                  <span>{validationErrors.productId}</span>
+                </p>
+              ) : (
+                <p className="mt-1 text-[11px] text-slate-500">
+                  Memuat suku bunga, provisi, admin, dan matriks asuransi.
+                </p>
               )}
             </div>
 
@@ -423,6 +619,9 @@ export function CalculatorForm({
                   </option>
                 ))}
               </select>
+              <p className="mt-1 text-[11px] text-slate-500">
+                Pilih jika terdapat biaya flagging / verifikasi khusus.
+              </p>
             </div>
 
             {/* Metode Perhitungan */}
@@ -482,9 +681,14 @@ export function CalculatorForm({
                 label="Plafon Dimohon (Rp)"
                 required
                 value={requestedPrincipal}
-                onChange={(val) => setRequestedPrincipal(val)}
+                onChange={(val) => {
+                  setRequestedPrincipal(val);
+                  if (touchedFields.requestedPrincipal) runValidation("requestedPrincipal");
+                }}
+                onBlur={() => markTouched("requestedPrincipal")}
                 error={validationErrors.requestedPrincipal}
                 placeholder="100.000.000"
+                helperText="Besaran pokok pinjaman yang diajukan debitur."
               />
             </div>
 
@@ -503,7 +707,11 @@ export function CalculatorForm({
                 min={1}
                 max={360}
                 value={tenorMonths}
-                onChange={(val) => setTenorMonths(val)}
+                onChange={(val) => {
+                  setTenorMonths(val);
+                  if (touchedFields.tenorMonths) runValidation("tenorMonths");
+                }}
+                onBlur={() => markTouched("tenorMonths")}
                 suffix="Bulan"
                 error={validationErrors.tenorMonths}
                 placeholder="60"
@@ -514,7 +722,10 @@ export function CalculatorForm({
                   <button
                     key={t}
                     type="button"
-                    onClick={() => setTenorMonths(t)}
+                    onClick={() => {
+                      setTenorMonths(t);
+                      if (touchedFields.tenorMonths) runValidation("tenorMonths");
+                    }}
                     className={cn(
                       "rounded px-1.5 py-0.5 text-[10px] font-medium transition-colors border",
                       tenorMonths === t
@@ -535,8 +746,14 @@ export function CalculatorForm({
                 name="settlementPayoff"
                 label="Pelunasan Takeover (Rp)"
                 value={settlementPayoff}
-                onChange={(val) => setSettlementPayoff(val)}
+                onChange={(val) => {
+                  setSettlementPayoff(val);
+                  if (touchedFields.settlementPayoff) runValidation("settlementPayoff");
+                }}
+                onBlur={() => markTouched("settlementPayoff")}
+                error={validationErrors.settlementPayoff}
                 placeholder="0"
+                helperText="Estimasi kewajiban pelunasan fasilitas sebelumnya."
               />
             </div>
           </div>
