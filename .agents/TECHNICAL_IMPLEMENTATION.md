@@ -1155,6 +1155,15 @@ Tenor exceeds maximum
 Principal exceeds maximum
 ```
 
+### Acceptance Criteria
+
+- [x] `EligibilityService` implemented adhering strictly to `BUSINESS_RULES.md` Sections 38-41.
+- [x] Status decision logic: `OK` if all criteria pass, `OVER` if any rule fails.
+- [x] Comprehensive multi-rule checking: DBR ($\le 90\%$), Age at maturity ($< 85$ years / $\le 84$y 11m), Tenor ($\le \text{final max tenor}$), Principal ($\le \text{final max principal}$), and Net Disbursement ($> 0$).
+- [x] Multi-reason aggregation per Section 40: collects all failure reasons without premature early return.
+- [x] Exact boundary testing: 90.00% DBR $\rightarrow$ OK, 120m tenor $\rightarrow$ OK, 200M principal $\rightarrow$ OK.
+- [x] Unit test suite covering all single-rule failures, multiple simultaneous violations, and exact boundary cases (8/8 tests passing).
+
 ---
 
 ## TASK-033 — Maximum Principal Calculation
