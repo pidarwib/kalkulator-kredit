@@ -162,3 +162,113 @@ export async function GET(
     );
   }
 }
+
+/**
+ * DELETE /api/v1/simulations/:id
+ *
+ * Soft deletes a simulation record and updates status to ARCHIVED.
+ * Writes audit log automatically.
+ *
+ * Permission: SIMULATION_DELETE (Super Admin, Admin, Marketing)
+ * Data Scope:
+ * - MARKETING: Only own simulation
+ * - ADMIN: Simulation within caller's BPR
+ * - SUPER_ADMIN: All simulations
+ */
+export async function DELETE(
+  request: NextRequest,
+  { params }: RouteParams
+) {
+  // 1. Authentication & Permission Check
+  const auth = await requirePermission(request, "SIMULATION_DELETE");
+  if (!auth.allowed) {
+    return auth.errorResponse!;
+  }
+
+  const caller = auth.user!;
+  const simulationId = params.id;
+
+  if (!simulationId) {
+    return NextResponse.json(
+      {
+        error: {
+          code: "INVALID_SIMULATION_ID",
+          message: "ID simulasi tidak valid.",
+        },
+      },
+      { status: 400 }
+    );
+  }
+
+  try {
+    // 2. Verify simulation exists
+    const simulation = await SimulationRepository.findById(simulationId);
+
+    if (!simulation || simulation.deletedAt !== null) {
+      return NextResponse.json(
+        {
+          error: {
+            code: "SIMULATION_NOT_FOUND",
+            message: `Simulasi dengan ID '${simulationId}' tidak ditemukan.`,
+          },
+        },
+        { status: 404 }
+      );
+    }
+
+    // 3. Ownership / Scope Check
+    if (caller.role === "MARKETING") {
+      if (simulation.createdBy !== caller.id) {
+        return forbiddenResponse(
+          "Anda tidak memiliki hak untuk menghapus simulasi pengguna lain."
+        );
+      }
+    } else if (caller.role === "ADMIN") {
+      if (caller.bprId && simulation.bprId !== caller.bprId) {
+        return forbiddenResponse(
+          "Anda tidak memiliki hak untuk menghapus simulasi BPR lain."
+        );
+      }
+    }
+
+    // 4. Extract IP & User-Agent for Audit Trail
+    const ipAddress =
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      request.headers.get("x-real-ip") ||
+      null;
+    const userAgent = request.headers.get("user-agent") || null;
+
+    // 5. Execute Soft Delete
+    const deleted = await SimulationRepository.softDelete(
+      simulationId,
+      caller.id,
+      ipAddress,
+      userAgent
+    );
+
+    return NextResponse.json(
+      {
+        data: {
+          id: deleted.id,
+          simulationNumber: deleted.simulationNumber,
+          status: deleted.status,
+          deletedAt: deleted.deletedAt,
+          message: "Simulasi berhasil dihapus.",
+        },
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("[Delete Simulation API] Error:", error);
+    return NextResponse.json(
+      {
+        error: {
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Terjadi kesalahan internal server saat menghapus simulasi.",
+        },
+      },
+      { status: 500 }
+    );
+  }
+}
+

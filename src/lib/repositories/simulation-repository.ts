@@ -191,6 +191,95 @@ export class SimulationRepository {
   }
 
   /**
+   * Soft deletes a simulation record and logs the audit trail.
+   */
+  static async softDelete(
+    id: string,
+    userId: string,
+    ipAddress?: string | null,
+    userAgent?: string | null
+  ): Promise<Simulation> {
+    return await db.$transaction(async (tx) => {
+      const existing = await tx.simulation.findUnique({ where: { id } });
+      if (!existing) {
+        throw new Error(`Simulation with ID '${id}' not found.`);
+      }
+
+      const updated = await tx.simulation.update({
+        where: { id },
+        data: {
+          deletedAt: new Date(),
+          status: "ARCHIVED",
+        },
+      });
+
+      await tx.auditLog.create({
+        data: {
+          userId,
+          action: "SIMULATION_DELETE",
+          entityType: "Simulation",
+          entityId: id,
+          oldValue: {
+            status: existing.status,
+            deletedAt: existing.deletedAt,
+          },
+          newValue: {
+            status: updated.status,
+            deletedAt: updated.deletedAt,
+          },
+          ipAddress: ipAddress || null,
+          userAgent: userAgent || null,
+        },
+      });
+
+      return updated;
+    });
+  }
+
+  /**
+   * Sets simulation status to ARCHIVED and logs the audit trail.
+   */
+  static async archive(
+    id: string,
+    userId: string,
+    ipAddress?: string | null,
+    userAgent?: string | null
+  ): Promise<Simulation> {
+    return await db.$transaction(async (tx) => {
+      const existing = await tx.simulation.findUnique({ where: { id } });
+      if (!existing) {
+        throw new Error(`Simulation with ID '${id}' not found.`);
+      }
+
+      const updated = await tx.simulation.update({
+        where: { id },
+        data: {
+          status: "ARCHIVED",
+        },
+      });
+
+      await tx.auditLog.create({
+        data: {
+          userId,
+          action: "SIMULATION_ARCHIVE",
+          entityType: "Simulation",
+          entityId: id,
+          oldValue: {
+            status: existing.status,
+          },
+          newValue: {
+            status: updated.status,
+          },
+          ipAddress: ipAddress || null,
+          userAgent: userAgent || null,
+        },
+      });
+
+      return updated;
+    });
+  }
+
+  /**
    * Lists simulations with search, filter, scoping, and pagination.
    */
   static async list(params: ListSimulationsParams = {}) {
