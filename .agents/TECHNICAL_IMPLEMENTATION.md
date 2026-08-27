@@ -1206,13 +1206,13 @@ Installment
 Closing Balance
 ```
 
-### Tests
+### Acceptance Criteria
 
-- first period;
-- middle period;
-- final period;
-- ending balance;
-- rounding reconciliation.
+- [x] `AmortizationEngine` implemented supporting both `FLAT` and `ANNUITY` methods.
+- [x] Complete breakdown generated for every period: `period`, `paymentDate`, `openingBalance`, `principalPortion`, `interestPortion`, `installment`, `closingBalance`.
+- [x] Accurate final period balance reconciliation guaranteeing `closingBalance === 0` at period $n$.
+- [x] Schedule summary providing aggregated totals: `totalPrincipalPaid`, `totalInterestPaid`, `totalInstallmentsPaid`.
+- [x] Unit test suite covering first, middle, and final period breakdowns, 120-month long schedules, boundary 1-month tenor, and edge cases (5/5 tests passing).
 
 ---
 
