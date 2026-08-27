@@ -8,3 +8,4 @@ export * from "./dbr-service";
 export * from "./eligibility-service";
 export * from "./maximum-principal-service";
 export * from "./amortization-engine";
+export * from "./credit-calculation-orchestrator";

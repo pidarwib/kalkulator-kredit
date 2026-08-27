@@ -7,8 +7,10 @@ import { Prisma } from "@prisma/client";
 export class Money {
   private readonly _amount: Prisma.Decimal;
 
-  constructor(amount: Prisma.Decimal | number | string | Money) {
-    if (amount instanceof Money) {
+  constructor(amount: Prisma.Decimal | number | string | Money | null | undefined) {
+    if (amount === null || amount === undefined) {
+      this._amount = new Prisma.Decimal(0);
+    } else if (amount instanceof Money) {
       this._amount = amount.amount;
     } else if (amount instanceof Prisma.Decimal) {
       this._amount = amount;
@@ -20,7 +22,10 @@ export class Money {
   /**
    * Creates a Money instance.
    */
-  static from(amount: Money | Prisma.Decimal | number | string): Money {
+  static from(amount: Money | Prisma.Decimal | number | string | null | undefined): Money {
+    if (amount === null || amount === undefined) {
+      return Money.zero();
+    }
     if (amount instanceof Money) {
       return amount;
     }
