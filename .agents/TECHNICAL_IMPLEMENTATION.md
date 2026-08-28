@@ -2267,6 +2267,17 @@ STOP
 
 Jangan mengubah formula agar test pass sebelum penyebab perbedaan ditemukan.
 
+### Acceptance Criteria
+
+- [x] Implemented strict Excel Financial Regression test suite (`tests/excel-financial-regression.test.ts`) benchmarking application financial engine against BPR reference workbook formulas (`Ref`, `Asuransi`, `Simulasi BPR`).
+- [x] Verified FLAT installment formula (Plafon/Tenor + Plafon * 0.9%/mo) yielding exact Rp 1.283.333,33 installment on 50M loan / 60 months at 10.8% p.a.
+- [x] Verified ANNUITY / PMT installment formula using high-precision unified monthly rate (10.8% / 12 = 0.9%) yielding exact PMT Rp 3.264.408,57 on 100M loan / 36 months.
+- [x] Verified Maximum Principal calculation across both methods (FLAT Capacity: Rp 200M capped product ceiling; ANNUITY PV Capacity: Rp 96.7M floor rounded to 100k).
+- [x] Verified Insurance Engine dual-age lookup (MAX(Current, Next Age)), fronting (5%), and reserve (10%) premium calculations.
+- [x] Verified Fee Engine & Net Disbursement single-deduction flagging fee isolation (Flagging fee deducted strictly once, not aggregated in `totalFees` to prevent double deduction).
+- [x] Verified DBR and Tenor exact boundary threshold evaluations (89.99% -> OK, 90.00% -> OK, 90.01% -> OVER; 120mo -> OK, 121mo -> OVER).
+- [x] Verified Amortization schedule balance convergence to exactly Rp 0,00 closing balance on final period for both Flat and Annuity methods (11/11 tests passing).
+
 ---
 
 ## TASK-072 — Boundary Testing
