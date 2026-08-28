@@ -2151,6 +2151,15 @@ RBAC
 Calculation
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented multi-layer End-to-End Service Integration Test suite (`tests/end-to-end-service-integration.test.ts`) validating API routes, Prisma database, JWT authentication, RBAC boundaries, calculation orchestration, and audit logs.
+- [x] Verified authentication and session lifecycle (`POST /api/v1/auth/login`, `GET /api/v1/auth/me`) issuing valid HTTP-only session cookies and resolving permissions.
+- [x] Verified full database-driven credit calculation orchestration (`POST /api/v1/calculations`) executing input validation, insurance lookup, fee computation, flat/annuity strategy, DBR evaluation, eligibility checks, and amortization schedule generation.
+- [x] Verified simulation persistence and retrieval lifecycle (`POST /api/v1/simulations`, `GET /api/v1/simulations/:id`, `GET /api/v1/simulations` list with search & status filters).
+- [x] Verified tenant and role-based data isolation (Admin BPR-A views own BPR simulations, Admin BPR-B receives 403 Forbidden when attempting cross-tenant access).
+- [x] Verified immutable audit log recording and query endpoint integration (`GET /api/v1/audit-logs`) with tenant-scoped filtering (10/10 tests passing).
+
 ---
 
 ## TASK-069 — End-to-End Tests
