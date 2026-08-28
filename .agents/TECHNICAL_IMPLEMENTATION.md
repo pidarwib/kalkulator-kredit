@@ -2020,6 +2020,16 @@ Expected:
 DENY
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented comprehensive Privilege Escalation security test suite (`tests/security-privilege-escalation.test.ts`) covering role injection, self-elevation, cross-tenant escape, and JWT forgery.
+- [x] Verified that non-Super Admin attempting to create a user with `SUPER_ADMIN` or `ADMIN` role is rejected with 403 Forbidden.
+- [x] Verified that Admin attempting to elevate their own account or other users to `SUPER_ADMIN` via `PATCH /api/v1/users/:id` is rejected with 403 Forbidden.
+- [x] Verified that Marketing user attempting user management or role elevation is rejected with 403 Forbidden.
+- [x] Verified that tenant escape attempts (tampering `bprId`) are rejected with 403 Forbidden.
+- [x] Verified that cryptographic JWT session tampering (unsigned tokens, forged secrets, non-existent user IDs) are rejected with 401 Unauthorized.
+- [x] Verified that operational endpoints (`/calculations`, `/simulations`) ignore injected client headers/payloads and strictly enforce server-authenticated session scope (15/15 tests passing).
+
 ---
 
 ## TASK-064 — Financial Parameter Tampering Test
