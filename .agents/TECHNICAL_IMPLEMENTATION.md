@@ -1938,6 +1938,15 @@ Recent Simulation
 
 Maximum 2–4 KPI cards.
 
+### Acceptance Criteria
+
+- [x] Implemented Marketing Dashboard API endpoint (`src/app/api/v1/dashboard/marketing/route.ts`) returning simulations today, total lifetime simulations, eligibility rate, principal sums, and recent 5 simulations scoped to the marketing officer.
+- [x] Implemented clean, data-first Marketing Dashboard page (`src/app/page.tsx`) adhering strictly to `DESIGN.md` (no visual clutter, maximum 3 focused KPI cards).
+- [x] Displayed 3 Primary KPI cards: Simulasi Hari Ini (count & today's principal sum), Total Simulasi (count & cumulative principal sum), and Tingkat Kelayakan DBR (eligibility percentage & eligible/over capacity breakdown).
+- [x] Implemented Recent Simulations table with right-aligned tabular numbers, eligibility status badges (`ELIGIBLE` / `OVER CAPACITY`), and direct detail action buttons (`/simulations/[id]`).
+- [x] Integrated prominent CTA button (`+ Mulai Simulasi Baru`) directly routing to `/calculator`.
+- [x] Created unit & component test suite in `tests/marketing-dashboard.test.tsx` (2/2 tests passing).
+
 ---
 
 ## TASK-061 — Admin Dashboard

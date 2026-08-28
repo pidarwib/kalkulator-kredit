@@ -1,92 +1,432 @@
-import { AppLayout, PageHeader } from "@/components/layout";
-import { Calculator, FileSpreadsheet, PlusCircle, ArrowRight } from "lucide-react";
-import Link from "next/link";
+"use client";
 
-export default function HomePage() {
+import React, { useState, useEffect, useCallback } from "react";
+import { AppLayout, PageHeader } from "@/components/layout";
+import { useAuth } from "@/lib/auth/auth-provider";
+import Link from "next/link";
+import {
+  Calculator,
+  PlusCircle,
+  FileSpreadsheet,
+  CheckCircle2,
+  AlertTriangle,
+  Clock,
+  ArrowRight,
+  TrendingUp,
+  Calendar,
+  Layers,
+  ChevronRight,
+  Loader2,
+  RefreshCw,
+  Eye,
+  User,
+  ShieldCheck,
+  Percent,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+
+interface DashboardStats {
+  simulationsToday: number;
+  todayPrincipal: number;
+  totalSimulations: number;
+  totalPrincipal: number;
+  eligibleCount: number;
+  overCapacityCount: number;
+  eligibilityRate: number;
+}
+
+interface RecentSimulation {
+  id: string;
+  simulationNumber: string;
+  customerName: string;
+  customerNip?: string | null;
+  productName: string;
+  productCode?: string;
+  requestedPrincipal: number;
+  monthlyInstallment: number;
+  eligibilityStatus: "ELIGIBLE" | "OVER_CAPACITY";
+  totalDbrPercent: number;
+  createdAt: string;
+}
+
+export default function MarketingDashboardPage() {
+  const { user: currentUser } = useAuth();
+
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [recentSimulations, setRecentSimulations] = useState<RecentSimulation[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch Dashboard Metrics
+  const fetchDashboardData = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch("/api/v1/dashboard/marketing");
+      if (!res.ok) {
+        const errJson = await res.json().catch(() => ({}));
+        throw new Error(errJson.error?.message || "Gagal memuat data dashboard.");
+      }
+
+      const json = await res.json();
+      if (json.data) {
+        setStats(json.data.stats);
+        setRecentSimulations(json.data.recentSimulations || []);
+      }
+    } catch (err: any) {
+      setError(err.message || "Terjadi kesalahan saat memuat dashboard.");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, [fetchDashboardData]);
+
+  const formatRupiah = (val: number | null | undefined): string => {
+    if (val === undefined || val === null || isNaN(val)) return "Rp 0";
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      maximumFractionDigits: 0,
+    }).format(val);
+  };
+
+  const formatDate = (isoString: string): string => {
+    try {
+      const d = new Date(isoString);
+      return new Intl.DateTimeFormat("id-ID", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      }).format(d);
+    } catch {
+      return isoString;
+    }
+  };
+
   return (
     <AppLayout>
-      <PageHeader
-        title="Dashboard Simulasi Kredit"
-        description="Pusat kerja simulasi pembiayaan dan analisis kelayakan debitur BPR."
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Dashboard" }]}
-        actions={
-          <Link
-            href="/calculator"
-            className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
-            <PlusCircle className="h-4 w-4" />
-            <span>Mulai Simulasi Baru</span>
-          </Link>
-        }
-      />
-
-      {/* Quick Action / Information Cards */}
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {/* Calculator Card */}
-        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:border-indigo-200 hover:shadow-md">
+      <div className="space-y-6 pb-12">
+        {/* Welcome & Action Header */}
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-5">
           <div>
-            <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600">
-              <Calculator className="h-6 w-6" />
-            </div>
-            <h2 className="mt-4 text-base font-semibold text-slate-900">
-              Kalkulator Kredit
-            </h2>
-            <p className="mt-1 text-sm text-slate-500">
-              Hitung simulasi angsuran flat/anuitas, analisis DBR, dan cek kelayakan kredit secara real-time.
+            <h1
+              data-testid="marketing-dashboard-title"
+              className="text-xl font-bold tracking-tight text-slate-900"
+            >
+              Dashboard Simulasi Kredit
+            </h1>
+            <p className="mt-1 text-xs text-slate-500">
+              Selamat datang kembali,{" "}
+              <strong className="text-slate-800 font-semibold">
+                {currentUser?.fullName || "Petugas Marketing"}
+              </strong>
+              . Berikut ringkasan aktivitas simulasi dan kelayakan debitur Anda.
             </p>
           </div>
-          <div className="mt-6 pt-4 border-t border-slate-100">
+
+          <div className="flex items-center gap-3">
             <Link
               href="/calculator"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 hover:text-indigo-700"
+              data-testid="dashboard-start-calc-btn"
+              className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
-              <span>Buka Kalkulator</span>
-              <ArrowRight className="h-3.5 w-3.5" />
+              <PlusCircle className="h-4 w-4" />
+              <span>+ Mulai Simulasi Baru</span>
             </Link>
           </div>
         </div>
 
-        {/* Simulations Card */}
-        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:border-indigo-200 hover:shadow-md">
-          <div>
-            <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-slate-100 text-slate-700">
-              <FileSpreadsheet className="h-6 w-6" />
-            </div>
-            <h2 className="mt-4 text-base font-semibold text-slate-900">
-              Daftar Simulasi
-            </h2>
-            <p className="mt-1 text-sm text-slate-500">
-              Akses riwayat simulasi yang telah disimpan, cetak ringkasan, atau lanjutkan pengajuan.
+        {/* Loading State */}
+        {loading && (
+          <div
+            data-testid="dashboard-loading"
+            className="flex flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-sm"
+          >
+            <Loader2 className="h-7 w-7 animate-spin text-indigo-600" />
+            <p className="mt-3 text-xs font-semibold text-slate-700">
+              Memuat metrik operasional dan ringkasan simulasi...
             </p>
           </div>
-          <div className="mt-6 pt-4 border-t border-slate-100">
-            <Link
-              href="/simulations"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 hover:text-slate-900"
-            >
-              <span>Lihat Semua Simulasi</span>
-              <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
-          </div>
-        </div>
+        )}
 
-        {/* System Guidelines Card */}
-        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:col-span-2 lg:col-span-1">
-          <div>
-            <div className="inline-flex items-center gap-1.5 rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-700 border border-emerald-100">
-              Standard BPR Core
+        {/* Error State */}
+        {!loading && error && (
+          <div
+            data-testid="dashboard-error"
+            className="rounded-2xl border border-rose-200 bg-rose-50 p-6 text-center"
+          >
+            <AlertTriangle className="mx-auto h-7 w-7 text-rose-600" />
+            <h3 className="mt-2 text-xs font-bold text-rose-900">
+              Gagal Memuat Data Dashboard
+            </h3>
+            <p className="mt-1 text-xs text-rose-700">{error}</p>
+            <button
+              type="button"
+              onClick={fetchDashboardData}
+              className="mt-3 inline-flex items-center gap-1 rounded-lg bg-rose-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-rose-700 transition-colors"
+            >
+              <RefreshCw className="h-3.5 w-3.5" />
+              <span>Coba Lagi</span>
+            </button>
+          </div>
+        )}
+
+        {/* Content: 3 Clean KPI Cards + Table */}
+        {!loading && !error && (
+          <div className="space-y-6">
+            {/* 3 Primary Data-first KPI Cards (DESIGN.md §1 & §2) */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {/* Card 1: Simulasi Hari Ini */}
+              <div
+                data-testid="kpi-simulations-today"
+                className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 shadow-sm hover:border-indigo-200 transition-all"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                    Simulasi Hari Ini
+                  </span>
+                  <div className="rounded-xl bg-indigo-50 p-2 text-indigo-600">
+                    <Calendar className="h-5 w-5" />
+                  </div>
+                </div>
+
+                <div className="mt-3">
+                  <div
+                    data-testid="kpi-today-count"
+                    className="text-2xl font-bold font-mono text-slate-900"
+                  >
+                    {stats?.simulationsToday || 0}{" "}
+                    <span className="text-sm font-sans font-medium text-slate-500">
+                      Pengajuan
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-500 mt-1">
+                    Total Plafon:{" "}
+                    <strong className="font-mono font-semibold text-slate-700">
+                      {formatRupiah(stats?.todayPrincipal)}
+                    </strong>
+                  </p>
+                </div>
+              </div>
+
+              {/* Card 2: Total Akumulasi Simulasi */}
+              <div
+                data-testid="kpi-total-simulations"
+                className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 shadow-sm hover:border-indigo-200 transition-all"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                    Total Simulasi
+                  </span>
+                  <div className="rounded-xl bg-slate-100 p-2 text-slate-700">
+                    <Layers className="h-5 w-5" />
+                  </div>
+                </div>
+
+                <div className="mt-3">
+                  <div
+                    data-testid="kpi-total-count"
+                    className="text-2xl font-bold font-mono text-slate-900"
+                  >
+                    {stats?.totalSimulations || 0}{" "}
+                    <span className="text-sm font-sans font-medium text-slate-500">
+                      Simulasi
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-500 mt-1">
+                    Akumulasi Plafon:{" "}
+                    <strong className="font-mono font-semibold text-slate-700">
+                      {formatRupiah(stats?.totalPrincipal)}
+                    </strong>
+                  </p>
+                </div>
+              </div>
+
+              {/* Card 3: Tingkat Kelayakan Debitur (Eligible Rate) */}
+              <div
+                data-testid="kpi-eligibility-rate"
+                className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 shadow-sm hover:border-emerald-200 transition-all sm:col-span-2 lg:col-span-1"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                    Tingkat Kelayakan DBR
+                  </span>
+                  <div className="rounded-xl bg-emerald-50 p-2 text-emerald-600">
+                    <CheckCircle2 className="h-5 w-5" />
+                  </div>
+                </div>
+
+                <div className="mt-3">
+                  <div
+                    data-testid="kpi-eligibility-value"
+                    className="text-2xl font-bold font-mono text-emerald-700"
+                  >
+                    {stats?.eligibilityRate || 100}%
+                  </div>
+                  <p className="text-xs text-slate-500 mt-1">
+                    <span className="text-emerald-700 font-semibold">
+                      {stats?.eligibleCount || 0} Layak
+                    </span>{" "}
+                    •{" "}
+                    <span className="text-amber-700 font-semibold">
+                      {stats?.overCapacityCount || 0} Over Capacity
+                    </span>
+                  </p>
+                </div>
+              </div>
             </div>
-            <h2 className="mt-4 text-base font-semibold text-slate-900">
-              Prinsip Perhitungan
-            </h2>
-            <p className="mt-1 text-sm text-slate-500">
-              Perhitungan angsuran dan kelayakan debitur diproses langsung oleh authoritative calculation engine backend sesuai parameter aktif BPR.
-            </p>
+
+            {/* Recent Simulations Section (DESIGN.md §16 & §17) */}
+            <div className="space-y-3 pt-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-indigo-600" />
+                  <h2
+                    data-testid="recent-simulations-title"
+                    className="text-base font-bold text-slate-900"
+                  >
+                    Simulasi Terbaru
+                  </h2>
+                </div>
+
+                <Link
+                  href="/simulations"
+                  data-testid="view-all-simulations-link"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition-colors"
+                >
+                  <span>Lihat Semua Simulasi</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table
+                    data-testid="recent-simulations-table"
+                    className="w-full text-left text-xs border-collapse"
+                  >
+                    <thead className="bg-slate-50 text-slate-600 font-bold uppercase tracking-wider text-[11px] border-b border-slate-200">
+                      <tr>
+                        <th className="py-3 px-4">No. Simulasi</th>
+                        <th className="py-3 px-4">Nasabah</th>
+                        <th className="py-3 px-4">Produk Kredit</th>
+                        <th className="py-3 px-4 text-right">Plafon Diajukan</th>
+                        <th className="py-3 px-4 text-right">Angsuran / Bln</th>
+                        <th className="py-3 px-4 text-center">Status Kelayakan</th>
+                        <th className="py-3 px-4">Waktu Dibuat</th>
+                        <th className="py-3 px-4 text-center w-24">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 font-medium">
+                      {recentSimulations.length === 0 ? (
+                        <tr>
+                          <td
+                            colSpan={8}
+                            data-testid="dashboard-empty-simulations"
+                            className="py-12 text-center text-slate-400"
+                          >
+                            <Calculator className="mx-auto h-8 w-8 text-slate-300" />
+                            <p className="mt-2 text-xs font-semibold text-slate-600">
+                              Belum ada simulasi kredit yang disimpan.
+                            </p>
+                            <p className="text-[11px] text-slate-400 mt-0.5">
+                              Mulai hitung simulasi debitur pertama Anda menggunakan kalkulator.
+                            </p>
+                            <Link
+                              href="/calculator"
+                              className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-indigo-700"
+                            >
+                              <PlusCircle className="h-3.5 w-3.5" />
+                              <span>Mulai Simulasi Baru</span>
+                            </Link>
+                          </td>
+                        </tr>
+                      ) : (
+                        recentSimulations.map((sim) => (
+                          <tr
+                            key={sim.id}
+                            data-testid={`recent-row-${sim.id}`}
+                            className="hover:bg-slate-50/80 transition-colors"
+                          >
+                            {/* Simulation Number */}
+                            <td className="py-3 px-4 font-mono font-bold text-indigo-950">
+                              {sim.simulationNumber}
+                            </td>
+
+                            {/* Customer Name & NIP */}
+                            <td className="py-3 px-4">
+                              <div className="font-bold text-slate-900">
+                                {sim.customerName}
+                              </div>
+                              {sim.customerNip && (
+                                <div className="text-[10px] text-slate-400 font-mono">
+                                  NIP: {sim.customerNip}
+                                </div>
+                              )}
+                            </td>
+
+                            {/* Product */}
+                            <td className="py-3 px-4 text-slate-700">
+                              <div>{sim.productName}</div>
+                            </td>
+
+                            {/* Requested Principal (Right-aligned numbers per DESIGN.md §16) */}
+                            <td className="py-3 px-4 text-right font-mono font-bold text-slate-900 tabular-nums">
+                              {formatRupiah(sim.requestedPrincipal)}
+                            </td>
+
+                            {/* Monthly Installment (Right-aligned numbers) */}
+                            <td className="py-3 px-4 text-right font-mono text-slate-800 tabular-nums">
+                              {formatRupiah(sim.monthlyInstallment)}
+                            </td>
+
+                            {/* Eligibility Badge */}
+                            <td className="py-3 px-4 text-center">
+                              {sim.eligibilityStatus === "ELIGIBLE" ? (
+                                <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700">
+                                  <span className="h-1 w-1 rounded-full bg-emerald-500" />
+                                  LAYAK (ELIGIBLE)
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-[10px] font-bold text-amber-700">
+                                  <span className="h-1 w-1 rounded-full bg-amber-500" />
+                                  OVER CAPACITY
+                                </span>
+                              )}
+                            </td>
+
+                            {/* Timestamp */}
+                            <td className="py-3 px-4 text-slate-500 text-[11px] whitespace-nowrap">
+                              {formatDate(sim.createdAt)}
+                            </td>
+
+                            {/* Action Detail Link */}
+                            <td className="py-3 px-4 text-center">
+                              <Link
+                                href={`/simulations/${sim.id}`}
+                                data-testid={`view-detail-btn-${sim.id}`}
+                                className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50 hover:text-indigo-600 transition-colors shadow-sm"
+                              >
+                                <Eye className="h-3.5 w-3.5" />
+                                <span>Detail</span>
+                              </Link>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-400">
-            Versi Sistem: v1.0.0 (Foundation)
-          </div>
-        </div>
+        )}
       </div>
     </AppLayout>
   );
