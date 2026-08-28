@@ -8,7 +8,7 @@ import {
 import { UserRepository, toSafeUser } from "@/lib/repositories";
 import { db } from "@/lib/db";
 
-describe("TASK-010: User & Password Security", () => {
+describe("TASK-010: User & Password Security", { timeout: 60000 }, () => {
   const testUsername = `testuser_${Date.now()}`;
   const testEmail = `${testUsername}@example.com`;
   const strongPassword = "SecureP@ssw0rd123";

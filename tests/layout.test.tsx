@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { PageHeader, Sidebar, Topbar, AppLayout } from "@/components/layout";
+import { defaultNavigationGroups } from "@/components/layout/sidebar";
 
 // Mock Next.js navigation
 vi.mock("next/navigation", () => ({
@@ -30,7 +31,7 @@ describe("TASK-004: Base Layout Components", () => {
 
   describe("Sidebar", () => {
     it("should render brand header and navigation items", () => {
-      render(<Sidebar isOpen={true} onClose={() => {}} />);
+      render(<Sidebar isOpen={true} onClose={() => {}} navigation={defaultNavigationGroups} />);
 
       expect(screen.getByTestId("app-sidebar")).toBeInTheDocument();
       expect(screen.getByText("Credit Calculator")).toBeInTheDocument();

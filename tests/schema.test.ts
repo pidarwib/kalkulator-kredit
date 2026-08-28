@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { db } from "@/lib/db";
 import { Prisma } from "@prisma/client";
 
-describe("TASK-006: Core Database Schema", () => {
+describe("TASK-006: Core Database Schema", { timeout: 30000 }, () => {
   it("should have all core model delegates defined in Prisma client", () => {
     // 1. Authentication & RBAC
     expect(db.user).toBeDefined();

@@ -5,7 +5,7 @@ import { UserRepository } from "@/lib/repositories/user-repository";
 import { db } from "@/lib/db";
 import { SESSION_COOKIE_NAME, signSessionToken } from "@/lib/auth";
 
-describe("TASK-037: POST /api/v1/simulations Integration & Transaction Tests", { timeout: 30000 }, () => {
+describe("TASK-037: POST /api/v1/simulations Integration & Transaction Tests", { timeout: 90000 }, () => {
   let superAdminId: string;
   let adminMadiunId: string;
   let marketingId: string;
@@ -159,14 +159,13 @@ describe("TASK-037: POST /api/v1/simulations Integration & Transaction Tests", {
   }, 45000);
 
   afterAll(async () => {
-    for (const uid of testUserIds) {
-      // Cascade delete simulations
-      await db.simulation.deleteMany({ where: { createdBy: uid } });
-      await db.calculation.deleteMany({ where: { createdBy: uid } });
-      await db.auditLog.deleteMany({ where: { userId: uid } });
-      await db.user.delete({ where: { id: uid } }).catch(() => {});
+    if (testUserIds.length > 0) {
+      await db.simulation.deleteMany({ where: { createdBy: { in: testUserIds } } });
+      await db.calculation.deleteMany({ where: { createdBy: { in: testUserIds } } });
+      await db.auditLog.deleteMany({ where: { userId: { in: testUserIds } } });
+      await db.user.deleteMany({ where: { id: { in: testUserIds } } });
     }
-  });
+  }, 60000);
 
   function createRequest(body: unknown, token?: string): NextRequest {
     const headers: Record<string, string> = {

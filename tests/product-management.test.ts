@@ -178,14 +178,27 @@ describe("TASK-021: Product Management API & Financial Hierarchy Validation", ()
       }
     }, 30000);
 
-    it("should reject Marketing with 403 Forbidden (Marketing lacks MASTER_VIEW)", async () => {
+    it("should allow Marketing to list Products scoped to their BPR (for credit calculations)", async () => {
       const req = new NextRequest("http://localhost:3000/api/v1/products", {
         method: "GET",
         headers: { cookie: `${SESSION_COOKIE_NAME}=${marketingToken}` },
       });
 
       const res = await listProducts(req);
-      expect(res.status).toBe(403);
+      expect(res.status).toBe(200);
+      const body = await res.json();
+      for (const prod of body.data) {
+        expect(prod.bprId).toBe(seededBprId);
+      }
+    }, 30000);
+
+    it("should reject unauthenticated request with 401 Unauthorized", async () => {
+      const req = new NextRequest("http://localhost:3000/api/v1/products", {
+        method: "GET",
+      });
+
+      const res = await listProducts(req);
+      expect(res.status).toBe(401);
     }, 30000);
   });
 

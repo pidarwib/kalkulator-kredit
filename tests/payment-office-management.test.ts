@@ -203,14 +203,27 @@ describe("TASK-020: Payment Office Management API & BPR->Branch Hierarchy Valida
       }
     }, 30000);
 
-    it("should reject Marketing with 403 Forbidden", async () => {
+    it("should allow Marketing to list Payment Offices scoped to their BPR (for credit calculations)", async () => {
       const req = new NextRequest("http://localhost:3000/api/v1/payment-offices", {
         method: "GET",
         headers: { cookie: `${SESSION_COOKIE_NAME}=${marketingToken}` },
       });
 
       const res = await listPaymentOffices(req);
-      expect(res.status).toBe(403);
+      expect(res.status).toBe(200);
+      const body = await res.json();
+      for (const po of body.data) {
+        expect(po.bprId).toBe(seededBprId);
+      }
+    }, 30000);
+
+    it("should reject unauthenticated request with 401 Unauthorized", async () => {
+      const req = new NextRequest("http://localhost:3000/api/v1/payment-offices", {
+        method: "GET",
+      });
+
+      const res = await listPaymentOffices(req);
+      expect(res.status).toBe(401);
     }, 30000);
   });
 

@@ -2,7 +2,7 @@ import React from "react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import AuditLogsPage from "@/app/audit-logs/page";
-import { sanitizeAuditPayload } from "@/app/api/v1/audit-logs/route";
+import { sanitizeAuditPayload } from "@/lib/audit";
 
 // Mock Auth Provider
 vi.mock("@/lib/auth/auth-provider", () => ({

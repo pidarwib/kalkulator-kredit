@@ -12,6 +12,33 @@ export interface AuditLogParams {
   userAgent?: string | null;
 }
 
+/**
+ * Recursively masks sensitive fields (passwords, tokens, secrets, hashes) in audit log payloads.
+ */
+export function sanitizeAuditPayload(data: any): any {
+  if (!data) return data;
+  if (typeof data !== "object") return data;
+
+  if (Array.isArray(data)) {
+    return data.map((item) => sanitizeAuditPayload(item));
+  }
+
+  const sanitized: Record<string, any> = {};
+  const sensitiveKeys = /password|secret|token|hash|salt|private|apiKey/i;
+
+  for (const [key, value] of Object.entries(data)) {
+    if (sensitiveKeys.test(key)) {
+      sanitized[key] = "******** (REDACTED)";
+    } else if (value && typeof value === "object") {
+      sanitized[key] = sanitizeAuditPayload(value);
+    } else {
+      sanitized[key] = value;
+    }
+  }
+
+  return sanitized;
+}
+
 export class AuditService {
   /**
    * Records an audit log entry in the database.

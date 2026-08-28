@@ -168,6 +168,9 @@ export class SimulationRepository {
       });
 
       return simulation;
+    }, {
+      maxWait: 15000,
+      timeout: 30000,
     });
   }
 
