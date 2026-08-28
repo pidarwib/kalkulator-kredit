@@ -2398,6 +2398,15 @@ Tablet
 Mobile
 ```
 
+### Acceptance Criteria
+
+- [x] Tested and reviewed UI layout responsiveness across Desktop (`lg:`), Tablet (`md:`), and Mobile (`sm:`).
+- [x] Verified mobile drawer navigation and backdrop overlay in `Sidebar` (`data-testid="sidebar-backdrop"`, `fixed inset-y-0 lg:static lg:translate-x-0`).
+- [x] Verified hamburger toggle button in `Topbar` (`lg:hidden`) allowing smooth opening/closing of the sidebar on mobile and tablet screens.
+- [x] Verified table horizontal overflow protection (`overflow-x-auto`) on amortization and simulation tables to ensure dense financial data scrolls smoothly without breaking page container layouts.
+- [x] Verified responsive grid column stacking on forms and dashboard KPI cards (`grid-cols-1 md:grid-cols-2 lg:grid-cols-3`).
+- [x] Implemented dedicated responsive UI test suite (`tests/responsive-ui-review.test.ts`) validating layout breakpoints, mobile drawers, and overflow containment (7/7 tests passing).
+
 ---
 
 ## TASK-077 — Accessibility Review
