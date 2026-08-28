@@ -2533,6 +2533,14 @@ Rate limiting
 Secret management
 ```
 
+### Acceptance Criteria
+
+- [x] Configured enterprise HTTP security headers in `next.config.mjs`: `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Strict-Transport-Security`, `Permissions-Policy`, and removed `X-Powered-By` header (`poweredByHeader: false`).
+- [x] Verified secure session cookie policies in `src/lib/auth/cookies.ts`: `httpOnly: true`, `sameSite: "lax"`, `secure` in production, `path: "/"`, and 7-day max-age.
+- [x] Verified sliding-window Rate Limiter (`src/lib/security/rate-limiter.ts`) enforcing burst protection and standard 429 Too Many Requests responses with `Retry-After` and `X-RateLimit-*` headers.
+- [x] Enforced zero secret leakage across error reporting, client responses, and git commits.
+- [x] Implemented dedicated security configuration test suite (`tests/security-configuration.test.ts`) validating headers, cookies, and rate limiting (4/4 tests passing).
+
 ---
 
 ## TASK-083 — Final Regression
