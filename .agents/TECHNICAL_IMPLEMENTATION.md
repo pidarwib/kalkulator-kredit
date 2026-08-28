@@ -1886,6 +1886,17 @@ Activation
 
 Implement fee parameter versioning UI.
 
+### Acceptance Criteria
+
+- [x] Implemented comprehensive Fee Management page (`src/app/master/fees/page.tsx`) matching `DESIGN.md` §21.
+- [x] Implemented Product & Payment Office Selector linking fee configurations to specific loan products and payment offices.
+- [x] Rendered Active Fee Parameter card displaying current version, status (`AKTIF`), effective date, payment office scope, creation timestamp, and structured financial fees (Provisi %, Administrasi %, Verifikasi Rp, Flagging Rp, Fronting %, Cadangan Klaim / Reserve %).
+- [x] Displayed historical fee versions audit trail table showing version list, payment office scope, effective date ranges, fee rate summaries, and creation dates.
+- [x] Integrated Multi-Step Create New Version modal with step 1 fee parameters form input and step 2 side-by-side comparison diff & confirmation dialog (`DESIGN.md` §21).
+- [x] Handled immutable historical snapshot archiving upon new fee version activation via `POST /api/v1/products/:id/fee-parameters/versions`.
+- [x] Handled permission-aware action buttons and access restrictions (`CREDIT_PARAMETER_VIEW`, `CREDIT_PARAMETER_CREATE`, `FEE_VIEW`).
+- [x] Created unit & component test suite in `tests/fee-management-ui.test.tsx` (2/2 tests passing).
+
 ---
 
 ## TASK-059 — Audit Log UI
