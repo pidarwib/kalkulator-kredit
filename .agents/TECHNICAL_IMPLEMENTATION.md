@@ -2078,6 +2078,14 @@ Logs
 Git
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented comprehensive Secret Exposure security test suite (`tests/security-secret-exposure.test.ts`) scanning frontend bundles, API responses, logs, and git artifacts.
+- [x] Verified that frontend bundles and client-side components contain no direct references to server-only secrets (`DATABASE_URL`, `AUTH_SECRET`, `OPENROUTER_API_KEY`) and no sensitive `NEXT_PUBLIC_*` leaks.
+- [x] Verified that user management and authentication API endpoints (`/users`, `/users/:id`, `/auth/me`) strip `passwordHash`, raw passwords, and private secrets from all response payloads.
+- [x] Verified that audit logs sanitize and redact sensitive keys (`password`, `token`, `secret`, `hash`, `salt`, `apiKey`) to `******** (REDACTED)`.
+- [x] Verified that `.gitignore` ignores all `.env` and `.env*.local` environment files, and `.env.example` contains only non-sensitive placeholder templates (10/10 tests passing).
+
 ---
 
 ## TASK-066 — Rate Limit Test
