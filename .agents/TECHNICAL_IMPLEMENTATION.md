@@ -2467,6 +2467,13 @@ Simulation Deletion/Archive
 
 Application error harus dapat ditemukan melalui server logs/monitoring tanpa membocorkan secret.
 
+### Acceptance Criteria
+
+- [x] Implemented dedicated structured logger and error monitoring service (`src/lib/observability/logger.ts`) supporting log levels (`DEBUG`, `INFO`, `WARN`, `ERROR`, `FATAL`).
+- [x] Automated recursive deep-redaction of sensitive credentials, secrets, tokens, API keys, passwords, cookies, and database connection strings (`redactSensitiveData`).
+- [x] Verified that error logs maintain diagnostic utility (error name, message, error codes, request context) while completely masking confidential user inputs and credentials.
+- [x] Implemented dedicated error monitoring and secret protection test suite (`tests/error-monitoring-security.test.ts`) validating automated redaction across complex nested payloads, string bearer tokens, and error logging (5/5 tests passing).
+
 ---
 
 # 29. PHASE 23 — PRODUCTION READINESS
