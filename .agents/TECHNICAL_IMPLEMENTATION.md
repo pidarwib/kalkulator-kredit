@@ -2211,6 +2211,20 @@ Super Admin
 
 Pastikan menu dan endpoint sesuai permission.
 
+### Acceptance Criteria
+
+- [x] Implemented comprehensive RBAC End-to-End Test suite (`tests/rbac-end-to-end.test.ts`) validating canonical permissions, endpoint access control guards, and multi-tenant data scope boundaries.
+- [x] Verified canonical permissions and menu scope resolution via `GET /api/v1/auth/me` across Marketing, Admin (BPR Admin), and Super Admin.
+- [x] Verified endpoint access control and permission guard enforcement:
+  - BPR Entity Management (`POST /api/v1/bprs`): Super Admin allowed (201), Admin and Marketing rejected (403).
+  - User Management (`GET /api/v1/users`): Marketing rejected (403), Admin allowed for own BPR (200), Super Admin allowed globally (200).
+  - Audit Logs API (`GET /api/v1/audit-logs`): Marketing rejected (403), Admin allowed for own BPR (200), Super Admin allowed globally (200).
+- [x] Verified data scope and ownership isolation across roles and tenants:
+  - Admin BPR-A cannot view users from BPR-B.
+  - Admin BPR-B receives 403 Forbidden when attempting to access BPR-A simulations.
+  - Marketing users are strictly isolated to their own simulations (Marketing A2 receives 403 when requesting Marketing A1 simulation).
+  - Super Admin retains global read/write visibility across all BPR tenants (10/10 tests passing).
+
 ---
 
 # 25. PHASE 19 — FINANCIAL REGRESSION
