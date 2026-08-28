@@ -2377,6 +2377,15 @@ Consistent spacing
 Consistent typography
 ```
 
+### Acceptance Criteria
+
+- [x] Audited user interface and styling against specifications in `.agents/DESIGN.md`.
+- [x] Confirmed adherence to clean, minimal, data-first financial SaaS design principles without distracting decorations or noisy animations.
+- [x] Verified unified brand color palette in `src/app/globals.css` using a single dominant primary token (`--primary: #4f46e5`), off-white background (`--background: #f8fafc`), and dark slate text (`--foreground: #0f172a`).
+- [x] Verified strict semantic color usage: Emerald/Green for `OK`/`ELIGIBLE`, Rose/Red for `OVER`/`REJECTED`, and Amber for warnings.
+- [x] Verified typography consistency: System sans-serif font stack with tabular, monospace numbers for currencies and percentages.
+- [x] Implemented dedicated design system test suite (`tests/design-system-audit.test.ts`) validating tokens, formatting, and layout structure (8/8 tests passing).
+
 ---
 
 ## TASK-076 — Responsive Review
