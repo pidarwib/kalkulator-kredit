@@ -2512,6 +2512,12 @@ Migration
 
 procedure tersedia.
 
+### Acceptance Criteria
+
+- [x] Documented complete database operations runbook (`docs/DATABASE_OPERATIONS.md`) covering logical `pg_dump` backups, `pg_restore` recovery, Supabase Point-In-Time-Recovery (PITR), and Prisma migration procedures (`prisma migrate deploy`).
+- [x] Implemented automated database snapshot script (`scripts/db-backup.ts`) capturing parameter versions, insurance rates, products, BPRs, and roles into structured backup artifacts.
+- [x] Implemented dedicated database operations test suite (`tests/database-backup-operations.test.ts`) validating documentation completeness, automated backup generation, and snapshot structure integrity (2/2 tests passing).
+
 ---
 
 ## TASK-082 — Security Configuration
