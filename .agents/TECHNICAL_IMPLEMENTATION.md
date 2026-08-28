@@ -2190,6 +2190,13 @@ Ulangi dengan:
 Annuity
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented complete End-to-End User Journey test suite (`tests/e2e-calculator-journey.test.ts`) covering both FLAT and ANNUITY calculation and simulation flows.
+- [x] Verified complete FLAT user journey: Authenticated Login -> Permission resolution (`GET /api/v1/auth/me`) -> Active product discovery (`GET /api/v1/products`) -> Credit input calculation (`POST /api/v1/calculations`) -> Formal simulation save (`POST /api/v1/simulations`) -> Detailed snapshot retrieval (`GET /api/v1/simulations/:id`).
+- [x] Verified complete ANNUITY user journey: Credit input calculation with high-precision Decimal PMT formula -> Decreasing interest & increasing principal amortization schedule -> Formal simulation save -> Detailed snapshot retrieval.
+- [x] Verified simulation list overview (`GET /api/v1/simulations`) displaying all saved simulations with status and metadata (10/10 tests passing).
+
 ---
 
 ## TASK-070 — RBAC E2E
