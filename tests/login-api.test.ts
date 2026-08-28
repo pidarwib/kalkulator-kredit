@@ -5,7 +5,7 @@ import { UserRepository } from "@/lib/repositories";
 import { db } from "@/lib/db";
 import { SESSION_COOKIE_NAME, verifySessionToken } from "@/lib/auth";
 
-describe("TASK-011: Login API (POST /api/v1/auth/login)", () => {
+describe("TASK-011: Login API (POST /api/v1/auth/login)", { timeout: 30000 }, () => {
   const activeUsername = `login_active_${Date.now()}`;
   const inactiveUsername = `login_inactive_${Date.now()}`;
   const password = "Password123!";

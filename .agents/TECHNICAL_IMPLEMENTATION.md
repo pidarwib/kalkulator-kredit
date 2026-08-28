@@ -2092,6 +2092,14 @@ Git
 
 Test login dan sensitive endpoint.
 
+### Acceptance Criteria
+
+- [x] Implemented in-memory sliding-window RateLimiter service (`src/lib/security/rate-limiter.ts`) supporting IP resolution, configurable thresholds, reset mechanisms, and HTTP 429 response formatting with `Retry-After` and `X-RateLimit-*` headers.
+- [x] Integrated rate limiting into the authentication endpoint (`POST /api/v1/auth/login`) to guard against brute-force and credential stuffing attacks.
+- [x] Verified that exceeding login request threshold (15 req/min) returns `429 Too Many Requests` with standard error payload (`TOO_MANY_REQUESTS`).
+- [x] Verified client IP isolation ensuring throttling on one IP does not block legitimate users on another IP.
+- [x] Implemented comprehensive unit and integration security test suite in `tests/security-rate-limit.test.ts` (6/6 tests passing).
+
 ---
 
 # 24. PHASE 18 — TESTING

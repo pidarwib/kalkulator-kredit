@@ -7,6 +7,7 @@ import {
   signSessionToken,
   getSessionCookieOptions,
 } from "@/lib/auth";
+import { RateLimiter } from "@/lib/security";
 import { db } from "@/lib/db";
 
 const loginSchema = z.object({
@@ -26,6 +27,15 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate Limiting / Brute Force Protection (max 15 requests/minute per IP)
+    const ip = RateLimiter.getClientIp(request);
+    const rateLimit = RateLimiter.check(`login:${ip}`, 15, 60_000);
+    if (!rateLimit.allowed) {
+      return RateLimiter.rateLimitResponse(
+        rateLimit,
+        "Terlalu banyak percobaan login. Silakan tunggu beberapa saat sebelum mencoba kembali."
+      );
+    }
     let body: unknown;
     try {
       body = await request.json();
