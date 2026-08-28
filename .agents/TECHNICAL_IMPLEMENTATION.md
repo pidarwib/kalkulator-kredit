@@ -1912,6 +1912,16 @@ Timestamp
 Actor
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented Audit Logs API route (`src/app/api/v1/audit-logs/route.ts`) supporting multi-criteria filtering, search, pagination, RBAC isolation (`AUDIT_VIEW`), and automatic secret/credential redaction.
+- [x] Implemented comprehensive Audit Log page (`src/app/audit-logs/page.tsx`) with search, action filter, entity filter, and date range filters.
+- [x] Implemented structured audit table displaying Timestamp, Actor (name, username, role, BPR), Action with visual color badges, Entity Type & ID, and IP address.
+- [x] Integrated Before / After Diff Viewer modal displaying side-by-side formatted JSON comparison with security redaction notice.
+- [x] Integrated CSV export capability for compliance and offline audit reporting (`AUDIT_EXPORT`).
+- [x] Handled permission-aware action buttons and access restrictions (`AUDIT_VIEW`, `AUDIT_EXPORT`).
+- [x] Created unit & component test suite in `tests/audit-logs-ui.test.tsx` (3/3 tests passing).
+
 ---
 
 # 22. PHASE 16 — DASHBOARD
