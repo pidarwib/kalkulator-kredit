@@ -1991,6 +1991,17 @@ Expected:
 403 / 404 according to security policy
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented comprehensive IDOR penetration and security test suite (`tests/security-idor.test.ts`) covering cross-user, cross-branch, and cross-BPR scenarios.
+- [x] Verified that Marketing A attempting to read or delete Simulation B (same BPR, different user) is rejected with 403 Forbidden (`FORBIDDEN`).
+- [x] Verified that Admin BPR-A attempting to read simulations from BPR-B is rejected with 403 Forbidden.
+- [x] Verified that Marketing user attempting to access another user's profile is rejected with 403 Forbidden.
+- [x] Verified that Admin attempting to access Super Admin user profile is rejected with 403 Forbidden.
+- [x] Verified that unauthorized role attempting to access audit logs is rejected with 403 Forbidden.
+- [x] Verified unauthenticated requests receive 401 Unauthorized and non-existent resources receive 404 Not Found.
+- [x] Verified DataScopeService unit logic for `canAccessSimulation` and `canAccessUser` (27/27 tests passing).
+
 ---
 
 ## TASK-063 — Privilege Escalation Test
