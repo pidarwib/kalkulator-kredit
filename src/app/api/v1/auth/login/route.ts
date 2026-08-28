@@ -71,10 +71,36 @@ export async function POST(request: NextRequest) {
     }
 
     const { username, password } = parseResult.data;
+    const ipAddress =
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      request.headers.get("x-real-ip") ||
+      null;
+    const userAgent = request.headers.get("user-agent") || null;
 
     // 2. Lookup user by username
     const user = await UserRepository.findByUsernameWithSecret(username);
     if (!user) {
+      // Record failed login attempt in audit log
+      try {
+        await db.auditLog.create({
+          data: {
+            userId: null,
+            action: "LOGIN_FAILED",
+            entityType: "User",
+            entityId: null,
+            newValue: {
+              attemptedUsername: username,
+              reason: "USER_NOT_FOUND",
+              timestamp: new Date().toISOString(),
+            },
+            ipAddress,
+            userAgent,
+          },
+        });
+      } catch (auditErr) {
+        console.error("Audit log error on failed login:", auditErr);
+      }
+
       // Generic message to prevent user enumeration
       return NextResponse.json(
         {
@@ -90,6 +116,27 @@ export async function POST(request: NextRequest) {
     // 3. Verify password hash
     const isPasswordValid = await verifyPassword(password, user.passwordHash);
     if (!isPasswordValid) {
+      // Record failed login attempt in audit log
+      try {
+        await db.auditLog.create({
+          data: {
+            userId: user.id,
+            action: "LOGIN_FAILED",
+            entityType: "User",
+            entityId: user.id,
+            newValue: {
+              username: user.username,
+              reason: "INVALID_PASSWORD",
+              timestamp: new Date().toISOString(),
+            },
+            ipAddress,
+            userAgent,
+          },
+        });
+      } catch (auditErr) {
+        console.error("Audit log error on failed login:", auditErr);
+      }
+
       return NextResponse.json(
         {
           error: {
@@ -104,6 +151,27 @@ export async function POST(request: NextRequest) {
     // 4. Validate user status
     const statusValidation = validateUserStatus(user);
     if (!statusValidation.isAllowed) {
+      try {
+        await db.auditLog.create({
+          data: {
+            userId: user.id,
+            action: "LOGIN_FAILED",
+            entityType: "User",
+            entityId: user.id,
+            newValue: {
+              username: user.username,
+              reason: "ACCOUNT_INACTIVE",
+              status: user.status,
+              timestamp: new Date().toISOString(),
+            },
+            ipAddress,
+            userAgent,
+          },
+        });
+      } catch (auditErr) {
+        console.error("Audit log error on failed login:", auditErr);
+      }
+
       return NextResponse.json(
         {
           error: {
@@ -121,12 +189,6 @@ export async function POST(request: NextRequest) {
     await UserRepository.updateLastLogin(user.id);
 
     // 6. Record audit log
-    const ipAddress =
-      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-      request.headers.get("x-real-ip") ||
-      null;
-    const userAgent = request.headers.get("user-agent") || null;
-
     try {
       await db.auditLog.create({
         data: {

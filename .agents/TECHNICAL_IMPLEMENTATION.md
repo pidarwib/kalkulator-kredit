@@ -2453,6 +2453,14 @@ Simulation Creation
 Simulation Deletion/Archive
 ```
 
+### Acceptance Criteria
+
+- [x] Verified audit logging across authentication lifecycle: `LOGIN` records successful sign-in with IP address & user-agent; `LOGIN_FAILED` records failed attempts with specific failure reasons (`USER_NOT_FOUND`, `INVALID_PASSWORD`, `ACCOUNT_INACTIVE`) without exposing credentials.
+- [x] Verified user management audit trail: `USER_CREATE`, `USER_UPDATE`, `USER_ROLE_CHANGE`, and `USER_STATUS_CHANGE`.
+- [x] Verified parameter and financial product audit trail: `CREDIT_PARAMETER_CREATE`, `FEE_PARAMETER_CREATE`, and `INSURANCE_RATE_CREATE_VERSION` record version tags and change payloads.
+- [x] Verified simulation lifecycle audit trail: `SIMULATION_CREATE` and `SIMULATION_ARCHIVE` automatically capture immutable entity IDs and snapshot diffs.
+- [x] Implemented dedicated audit verification test suite (`tests/audit-verification.test.ts`) validating end-to-end audit trail capture across all required business events (7/7 tests passing).
+
 ---
 
 ## TASK-079 — Error Monitoring
