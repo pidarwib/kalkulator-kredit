@@ -57,12 +57,14 @@ function LoginForm() {
       }
 
       setSuccessMessage("Login berhasil. Mengalihkan ke aplikasi...");
-      
-      // Navigate to destination dashboard / requested callback
+
+      // Navigate to destination dashboard / requested callback with full state refresh
       setTimeout(() => {
         router.push(callbackUrl);
-        router.refresh();
-      }, 500);
+        if (typeof window !== "undefined" && window.location) {
+          window.location.href = callbackUrl;
+        }
+      }, 300);
     } catch (err) {
       console.error("[Login Error]:", err);
       setErrorMessage("Terjadi kesalahan jaringan atau server. Silakan coba lagi.");

@@ -76,7 +76,7 @@ interface RecentSimulation {
 }
 
 export default function DashboardPage() {
-  const { user: currentUser } = useAuth();
+  const { user: currentUser, isLoading: isAuthLoading } = useAuth();
   const isAdmin = currentUser?.role === "ADMIN" || currentUser?.role === "SUPER_ADMIN";
 
   // State
@@ -90,6 +90,7 @@ export default function DashboardPage() {
 
   // Fetch Dashboard Data based on role
   const fetchDashboardData = useCallback(async () => {
+    if (isAuthLoading) return;
     setLoading(true);
     setError(null);
 
@@ -127,11 +128,13 @@ export default function DashboardPage() {
     } finally {
       setLoading(false);
     }
-  }, [isAdmin]);
+  }, [isAdmin, isAuthLoading]);
 
   useEffect(() => {
-    fetchDashboardData();
-  }, [fetchDashboardData]);
+    if (!isAuthLoading) {
+      fetchDashboardData();
+    }
+  }, [fetchDashboardData, isAuthLoading]);
 
   const formatRupiah = (val: number | null | undefined): string => {
     if (val === undefined || val === null || isNaN(val)) return "Rp 0";

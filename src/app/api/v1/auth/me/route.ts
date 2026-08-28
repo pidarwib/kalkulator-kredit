@@ -19,6 +19,8 @@ export async function GET(request: NextRequest) {
           role: user.role,
           permissions: user.permissions,
           scope: user.scope,
+          bprName: (user as any).bprName,
+          branchName: (user as any).branchName,
         },
       },
       { status: 200 }

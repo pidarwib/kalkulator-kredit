@@ -104,7 +104,9 @@ export async function authenticateRequest(
     role: user.role.code,
     roleId: user.role.id,
     bprId: user.bprId,
+    bprName: user.bpr?.name || null,
     branchId: user.branchId,
+    branchName: user.branch?.name || null,
     permissions,
     scope,
   };
