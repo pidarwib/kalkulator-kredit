@@ -223,7 +223,7 @@ export function Sidebar({
         </div>
 
         {/* Navigation List */}
-        <div className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
+        <nav aria-label="Navigasi Utama" className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
           {activeNavigation.map((group, groupIndex) => (
             <div key={groupIndex} className="space-y-1">
               {group.label && (
@@ -281,7 +281,7 @@ export function Sidebar({
               </div>
             </div>
           ))}
-        </div>
+        </nav>
 
         {/* Footer User Info */}
         <div className="border-t border-slate-200 p-3 bg-slate-50/50">

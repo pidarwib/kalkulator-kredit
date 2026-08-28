@@ -2422,6 +2422,16 @@ Error messages
 Semantic HTML
 ```
 
+### Acceptance Criteria
+
+- [x] Audited accessibility (a11y) across components, layouts, and input forms.
+- [x] Verified form label association: `CurrencyInput`, `PercentageInput`, and `NumberInput` strictly link `<label htmlFor={inputId}>` to matching `<input id={inputId}>`.
+- [x] Verified visible keyboard focus indicators and outline rings (`focus:ring-1`, `focus:ring-2`, `focus:border-indigo-600`) across all interactive inputs and buttons.
+- [x] Verified semantic HTML landmark usage: `<aside>`, `<main>`, `<header>`, `<nav>`, `<table>`, `<thead>`, `<tbody>`, `<th>`, and `<td>` used systematically throughout the application.
+- [x] Verified screen reader support: `aria-label` tags on mobile hamburger and close buttons, `aria-hidden` on mobile backdrops, and `aria-label="Navigasi Utama"` on sidebar navigation.
+- [x] Verified high-contrast error semantics: Explicit error messages with high-contrast text (`text-red-600`) and border highlighting (`border-red-300`).
+- [x] Implemented dedicated accessibility review test suite (`tests/accessibility-audit.test.ts`) validating labels, focus rings, ARIA attributes, semantic HTML, and error semantics (9/9 tests passing).
+
 ---
 
 # 28. PHASE 22 — AUDIT & OBSERVABILITY
