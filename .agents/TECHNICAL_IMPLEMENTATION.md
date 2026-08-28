@@ -2045,6 +2045,17 @@ Frontend mencoba:
 
 Backend harus mengabaikan/tolak parameter tersebut sebagai source of truth.
 
+### Acceptance Criteria
+
+- [x] Implemented comprehensive Financial Parameter Tampering security test suite (`tests/security-financial-tampering.test.ts`) verifying server-side authoritative calculations.
+- [x] Verified that client-supplied DBR limits (`dbr: 0.99`, `maxDbr: 0.99`) are ignored and authoritative product DBR limits from database are strictly enforced.
+- [x] Verified that client-supplied insurance rates/premiums (`insuranceRate: 0.001`, `premium: 50000`) are ignored and database matrix rates are applied.
+- [x] Verified that client attempts to waive or manipulate fees (provision, administration, verification, flagging, installment deductions) are ignored and authoritative FeeParameters are applied.
+- [x] Verified that client-supplied interest margin rates (`flatAnnualRate: 0.01`) are ignored and authoritative product rates from database are used for installment calculation.
+- [x] Verified that client-supplied loan ceilings (`maximumPrincipal: 100000000000`) are ignored and product ceiling is enforced.
+- [x] Verified that simulation creation (`POST /api/v1/simulations`) ignores spoofed `resultSnapshot` payloads and persists authoritative server-computed results.
+- [x] Verified direct `CreditCalculationOrchestrator` execution ignores hostile properties and parameter injections (7/7 tests passing).
+
 ---
 
 ## TASK-065 — Secret Exposure Test
