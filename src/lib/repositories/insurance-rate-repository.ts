@@ -114,22 +114,54 @@ export class InsuranceRateRepository {
   }
 
   /**
+   * Performs high-performance single-query dual lookup for current age and next age.
+   */
+  static async lookupDualRates(
+    productId: string,
+    currentAge: number,
+    tenorYears: number,
+    version?: string
+  ): Promise<{
+    rate1: InsuranceRate | null;
+    rate2: InsuranceRate | null;
+  }> {
+    const nextAge = currentAge + 1;
+    const rates = await db.insuranceRate.findMany({
+      where: {
+        productId,
+        age: { in: [currentAge, nextAge] },
+        tenorYears,
+        ...(version ? { version } : { isActive: true }),
+      },
+      orderBy: { effectiveFrom: "desc" },
+    });
+
+    const rate1 = rates.find((r) => r.age === currentAge) || null;
+    const rate2 = rates.find((r) => r.age === nextAge) || null;
+
+    return { rate1, rate2 };
+  }
+
+  /**
    * Performs the dual lookup (Current Age vs Next Age) and returns the higher rate
-   * per BUSINESS_RULES.md Section 25.
+   * per BUSINESS_RULES.md Section 25 in a single query.
    */
   static async lookupMaxAgeRate(
     productId: string,
     currentAge: number,
-    tenorYears: number
+    tenorYears: number,
+    version?: string
   ): Promise<{
     selectedRate: Prisma.Decimal;
     currentAgeRate: InsuranceRate | null;
     nextAgeRate: InsuranceRate | null;
   } | null> {
-    const [rate1, rate2] = await Promise.all([
-      this.lookup(productId, currentAge, tenorYears),
-      this.lookup(productId, currentAge + 1, tenorYears),
-    ]);
+    const { rate1, rate2 } = await this.lookupDualRates(
+      productId,
+      currentAge,
+      tenorYears,
+      version
+    );
 
     if (!rate1 && !rate2) {
       return null;

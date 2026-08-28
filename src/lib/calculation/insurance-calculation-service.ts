@@ -64,11 +64,14 @@ export class InsuranceCalculationService {
     // 1. Tenor Tahun Asuransi = CEILING(Tenor Bulan / 12) per Section 23.1
     const tenorYears = tenor.insuranceTenorYears;
 
-    // 2. Dual Lookup: Current Age (Lookup 1) & Next Age (Lookup 2) per Section 25
-    const [rate1Record, rate2Record] = await Promise.all([
-      InsuranceRateRepository.lookup(input.productId, currentAge, tenorYears, input.version),
-      InsuranceRateRepository.lookup(input.productId, nextAge, tenorYears, input.version),
-    ]);
+    // 2. Dual Lookup: Current Age (Lookup 1) & Next Age (Lookup 2) per Section 25 in single query
+    const { rate1: rate1Record, rate2: rate2Record } =
+      await InsuranceRateRepository.lookupDualRates(
+        input.productId,
+        currentAge,
+        tenorYears,
+        input.version
+      );
 
     // Critical Rule: Missing rate MUST be an error, NOT an AI estimation
     if (!rate1Record && !rate2Record) {
