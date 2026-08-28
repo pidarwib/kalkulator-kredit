@@ -2351,6 +2351,14 @@ Review:
 - unnecessary joins;
 - large amortization queries.
 
+### Acceptance Criteria
+
+- [x] Audited Prisma database schema (`prisma/schema.prisma`) and confirmed comprehensive index coverage across foreign keys, multi-tenant boundaries (`bprId`, `branchId`), status filters, compound search keys, and audit timeline lookups (`[userId, createdAt]`, `[entityType, entityId]`).
+- [x] Verified bounded pagination across all repository listing methods (`SimulationRepository`, `InsuranceRateRepository`, `UserRepository`), enforcing safety clamping on `page` and `pageSize` to prevent runaway dataset extraction.
+- [x] Verified N+1 query prevention: `ProductRepository.list` uses lightweight `_count` aggregations instead of loading full child relation trees into memory.
+- [x] Verified large amortization schedule isolation: `SimulationRepository.list` omits massive 120-period amortization schedule rows, selecting only essential calculation result summary fields to preserve network and database performance.
+- [x] Implemented dedicated database query review test suite (`tests/database-query-review.test.ts`) validating index integrity, bounded pagination limits, and relation isolation (11/11 tests passing).
+
 ---
 
 # 27. PHASE 21 — UI QUALITY
