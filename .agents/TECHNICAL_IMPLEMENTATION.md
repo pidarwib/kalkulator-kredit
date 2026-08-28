@@ -1962,6 +1962,15 @@ Eligibility Summary
 
 Scope mengikuti permission.
 
+### Acceptance Criteria
+
+- [x] Implemented Admin Dashboard API endpoint (`src/app/api/v1/dashboard/admin/route.ts`) returning Total Marketing Officers, Total Simulations, Today's Simulations, Eligibility Summary, Branch breakdown, and recent cross-branch simulations scoped to the caller's BPR/role.
+- [x] Enhanced Dashboard page (`src/app/page.tsx`) to dynamically render the Admin Dashboard view for `ADMIN` and `SUPER_ADMIN` roles.
+- [x] Displayed 4 Focused Management KPI cards: Total Marketing (officers in scope), Total Simulasi (count & total principal volume), Simulasi Hari Ini (today's count & volume), and Eligibility Summary (eligibility rate % & eligible vs over capacity count).
+- [x] Displayed Branch Distribution card showing marketing officer count and simulation count per branch within the BPR.
+- [x] Displayed Recent Simulations table enriched with Officer Attribution & Branch columns.
+- [x] Created unit & component test suite in `tests/admin-dashboard.test.tsx` (1/1 test passing).
+
 ---
 
 # 23. PHASE 17 — SECURITY HARDENING

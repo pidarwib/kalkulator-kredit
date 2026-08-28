@@ -86,7 +86,7 @@ describe("TASK-060: Marketing Dashboard UI Tests", () => {
 
     render(<MarketingDashboardPage />);
 
-    expect(screen.getByTestId("marketing-dashboard-title")).toBeInTheDocument();
+    expect(screen.getByTestId("dashboard-page-title")).toBeInTheDocument();
     expect(screen.getAllByText("Budi Santoso").length).toBeGreaterThan(0);
     expect(screen.getByTestId("dashboard-start-calc-btn")).toBeInTheDocument();
 
@@ -142,6 +142,6 @@ describe("TASK-060: Marketing Dashboard UI Tests", () => {
       expect(screen.getByTestId("dashboard-empty-simulations")).toBeInTheDocument();
     });
 
-    expect(screen.getByText("Belum ada simulasi kredit yang disimpan.")).toBeInTheDocument();
+    expect(screen.getByText("Belum ada simulasi kredit yang tersimpan.")).toBeInTheDocument();
   });
 });
