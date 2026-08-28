@@ -2120,6 +2120,19 @@ Amortization
 Money/rounding
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented comprehensive master unit test suite (`tests/financial-master-unit.test.ts`) covering all 9 core financial computation domains with 100% deterministic mathematical assertions.
+- [x] Verified Money Value Object precision, high-precision arithmetic, floor increment rounding (`floorTo`), and Indonesian Rupiah formatting.
+- [x] Verified Flat Calculation strategy (installment, monthly margin, principal breakdown, total payment, reverse capacity).
+- [x] Verified Annuity Calculation strategy (PMT formula, monthly interest/principal decay, capacity).
+- [x] Verified Insurance calculation rules (age ceil rounding for >6 months, tenor ceil in years, premium, fronting fee, reserve).
+- [x] Verified Fee calculation rules (provision, admin, verification, flagging, upfront installment deductions, net disbursement).
+- [x] Verified DBR service (debt burden ratio, remaining income, maximum DBR threshold checking).
+- [x] Verified Eligibility service (evaluation and aggregation of all 7 standard rejection rules).
+- [x] Verified Maximum Principal service (reverse DBR capacity, product ceiling capping, floor increment rounding).
+- [x] Verified Amortization Schedule engine (exact schedule generation, monthly payment dates, zero closing balance guarantee) (20/20 master tests & 75/75 domain unit tests passing).
+
 ---
 
 ## TASK-068 — Integration Tests
