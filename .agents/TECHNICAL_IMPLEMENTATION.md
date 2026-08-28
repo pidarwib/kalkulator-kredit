@@ -2302,6 +2302,16 @@ Negative values
 Missing values
 ```
 
+### Acceptance Criteria
+
+- [x] Implemented comprehensive financial boundary testing suite (`tests/financial-boundary-testing.test.ts`) covering all critical edge cases and thresholds.
+- [x] Verified DBR boundary transitions: 89.99% (`OK`), 90.00% (`OK`), 90.01% (`OVER` with specific over-threshold reason).
+- [x] Verified Tenor boundary transitions: 119 months (`OK`), 120 months (`OK`), 121 months (`OVER` with specific tenor-limit reason).
+- [x] Verified Principal limit boundary: Rp 199.900.000 (`OK`), Rp 200.000.000 (`OK`), Rp 200.100.000 (`OVER` with specific ceiling-exceeded reason).
+- [x] Verified Age & Maturity boundary: Maturity age 84 years 11 months (`OK`), Maturity age 85 years 0 months (`OVER` with specific age-limit reason), and minimum valid age boundary (21 years, `OK`).
+- [x] Verified Input safety validation: Rejection of zero values (salary 0, principal 0, tenor 0), negative values (salary -5M, principal -50M, tenor -12), and missing required fields.
+- [x] Verified Multi-Rule failure aggregation: When multiple constraints fail simultaneously, all respective reasons are collected and returned without premature termination (19/19 tests passing).
+
 ---
 
 # 26. PHASE 20 — PERFORMANCE
