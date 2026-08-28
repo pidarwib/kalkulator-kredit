@@ -14,7 +14,9 @@ export interface AuthenticatedUserContext {
   role: string;
   roleId: string;
   bprId: string | null;
+  bprName?: string | null;
   branchId: string | null;
+  branchName?: string | null;
   permissions: string[];
   scope: UserScope;
 }
