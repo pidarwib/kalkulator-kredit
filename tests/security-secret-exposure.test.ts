@@ -14,6 +14,7 @@ import { NextRequest } from "next/server";
 import fs from "fs";
 import path from "path";
 import { GET as getUsers, POST as createUser } from "@/app/api/v1/users/route";
+import { GET as getUser, PATCH as updateUser } from "@/app/api/v1/users/[id]/route";
 import { GET as getAuditLogs } from "@/app/api/v1/audit-logs/route";
 import { sanitizeAuditPayload } from "@/lib/audit";
 import { UserRepository } from "@/lib/repositories/user-repository";
