@@ -2490,6 +2490,14 @@ Production
 
 menggunakan configuration dan credential yang sesuai.
 
+### Acceptance Criteria
+
+- [x] Separated environment configurations across `development`, `test`, and `production` tiers.
+- [x] Verified `.env.example` template contains only safe placeholders (`[PROJECT_REF]`, `[PASSWORD]`) with zero real passwords or database connection strings.
+- [x] Updated `.gitignore` to strictly isolate all environment files (`.env`, `.env*.local`, `.env.development`, `.env.test`, `.env.production`, `.env.staging`) from git tracking.
+- [x] Enforced strict environment schema validation in `src/lib/env.ts` requiring high-entropy `AUTH_SECRET` (>=32 characters) and valid `DATABASE_URL`.
+- [x] Implemented dedicated environment separation test suite (`tests/environment-separation.test.ts`) validating credential isolation and sanitized error messages (6/6 tests passing).
+
 ---
 
 ## TASK-081 — Database Backup
